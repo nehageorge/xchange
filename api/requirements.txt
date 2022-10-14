@@ -1,0 +1,14 @@
+click
+dnspython
+Flask
+importlib-metadata
+itsdangerous
+Jinja2
+MarkupSafe
+pymongo
+python-dateutil
+python-dotenv
+setuptools
+six
+Werkzeug
+zipp
