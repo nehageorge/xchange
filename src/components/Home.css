@@ -1,6 +1,10 @@
 .Home {
   text-align: center;
 }
+.TopBar {
+  display: flex;
+  flex-direction: row;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .Home-logo {

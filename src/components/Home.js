@@ -42,43 +42,49 @@ function Home() {
 
   return (
     <div className="Home">
-      <h1>
-        <b>XChange </b>
-      </h1>
-      <Button onClick={addHandler}>Add new uni</Button>
-      <br></br>
-      <TextField
-        onChange={(event) => {
-          handleSearch(event.target.value);
-        }}
-        name="search"
-        label="Search"
-        variant="standard"
-      />
-      <br></br><br></br>
-      <View>
-        <ul>
-          {unis.map((uni) => {
-            return (
-              <div key={uni} style={{ border: "thin solid black" }}>
-                <br></br>
-                <Chip color="primary" label={uni} />
-                <br></br>
-                <br></br>
-                <ButtonGroup
-                  variant="outlined"
-                  aria-label="outlined button group"
-                >
-                  <Button onClick={() => navigate(`/get_uni/${uni}`)}>
-                    View
-                  </Button>
-                </ButtonGroup>
-                <br></br>
-                <br></br>
-              </div>
-            );
-          })}
-        </ul>
+      <View style={{flex: 1}}>
+        <div className="TopBar">
+            <h1 style={{ color: 'gold' }}>X</h1>
+            <h1>Change </h1>
+
+            <TextField
+              onChange={(event) => {
+              handleSearch(event.target.value);
+              }}
+              name="search"
+              label="Search"
+              variant="standard"
+              style={{ marginLeft: '2rem' }}
+            />
+        </div>
+        <Button onClick={addHandler}>Add new uni</Button>
+        <br></br>
+
+        <br></br><br></br>
+        <View>
+          <ul>
+            {unis.map((uni) => {
+              return (
+                <div key={uni} style={{ border: "thin solid black" }}>
+                  <br></br>
+                  <Chip color="primary" label={uni} />
+                  <br></br>
+                  <br></br>
+                  <ButtonGroup
+                    variant="outlined"
+                    aria-label="outlined button group"
+                  >
+                    <Button onClick={() => navigate(`/get_uni/${uni}`)}>
+                      View
+                    </Button>
+                  </ButtonGroup>
+                  <br></br>
+                  <br></br>
+                </div>
+              );
+            })}
+          </ul>
+        </View>
       </View>
     </div>
   );
