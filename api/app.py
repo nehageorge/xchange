@@ -18,10 +18,13 @@ col = db["UniversityRepo"]
 @app.route('/index', methods=['GET'])
 def index():
 	all_unis = University.load_all_universities(col)
-	unis = Image.get_unis_ready_for_display(all_unis)
+	unis = University.get_unis_ready_for_display(all_unis)
 	res = json_response(unis)
 	return res
 
+@app.route('/search_unis/<param>', methods=['GET'])
+def search_unis(param):
+	return json_response(University.search_uni(col, param))
 
 @app.route('/new_uni', methods=['GET','POST'])
 def new_uni():

@@ -6,27 +6,22 @@ function Add() {
   return (
     <div className="Add">
       <center>
-        <h2>Add Image to Repository</h2>
+        <h2>Add University</h2>
 
         <div>
-          <form action="/new_image" method="POST">
+          <form action="/new_uni" method="POST">
             <Text>Name</Text>
             <br></br>
-            <TextField name="name" label="Image name" variant="standard" />
+            <TextField name="name" label="University name" variant="standard" />
             <br></br>
             <br></br>
-            <Text>Labels</Text>
+            <Text>Info</Text>
             <br></br>
             <TextField
-              name="labels"
-              label="Comma-seperated"
+              name="info"
+              label="Description"
               variant="standard"
             />
-            <br></br>
-            <br></br>
-            <Text>Url</Text>
-            <br></br>
-            <TextField name="url" label="Image Url" variant="standard" />
             <br></br>
             <br></br>
             <Button type="submit">Submit</Button>

@@ -35,6 +35,13 @@ class University():
 			unis = [[results['name'], results['info']]]
 
 		return unis
+	
+	@staticmethod
+	def search_uni(col, parameter):
+		query = {"name": {"$regex": parameter, "$options": "i"}} 
+		result = col.find(query)
+		return University.get_unis_ready_for_display(result)
+
 
 	@staticmethod
 	def load_all_universities(col):

@@ -5,16 +5,16 @@ import { Button, ButtonGroup, Chip, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const [images, setImages] = useState([]);
-  const [allImages, setAllImages] = useState([])
+  const [unis, setUnis] = useState([]);
+  const [allUnis, setAllUnis] = useState([])
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetch("/index").then((res) =>
       res.json().then((data) => {
-        setAllImages(data.map((img) => img[1]))
+        setAllUnis(data.map((uni) => uni[0]))
         if (search.length == 0) {
-          setImages(data.map((img) => img[1]))
+          setUnis(data.map((uni) => uni[0]))
         }
       })
     );
@@ -22,28 +22,19 @@ function Home() {
 
   const navigate = useNavigate();
 
-  const addHandler = () => navigate("/new_image");
+  const addHandler = () => navigate("/new_uni");
 
   function handleSearch(newSearch) {
     setSearch(newSearch)
     if (newSearch.length == 0) {
-      setImages(allImages)
+      setUnis(allUnis)
       return
     }
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    };
-    const url = `https://us-central1-otot-b-363407.cloudfunctions.net/search_http?search=${newSearch}&images=${allImages.join(",")}`
-    fetch(url, requestOptions)
+    fetch("/search_unis/"+newSearch)
     .then((res) =>
       res.json().then((data) => {
         if (newSearch.length != 0) {
-          var imgLst = data['images'].split(",");
-          if (imgLst[0] == '') {
-            imgLst = [];
-          }
-          setImages(imgLst);
+          setUnis(data.map((uni) => uni[0]))
         }
       })
     );
@@ -52,9 +43,9 @@ function Home() {
   return (
     <div className="Home">
       <h1>
-        <b>Neha George's Image Repository</b>
+        <b>XChange </b>
       </h1>
-      <Button onClick={addHandler}>Add new image</Button>
+      <Button onClick={addHandler}>Add new uni</Button>
       <br></br>
       <TextField
         onChange={(event) => {
@@ -67,25 +58,19 @@ function Home() {
       <br></br><br></br>
       <View>
         <ul>
-          {images.map((image) => {
+          {unis.map((uni) => {
             return (
-              <div key={image} style={{ border: "thin solid black" }}>
+              <div key={uni} style={{ border: "thin solid black" }}>
                 <br></br>
-                <Chip color="primary" label={image} />
+                <Chip color="primary" label={uni} />
                 <br></br>
                 <br></br>
                 <ButtonGroup
                   variant="outlined"
                   aria-label="outlined button group"
                 >
-                  <Button onClick={() => navigate(`/get_image/${image}`)}>
+                  <Button onClick={() => navigate(`/get_uni/${uni}`)}>
                     View
-                  </Button>
-                  <Button onClick={() => navigate(`/update_image/${image}`)}>
-                    Update
-                  </Button>
-                  <Button onClick={() => navigate(`/delete_image/${image}`)}>
-                    Delete
                   </Button>
                 </ButtonGroup>
                 <br></br>
