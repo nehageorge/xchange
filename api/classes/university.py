@@ -2,12 +2,14 @@ import pymongo
 from urllib.parse import urlparse
 
 class University():
-	def __init__(self, name, info):
-		if not(name and info):
-			raise ValueError("Input validation failed. Name and info required.")
+	def __init__(self, name, languages, terms, competition):
+		if not(name and languages and terms and competition):
+			raise ValueError("Input validation failed. All fields required.")
 
 		self.name = name
-		self.info = info
+		self.languages = languages
+		self.terms = terms
+		self.competition = competition
 
 	@staticmethod
 	def get_by_name(col, name):
@@ -21,18 +23,28 @@ class University():
 
 		document = {
 			'name': self.name,
-			'info': self.info,
+			'languages': self.languages,
+			'terms': self.terms,
+			'competition': self.competition,
 		}
 
 		result = col.insert_one(document)
+		return result
+	
+	@staticmethod
+	def remove_from_db(col, name):
+		if col.find_one({"name" : name}) is None:
+			raise ValueError("University not found.") 
+
+		result = col.delete_one({"name" : name})
 		return result
 
 	@staticmethod
 	def get_unis_ready_for_display(results):
 		try:
-			unis = [[result['name'], result['info']] for result in results]
+			unis = [[result['name'], result['languages'], result['terms'], result['competition']] for result in results]
 		except:
-			unis = [[results['name'], results['info']]]
+			unis = [[result['name'], result['languages'], result['terms'], result['competition']]]
 
 		return unis
 	

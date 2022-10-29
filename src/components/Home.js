@@ -1,20 +1,26 @@
 import "./Home.css";
 import { View } from "react-native";
 import React, { useState, useEffect } from "react";
-import { Button, ButtonGroup, Chip, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 function Home() {
   const [unis, setUnis] = useState([]);
-  const [allUnis, setAllUnis] = useState([])
+  const [allUnis, setAllUnis] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetch("/index").then((res) =>
       res.json().then((data) => {
-        setAllUnis(data.map((uni) => uni[0]))
+        setAllUnis(data);
         if (search.length == 0) {
-          setUnis(data.map((uni) => uni[0]))
+          setUnis(data);
         }
       })
     );
@@ -22,19 +28,16 @@ function Home() {
 
   const navigate = useNavigate();
 
-  const addHandler = () => navigate("/new_uni");
-
   function handleSearch(newSearch) {
-    setSearch(newSearch)
+    setSearch(newSearch);
     if (newSearch.length == 0) {
-      setUnis(allUnis)
-      return
+      setUnis(allUnis);
+      return;
     }
-    fetch("/search_unis/"+newSearch)
-    .then((res) =>
+    fetch("/search_unis/" + newSearch).then((res) =>
       res.json().then((data) => {
         if (newSearch.length != 0) {
-          setUnis(data.map((uni) => uni[0]))
+          setUnis(data);
         }
       })
     );
@@ -42,48 +45,57 @@ function Home() {
 
   return (
     <div className="Home">
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1, padding: 25 }}>
         <div className="TopBar">
-            <h1 style={{ color: 'gold' }}>X</h1>
-            <h1>Change </h1>
+          <h1 style={{ color: "gold" }}>X</h1>
+          <h1>Change </h1>
 
-            <TextField
-              onChange={(event) => {
+          <TextField
+            onChange={(event) => {
               handleSearch(event.target.value);
-              }}
-              name="search"
-              label="Search"
-              variant="standard"
-              style={{ marginLeft: '2rem' }}
-            />
+            }}
+            name="search"
+            label="Search"
+            variant="standard"
+            style={{ marginLeft: "2rem", width: "1000" }}
+            fullWidth
+          />
         </div>
-        <Button onClick={addHandler}>Add new uni</Button>
-        <br></br>
-
-        <br></br><br></br>
+      </View>
+      <View>
+        <img src="https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg" alt="Panoramic view of city" style={{ maxHeight: 600 }}></img>
+      </View>
+      <View style={{ flex: 1, padding: 25 }}>
         <View>
-          <ul>
-            {unis.map((uni) => {
-              return (
-                <div key={uni} style={{ border: "thin solid black" }}>
-                  <br></br>
-                  <Chip color="primary" label={uni} />
-                  <br></br>
-                  <br></br>
-                  <ButtonGroup
-                    variant="outlined"
-                    aria-label="outlined button group"
+          <TableContainer>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{fontWeight: 'bold' }}>University</TableCell>
+                  <TableCell align="right" style={{fontWeight: 'bold' }}>Languages</TableCell>
+                  <TableCell align="right" style={{fontWeight: 'bold' }}>Terms</TableCell>
+                  <TableCell align="right" style={{fontWeight: 'bold' }}>Competitiveness</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {unis.map((uni) => (
+                  <TableRow
+                    key={uni[0]}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                    }}
                   >
-                    <Button onClick={() => navigate(`/get_uni/${uni}`)}>
-                      View
-                    </Button>
-                  </ButtonGroup>
-                  <br></br>
-                  <br></br>
-                </div>
-              );
-            })}
-          </ul>
+                    <TableCell component="th" scope="row" style={{ color: "blue",  textDecoration: "underline" }}>
+                      {uni[0]}
+                    </TableCell>
+                    <TableCell align="right">{uni[1]}</TableCell>
+                    <TableCell align="right">{uni[2]}</TableCell>
+                    <TableCell align="right">{uni[3]}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </View>
       </View>
     </div>
