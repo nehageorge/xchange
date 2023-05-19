@@ -1,11 +1,12 @@
 click
 dnspython
 Flask
+flask_marshmallow
+flask_migrate
 importlib-metadata
 itsdangerous
 Jinja2
 MarkupSafe
-pymongo
 python-dateutil
 python-dotenv
 setuptools

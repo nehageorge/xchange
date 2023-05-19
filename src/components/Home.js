@@ -18,6 +18,7 @@ function Home() {
   useEffect(() => {
     fetch("/index").then((res) =>
       res.json().then((data) => {
+        console.log(data);
         setAllUnis(data);
         if (search.length == 0) {
           setUnis(data);
@@ -80,17 +81,17 @@ function Home() {
               <TableBody>
                 {unis.map((uni) => (
                   <TableRow
-                    key={uni[0]}
+                    key={uni.name}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
                     <TableCell component="th" scope="row" style={{ color: "blue",  textDecoration: "underline" }}>
-                      {uni[0]}
+                      {uni.name}
                     </TableCell>
-                    <TableCell align="right">{uni[1]}</TableCell>
-                    <TableCell align="right">{uni[2]}</TableCell>
-                    <TableCell align="right">{uni[3]}</TableCell>
+                    <TableCell align="right">{uni.languages}</TableCell>
+                    <TableCell align="right">{uni.terms}</TableCell>
+                    <TableCell align="right">{uni.competition}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
