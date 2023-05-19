@@ -8,12 +8,3 @@ install:
 script:
 - cd api
 - python -m unittest test_image.py
-deploy:
-  provider: gcs
-  access_key_id: GOOGVDTWA4A3RIVCRQYLG4IP
-  secret_access_key:
-    secure: MXMk3ULl2R1cYoJrF7H451PFCPCBJacIsnDjLzHBepyvpIkMVtx06YAIfE5A5vCRuLJyUbQaxQ1HelIG/+KxGhlwH3h+lE6rYqZ61cV6l2ry1SGsSP40CBkqjbbjeaAr7T/fF9SPnRNeWmi7jMIGSRE8bCoVNtkb8zPuwHaI1Oj/ebs3FDEcIOUow6CZEnQJKRWebHqaStcrB6MTUMm/+jDjvR3Pkkq6HesBg21pvz/s08NX8EZAMlBIHyH8vh4fKjbOT9WYEwdNL69uAB6+b4OObe2eWXHvxLc6kaMUY0kJYQc9F0YGgHy7yVe5DBcbBoSoPrSxiLc47aq5xkwDkMAhGwjgjhMltR06SGmFrzwmntB2pdyNU8LrU8Q1xRvhbTOqi74O1JYglf0py2ZJ2U6ZWXqv0eoTZVRV1Or2ivf4FxExYtOCJ8zM4kjf5TxKBlx1qOvwjgMV3hKYgr/02sN8SC2Avw9x769RTUWFx3SM3nWrbjdXdhsGYBBG9oYpYxDML9cv9u4kF2DCUj0V8YkPOY1RUrFYMcAFHS8E7kbgAPMzmJmHaYdTAwmsTTpo6MLSsGwLgKzFcmCC1uyETKjxiN+eYw+Aqy/1+SAmAMl1YoE7COJjPAwwwBJc2aB+J7uAWaA53FPQdflMPxiIPSFBYma126X/RgooxYJ7oyY=
-  bucket: us.artifacts.otot-b-363407.appspot.com
-  on:
-    repo: nehageorge/OTOT-B
-  skip_cleanup: 'true'

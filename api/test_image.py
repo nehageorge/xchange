@@ -2,7 +2,7 @@ import pymongo
 import unittest
 import time
 from classes.image import Image
-import databaseconfig as cfg
+import config as cfg
 
 client = pymongo.MongoClient(cfg.client)
 db = client.test
