@@ -3,6 +3,7 @@ dnspython
 Flask
 flask_marshmallow
 flask_migrate
+flask_appbuilder
 importlib-metadata
 itsdangerous
 Jinja2

@@ -1,4 +1,3 @@
-from bson.json_util import dumps
 from urllib.parse import urlparse
 from flask import Flask, request, redirect, jsonify
 from flask_migrate import Migrate
