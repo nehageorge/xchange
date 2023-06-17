@@ -8,6 +8,7 @@ importlib-metadata
 itsdangerous
 Jinja2
 MarkupSafe
+mysqlclient
 python-dateutil
 python-dotenv
 setuptools

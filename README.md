@@ -1,5 +1,6 @@
 ## MySQL installation and set up
 1. Install mysql.
+	a)  If you used brew, you should start mySQL using `brew services start mysql`
 2. Run `mysql -u root -p` and enter password.
 3. Run `CREATE DATABASE xchange;`.
 4. Run `CREATE USER 'xchange'@'localhost';`.
@@ -22,4 +23,5 @@
 1. Go to the project root directory.
 2. Run `yarn start`.
     a) If yarn command is not found, install yarn using brew, npm, or another installer and try again.
+    b) If you get an error like `/bin/sh: react-scripts: command not found`, try running `yarn install`
 3. Navigate to localhost:3000 on your browser. 
