@@ -1,7 +1,7 @@
 .Home {
   text-align: center;
 }
-.TopBar {
+.SearchHeader {
   display: flex;
   flex-direction: row;
 }
