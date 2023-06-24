@@ -17,8 +17,9 @@
 .env.development.local
 .env.test.local
 .env.production.local
-/api/__pycache__/
 *.pyc
+**/__pycache__/
+
 
 npm-debug.log*
 yarn-debug.log*
