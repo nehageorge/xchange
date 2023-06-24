@@ -39,9 +39,11 @@ def index():
 	res = unis_schema.dump(unis)
 	return jsonify(res)
 
-# @app.route('/search_unis/<param>', methods=['GET'])
-# def search_unis(param):
-# 	return json_response(University.search_uni(col, param))
+@app.route('/search_unis/<param>', methods=['GET'])
+def search_unis(param):
+	unis = University.query.filter(University.name.like('%'+param+'%'))
+	res = unis_schema.dump(unis)
+	return jsonify(res)
 
 
 # @app.route('/get_uni/<name>', methods=['GET'])
