@@ -52,7 +52,7 @@ function Landing() {
             </div>
             <div class='left-buttons-padding'>
                 {XChangeButton('Search for schools', '/index')}
-                {XChangeButton('Search for courses', '/index')}
+                {XChangeButton('Search for courses', '/course/home')}
             </div>
             <div class='links-padding'>
                 {OtherLinks()}

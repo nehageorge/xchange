@@ -1,15 +1,14 @@
 import "./Home.css";
 import { View } from "react-native";
 import React from "react";
-import PagePreview from "./PagePreview"
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { Button, TextField } from "@mui/material";
+import {TextField } from "@mui/material";
 import XchangeTable from "./XchangeTable";
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import XchangeTabbedHeader from "./XchangeTabbedHeader"
-
+import CoursePageFilters from "./CoursePageFilters"
 
 function CourseSearch() {
 
@@ -51,11 +50,7 @@ function CourseSearch() {
               />
             </Grid>
             <Grid item xs={3}>
-              {/* TO-DO add the Course Filter Component */}
-              {/* <div>
-                <h3> Program</h3>
-                <h3> University</h3>
-              </div> */}
+              <CoursePageFilters/>
             </Grid>
           </Grid>
         </Box>

@@ -1,8 +1,11 @@
 import "./XchangeTabbedHeader.css";
 import React from "react";
 import { View } from "react-native";
+import { useNavigate } from "react-router-dom";
 
 function XchangeTabbedHeader() {
+  const navigate = useNavigate();
+
   return (
     <div className="TabbedHeader">
       <div className="TopHeader">
@@ -15,10 +18,10 @@ function XchangeTabbedHeader() {
       </div>
       <View style={{ flex: 1, padding: 5 }}></View>
       <div className="Tabs">
-        <button className="UniversitiesTab">
+        <button className="UniversitiesTab" onClick={() => navigate('/index')}>
           <h4>Universities</h4>
         </button>
-        <button className="CoursesTab">
+        <button className="CoursesTab" onClick={() => navigate('/course/home')}>
           <h4>Courses</h4>
         </button>
       </div>
