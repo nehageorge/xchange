@@ -1,7 +1,7 @@
 import "./Home.css";
 import { View } from "react-native";
 import React, { useState, useEffect } from "react";
-import { Box, TextField, Stack } from "@mui/material";
+import { Box, TextField, Stack, AppBar } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -44,9 +44,9 @@ function Home() {
 
   return (
     <div className="Home">
-      <View style={{ flex: 1, paddingVertical: 25, }}>
+      <AppBar position="sticky" style={{ background: "white", paddingTop: 20, color:"black" }}>
         <XchangeTabbedHeader />
-      </View>
+      </AppBar>
       <View>
         <img
           src="https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg"
