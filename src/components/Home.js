@@ -56,7 +56,10 @@ function Home() {
         <img
           src="https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg"
           alt="Panoramic view of Singapore city"
-          style={{ maxHeight: 400 }}
+          style={{
+            maxHeight: 335,
+            objectFit: "cover",
+          }}
         ></img>
       </View>
       <View style={{ flex: 1, padding: 45 }}>
