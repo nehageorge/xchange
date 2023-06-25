@@ -22,13 +22,13 @@ function CourseHome() {
         <img src="https://images.unsplash.com/photo-1535982330050-f1c2fb79ff78" alt="Macbook, bagpack and notes" style={{ maxHeight: 400, paddingBottom: '1em' }}></img>
       </View>
 
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1 }} >
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <PagePreview
             imageURL='https://images.unsplash.com/photo-1488646953014-85cb44e25828'
             altText="Planning to travel, Bag, field notes, camera and travel pamphlets laid out over a map"
-            page = '/prevCourses'
+            page = '/course/prevSequence'
             title="Previously Accepted Course Sequences"
             description="Take a look at the previously accepted course sequences students (Engineers) at the university of waterloo have done at universities when exchange on a particular study term"
           />
@@ -38,7 +38,7 @@ function CourseHome() {
           <PagePreview
             imageURL='https://images.unsplash.com/photo-1515378791036-0648a3ef77b2'
             altText="Person Searching for a course on their laptop"
-            page = '/prevCourses'
+            page = '/course/search'
             title="Search for a Course"
             description="Interested in courses students have taken at a particular university abroad ? Want to check a previously approved UW course equivalent at another institute ? Search for the course, university and your program here !"
           />
