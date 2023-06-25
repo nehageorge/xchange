@@ -4,7 +4,7 @@ import React from "react";
 import PagePreview from "./PagePreview"
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-
+import XchangeTable from "./XchangeTable";
 // TO-DO Remove when the reusable Table Component is made
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,9 +12,12 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import ProgramButton from "./ProgramButton";
 
 
 function PreviousCourseSequences() {
+
+  const programs = ["Software Engineering", "Managment Engineering", "Mechanical Engineering", "Computer Science", "Civil Engineering", "Biomedical Engineering", "Environmental Engineering", "Architectural Engineering"]
 
   return (
     <div className="PreviousCourseSequences">
@@ -26,45 +29,66 @@ function PreviousCourseSequences() {
       </View>
 
       <View>
-        <img src="https://images.unsplash.com/photo-1535982330050-f1c2fb79ff78" alt="Macbook, bagpack and notes" style={{ maxHeight: 400, paddingBottom: '1em' }}></img>
+        <img src={'/matt-ragland-02z1I7gv4ao-unsplash-cropped.jpg'} alt="Macbook, bagpack and notes" style={{ maxHeight: 400, paddingBottom: '1rem' }}></img>
       </View>
 
-      <h2>Previously Accepted Course Sequences</h2>
-
-      <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={9}>
-        <TableContainer>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{fontWeight: 'bold' }}>Engineering Department</TableCell>
-                  <TableCell align="right" style={{fontWeight: 'bold' }}>Countries</TableCell>
-                  <TableCell align="right" style={{fontWeight: 'bold' }}>Universities</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow
+      <div style={{padding: '1rem', marginLeft: '1rem'}}>
+        <h2>Previously Accepted Course Sequences</h2>
+        <div style={{paddingTop: "1rem"}}>
+          <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={9}>
+              <XchangeTable
+                headers={["Engineering Department", "Countries", "University"]}
+                colWidths={["33.3%", "33.3%", "33.3%"]}
+                tableBody={[
+                  <TableRow
+                    
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell component="th" scope="row" style={{ color: "blue",  textDecoration: "underline" }}>
-                      Software Engineering
+                    <TableCell
+                      component="th"
+                      scope="row"
+                    >
+                      <div>
+                        <p>Software Engineering</p>
+                        <p>Note 1: must have minimum overall GPA of 80% Note 2: 3B term only</p>
+                      </div>
                     </TableCell>
-                    <TableCell align="right">UK</TableCell>
-                    <TableCell align="right">University of Liverpool</TableCell>
+                    <TableCell>
+                      <p>Denmark</p>
+                      <p>Italy</p>
+                      <p>Germany</p>
+                    </TableCell>
+                    <TableCell
+                      style={{ color: "blue", textDecoration: "underline" }}
+                    >
+                      <div>
+                        <p>University of Southern Denmark (SDU)</p>
+                        <p>Politecnico di Milano (PoliMi)</p>
+                        <p>Istanbul Technical University (ITU)</p>
+                      </div>
+                    </TableCell>
+                    
                   </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        
-        </Grid>
-        <Grid item xs={3}>
-          
-        </Grid>
-      </Grid>
-    </Box>
+                ]}
+              />
+            
+            </Grid>
+            <Grid item xs={3} sx={{padding:"2rem"}}>
+              <Box sx={{ flexGrow: 1, borderRadius: "15px", border: 1, borderColor: "gray" }}>
+              {programs.map( (program) => (<ProgramButton text = {program}/>))} 
+              </Box>
+            </Grid>
+          </Grid>
+          </Box>
+        </div>
+      
+
+      </div>
+
 
     </div>
   );

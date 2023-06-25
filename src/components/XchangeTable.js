@@ -20,7 +20,7 @@ function XchangeTable(props) {
           })}
         </colgroup>
         <TableHead>
-          <TableRow sx={{ backgroundColor: "rgba(224, 208, 59, 0.5)" }}>
+          <TableRow sx={{ backgroundColor: "rgba(254, 200, 29, 0.54)" }}>
             {props.headers.map((header) => {
               return (
                 <TableCell style={{ fontSize: "1.2rem" }}>{header}</TableCell>

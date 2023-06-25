@@ -11,7 +11,7 @@ function CourseHome() {
 
   return (
     <div className="CourseHome">
-      <View style={{ flex: 1, padding: 5 }}>
+      <View style={{ flex: 1 }}>
         <div className="TopBar">
           <h1 style={{ color: "gold" }}>X</h1>
           <h1>Change </h1>
@@ -19,7 +19,7 @@ function CourseHome() {
       </View>
 
       <View>
-        <img src="https://images.unsplash.com/photo-1535982330050-f1c2fb79ff78" alt="Macbook, bagpack and notes" style={{ maxHeight: 400, paddingBottom: '1em' }}></img>
+        <img src={'/matt-ragland-02z1I7gv4ao-unsplash-cropped.jpg'} alt="Macbook, bagpack and notes" style={{ maxHeight: 400, paddingBottom: '0.5rem' }}></img>
       </View>
 
       <Box sx={{ flexGrow: 1 }} >

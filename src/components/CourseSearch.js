@@ -6,13 +6,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { Button, TextField } from "@mui/material";
 import XchangeTable from "./XchangeTable";
-
-// TO-DO Remove when the reusable Table Component is made
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
 
@@ -32,90 +26,39 @@ function CourseSearch() {
       </View>
 
       <View>
-        <img src="https://images.unsplash.com/photo-1535982330050-f1c2fb79ff78" alt="Macbook, bagpack and notes" style={{ maxHeight: 400, paddingBottom: '1em' }}></img>
+        <img src={'/matt-ragland-02z1I7gv4ao-unsplash-cropped.jpg'} alt="Macbook, bagpack and notes" style={{ maxHeight: 400, paddingBottom: '1rem' }}></img>
       </View>
-      <div style={{padding: '1em'}}>
+      <div style={{padding: '1em', marginLeft: '1rem'}}>
         <h2>Search for a Course</h2>
         
 
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={9}>
-            <TextField
-              onChange={(event) => {
-                search(event.target.value);
-              }}
-              name="search"
-              label="Search"
-              variant="standard"
-              style={{ margin: "1rem"}}
-              fullWidth
-            />
-              <TableContainer>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell style={{fontWeight: 'bold' }}>Course Name</TableCell>
-                        <TableCell align="right" style={{fontWeight: 'bold' }}>School</TableCell>
-                        <TableCell align="right" style={{fontWeight: 'bold' }}>Terms Offered</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          <TableCell component="th" scope="row" style={{ color: "blue",  textDecoration: "underline" }}>
-                            Data Structures and Algorithms
-                          </TableCell>
-                          <TableCell align="right">National University of Singapore (NUS)</TableCell>
-                          <TableCell align="right"><div>
-                            <p>Fall 2023</p>
-                            <p>Winter 2024</p>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                    </TableBody>
-                  </Table>
-              </TableContainer>
+              <TextField
+                onChange={(event) => {
+                  search(event.target.value);
+                }}
+                name="search"
+                label="Search"
+                variant="standard"
+                style={{ marginBottom: "1.5rem"}}
+                fullWidth
+              />
 
               <XchangeTable
                 headers={["Course Name", "University", "Terms Offered"]}
                 colWidths={["33.3%", "33.3%", "33.3%"]}
-                tableBody={[
-                  <TableRow
-                    
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      style={{ color: "blue", textDecoration: "underline" }}
-                    >
-                      Andrea
-                    </TableCell>
-                    <TableCell>English</TableCell>
-                    <TableCell>
-                      <div>
-                        <p>Fall 2023</p>
-                        <p>Winter 2024</p>
-                      </div>
-                    </TableCell>
-                    
-                  </TableRow>
-                ]}
+                tableBody = {tempTableBody}
+                // TO-DO Connect to the course endpoint 
               />
-              
-            
             </Grid>
             <Grid item xs={3}>
-              <div>
+              {/* TO-DO add the Course Filter Component */}
+              {/* <div>
                 <h3> Program</h3>
                 <h3> University</h3>
-              </div>
+              </div> */}
             </Grid>
           </Grid>
         </Box>
@@ -125,5 +68,74 @@ function CourseSearch() {
     </div>
   );
 }
+
+const tempTableBody = [
+  <TableRow
+    
+    sx={{
+      "&:last-child td, &:last-child th": { border: 0 },
+    }}
+  >
+    <TableCell
+      component="th"
+      scope="row"
+      style={{ color: "blue", textDecoration: "underline" }}
+    >
+      Data Structures and Algorithms
+    </TableCell>
+    <TableCell>National University of Singapore (NUS)</TableCell>
+    <TableCell>
+      <div>
+        <p>Fall 2023</p>
+        <p>Winter 2024</p>
+      </div>
+    </TableCell>
+    
+  </TableRow>, 
+  <TableRow
+    
+  sx={{
+    "&:last-child td, &:last-child th": { border: 0 },
+  }}
+>
+  <TableCell
+    component="th"
+    scope="row"
+    style={{ color: "blue", textDecoration: "underline" }}
+  >
+    Data Structures and Algorithms
+  </TableCell>
+  <TableCell>National University of Singapore (NUS)</TableCell>
+  <TableCell>
+    <div>
+      <p>Fall 2023</p>
+      <p>Winter 2024</p>
+    </div>
+  </TableCell>
+  
+</TableRow>, 
+<TableRow
+    
+    sx={{
+      "&:last-child td, &:last-child th": { border: 0 },
+    }}
+  >
+    <TableCell
+      component="th"
+      scope="row"
+      style={{ color: "blue", textDecoration: "underline" }}
+    >
+      Data Structures and Algorithms
+    </TableCell>
+    <TableCell>National University of Singapore (NUS)</TableCell>
+    <TableCell>
+      <div>
+        <p>Fall 2023</p>
+        <p>Winter 2024</p>
+      </div>
+    </TableCell>
+    
+  </TableRow>
+]
 
 export default CourseSearch;
