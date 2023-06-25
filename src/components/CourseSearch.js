@@ -8,6 +8,7 @@ import { Button, TextField } from "@mui/material";
 import XchangeTable from "./XchangeTable";
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import XchangeTabbedHeader from "./XchangeTabbedHeader"
 
 
 function CourseSearch() {
@@ -18,12 +19,8 @@ function CourseSearch() {
 
   return (
     <div className="CourseSearch">
-      <View style={{ flex: 1, padding: 5 }}>
-        <div className="TopBar">
-          <h1 style={{ color: "gold" }}>X</h1>
-          <h1>Change </h1>
-        </div>
-      </View>
+      <XchangeTabbedHeader/>
+
 
       <View>
         <img src={'/matt-ragland-02z1I7gv4ao-unsplash-cropped.jpg'} alt="Macbook, bagpack and notes" style={{ maxHeight: 400, paddingBottom: '1rem' }}></img>

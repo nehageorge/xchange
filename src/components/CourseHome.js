@@ -5,18 +5,14 @@ import { useNavigate } from "react-router-dom";
 import PagePreview from "./PagePreview"
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import XchangeTabbedHeader from "./XchangeTabbedHeader"
 
 function CourseHome() {
   const navigate = useNavigate();
 
   return (
     <div className="CourseHome">
-      <View style={{ flex: 1 }}>
-        <div className="TopBar">
-          <h1 style={{ color: "gold" }}>X</h1>
-          <h1>Change </h1>
-        </div>
-      </View>
+      <XchangeTabbedHeader/>
 
       <View>
         <img src={'/matt-ragland-02z1I7gv4ao-unsplash-cropped.jpg'} alt="Macbook, bagpack and notes" style={{ maxHeight: 400, paddingBottom: '0.5rem' }}></img>
