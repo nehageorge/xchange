@@ -11,6 +11,7 @@ MarkupSafe
 mysqlclient
 python-dateutil
 python-dotenv
+selenium
 setuptools
 six
 Werkzeug
