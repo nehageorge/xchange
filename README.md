@@ -8,6 +8,10 @@
 6. Run `FLUSH privileges;`.
 7. Run `exit`.
 
+## Selenium Scraper setup
+1. Go to https://sites.google.com/chromium.org/driver/downloads?authuser=0 and download the correct version of WebDriver depending on your chrome browser version 
+
+
 
 ## How to run the backend
 

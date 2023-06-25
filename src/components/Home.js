@@ -1,14 +1,16 @@
 import "./Home.css";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import { Button, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import {
+  Box,
+  TextField,
+  Stack,
+  AppBar,
+  TableCell,
+  TableRow,
+} from "@mui/material";
+import XchangeTabbedHeader from "./XchangeTabbedHeader";
+import XchangeTable from "./XchangeTable";
 
 function Home() {
   const [unis, setUnis] = useState([]);
@@ -27,8 +29,6 @@ function Home() {
     );
   }, []);
 
-  const navigate = useNavigate();
-
   function handleSearch(newSearch) {
     setSearch(newSearch);
     if (newSearch.length == 0) {
@@ -46,58 +46,75 @@ function Home() {
 
   return (
     <div className="Home">
-      <View style={{ flex: 1, padding: 25 }}>
-        <div className="TopBar">
-          <h1 style={{ color: "gold" }}>X</h1>
-          <h1>Change </h1>
-
-          <TextField
-            onChange={(event) => {
-              handleSearch(event.target.value);
-            }}
-            name="search"
-            label="Search"
-            variant="standard"
-            style={{ marginLeft: "2rem", width: "1000" }}
-            fullWidth
-          />
-        </div>
-      </View>
+      <AppBar
+        position="sticky"
+        style={{ background: "white", paddingTop: 20, color: "black" }}
+      >
+        <XchangeTabbedHeader />
+      </AppBar>
       <View>
-        <img src="https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg" alt="Panoramic view of city" style={{ maxHeight: 600 }}></img>
+        <img
+          src="https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg"
+          alt="Panoramic view of Singapore city"
+          style={{ maxHeight: 400 }}
+        ></img>
       </View>
-      <View style={{ flex: 1, padding: 25 }}>
-        <View>
-          <TableContainer>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{fontWeight: 'bold' }}>University</TableCell>
-                  <TableCell align="right" style={{fontWeight: 'bold' }}>Languages</TableCell>
-                  <TableCell align="right" style={{fontWeight: 'bold' }}>Terms</TableCell>
-                  <TableCell align="right" style={{fontWeight: 'bold' }}>Competitiveness</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {unis.map((uni) => (
-                  <TableRow
-                    key={uni.name}
+      <View style={{ flex: 1, padding: 45 }}>
+        <TextField
+          sx={{ backgroundColor: "rgba(52, 52, 52, 0.1)" }}
+          onChange={(event) => {
+            handleSearch(event.target.value);
+          }}
+          name="search"
+          label="Search for universities"
+          variant="outlined"
+          InputLabelProps={{ style: { fontSize: 20 } }}
+        />
+        <br></br>
+        <XchangeTable
+          headers={["University Name", "Languages", "Terms", "Competitiveness"]}
+          colWidths={["30%", "20%", "25%", "25%"]}
+          tableBody={unis.map((uni) => (
+            <TableRow
+              key={uni.name}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+              }}
+            >
+              <TableCell
+                component="th"
+                scope="row"
+                style={{ color: "blue", textDecoration: "underline" }}
+              >
+                {uni.name}
+              </TableCell>
+              <TableCell>{uni.languages}</TableCell>
+              <TableCell>{uni.terms}</TableCell>
+              <TableCell>
+                <Stack direction="row">
+                  <Box
                     sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
+                      backgroundColor: () => {
+                        let comp = uni.competition.toLowerCase();
+                        if (comp == "ultra competitive") return "red";
+                        else if (comp == "very competitive") return "#ECE54B";
+                        else if (comp == "competitive") return "#48C246";
+                        else return "blue";
+                      },
+                      borderRadius: "50%",
+                      height: "40px",
+                      width: "40px",
+                      marginRight: "5px",
                     }}
-                  >
-                    <TableCell component="th" scope="row" style={{ color: "blue",  textDecoration: "underline" }}>
-                      {uni.name}
-                    </TableCell>
-                    <TableCell align="right">{uni.languages}</TableCell>
-                    <TableCell align="right">{uni.terms}</TableCell>
-                    <TableCell align="right">{uni.competition}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </View>
+                  ></Box>
+                  <Text style={{ margin: "10px", top: "50%" }}>
+                    {uni.competition}
+                  </Text>
+                </Stack>
+              </TableCell>
+            </TableRow>
+          ))}
+        />
       </View>
     </div>
   );
