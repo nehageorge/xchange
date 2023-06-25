@@ -1,14 +1,16 @@
 import "./Home.css";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import { Box, TextField, Stack, AppBar } from "@mui/material";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import {
+  Box,
+  TextField,
+  Stack,
+  AppBar,
+  TableCell,
+  TableRow,
+} from "@mui/material";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
+import XchangeTable from "./XchangeTable";
 
 function Home() {
   const [unis, setUnis] = useState([]);
@@ -44,7 +46,10 @@ function Home() {
 
   return (
     <div className="Home">
-      <AppBar position="sticky" style={{ background: "white", paddingTop: 20, color:"black" }}>
+      <AppBar
+        position="sticky"
+        style={{ background: "white", paddingTop: 20, color: "black" }}
+      >
         <XchangeTabbedHeader />
       </AppBar>
       <View>
@@ -66,67 +71,50 @@ function Home() {
           InputLabelProps={{ style: { fontSize: 20 } }}
         />
         <br></br>
-        <TableContainer
-          sx={{ borderRadius: "15px", border: 1, borderColor: "gray" }}
-        >
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow sx={{ backgroundColor: "rgba(224, 208, 59, 0.5)" }}>
-                <TableCell style={{ fontSize: "1.2rem" }}>
-                  University Name
-                </TableCell>
-                <TableCell style={{ fontSize: "1.2rem" }}>Languages</TableCell>
-                <TableCell style={{ fontSize: "1.2rem" }}>Terms</TableCell>
-                <TableCell style={{ fontSize: "1.2rem" }}>
-                  Competitiveness
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {unis.map((uni) => (
-                <TableRow
-                  key={uni.name}
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                  }}
-                >
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    style={{ color: "blue", textDecoration: "underline" }}
-                  >
-                    {uni.name}
-                  </TableCell>
-                  <TableCell>{uni.languages}</TableCell>
-                  <TableCell>{uni.terms}</TableCell>
-                  <TableCell>
-                    <Stack direction="row">
-                      <Box
-                        sx={{
-                          backgroundColor: () => {
-                            let comp = uni.competition.toLowerCase();
-                            if (comp == "ultra competitive") return "red";
-                            else if (comp == "very competitive")
-                              return "#ECE54B";
-                            else if (comp == "competitive") return "#48C246";
-                            else return "blue";
-                          },
-                          borderRadius: "50%",
-                          height: "40px",
-                          width: "40px",
-                          marginRight: "5px",
-                        }}
-                      ></Box>
-                      <View style={{ margin: "10px", top: "50%" }}>
-                        {uni.competition}
-                      </View>
-                    </Stack>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <XchangeTable
+          headers={["University Name", "Languages", "Terms", "Competitiveness"]}
+          colWidths={["30%", "20%", "25%", "25%"]}
+          tableBody={unis.map((uni) => (
+            <TableRow
+              key={uni.name}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+              }}
+            >
+              <TableCell
+                component="th"
+                scope="row"
+                style={{ color: "blue", textDecoration: "underline" }}
+              >
+                {uni.name}
+              </TableCell>
+              <TableCell>{uni.languages}</TableCell>
+              <TableCell>{uni.terms}</TableCell>
+              <TableCell>
+                <Stack direction="row">
+                  <Box
+                    sx={{
+                      backgroundColor: () => {
+                        let comp = uni.competition.toLowerCase();
+                        if (comp == "ultra competitive") return "red";
+                        else if (comp == "very competitive") return "#ECE54B";
+                        else if (comp == "competitive") return "#48C246";
+                        else return "blue";
+                      },
+                      borderRadius: "50%",
+                      height: "40px",
+                      width: "40px",
+                      marginRight: "5px",
+                    }}
+                  ></Box>
+                  <Text style={{ margin: "10px", top: "50%" }}>
+                    {uni.competition}
+                  </Text>
+                </Stack>
+              </TableCell>
+            </TableRow>
+          ))}
+        />
       </View>
     </div>
   );
