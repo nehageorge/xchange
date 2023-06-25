@@ -5,13 +5,14 @@ import ViewUni from "./components/ViewUni";
 import CourseHome from "./components/CourseHome"
 import PreviousCourseSequences from "./components/PrevCourseSequences"
 import CourseSearch from "./components/CourseSearch";
+import Landing from "./components/Landing";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Landing />} />
           <Route exact path="/index" element={<Home />} />
           <Route exact path="/get_uni/:name" element={<ViewUni />} />
           <Route exact path="/course/home" element={<CourseHome />} />
