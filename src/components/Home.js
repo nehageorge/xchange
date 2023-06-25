@@ -1,13 +1,14 @@
 import "./Home.css";
 import { View } from "react-native";
 import React, { useState, useEffect } from "react";
-import { Box, TextField, Stack } from "@mui/material";
+import { Box, TextField, Stack, AppBar } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import XchangeTabbedHeader from "./XchangeTabbedHeader";
 
 function Home() {
   const [unis, setUnis] = useState([]);
@@ -43,12 +44,9 @@ function Home() {
 
   return (
     <div className="Home">
-      <View style={{ flex: 1, padding: 25 }}>
-        <div className="TopBar">
-          <h1 style={{ color: "gold" }}>X</h1>
-          <h1>Change </h1>
-        </div>
-      </View>
+      <AppBar position="sticky" style={{ background: "white", paddingTop: 20, color:"black" }}>
+        <XchangeTabbedHeader />
+      </AppBar>
       <View>
         <img
           src="https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg"
