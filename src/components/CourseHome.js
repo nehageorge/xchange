@@ -12,8 +12,7 @@ function CourseHome() {
 
   return (
     <div className="CourseHome">
-      <XchangeTabbedHeader />
-
+      <XchangeTabbedHeader uniActive={false}/>
       <View>
         <img
           src={"/matt-ragland-02z1I7gv4ao-unsplash-cropped.jpg"}

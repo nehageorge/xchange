@@ -23,8 +23,7 @@ function PreviousCourseSequences() {
 
   return (
     <div className="PreviousCourseSequences">
-      <XchangeTabbedHeader />
-
+      <XchangeTabbedHeader uniActive={false}/>
       <View>
         <img
           src={"/matt-ragland-02z1I7gv4ao-unsplash-cropped.jpg"}

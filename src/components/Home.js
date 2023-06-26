@@ -46,12 +46,7 @@ function Home() {
 
   return (
     <div className="Home">
-      <AppBar
-        position="sticky"
-        style={{ background: "white", paddingTop: 20, color: "black" }}
-      >
-        <XchangeTabbedHeader />
-      </AppBar>
+      <XchangeTabbedHeader />
       <View>
         <img
           src="https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg"

@@ -1,67 +1,67 @@
-h4 {
-    text-align: left;
+h5 {
+  text-align: left;
 }
 
 .TabbedHeader {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-.TopHeader{
-    display: flex;
-    flex-direction: row;
-    padding-left: 20px;
-    padding-right: 20px;
+.TopHeader {
+  display: flex;
+  flex-direction: row;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .LoginButton {
-    background-color: #E4E3E3;
-    color: black;
-    border-radius: 5px;
-    border: none;
-    align-content: center;
-    padding: 5px 25px 0px 25px;
+  background-color: #e4e3e3;
+  color: black;
+  border-radius: 5px;
+  border: none;
+  align-content: center;
+  padding: 5px 15px 0px 15px;
 }
 
 .Tabs {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .UniversitiesTab {
-    flex: 1;
-    padding: 10px 15px 5px 15px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-color: #E0D03B;
-    border-width: 2px;
-    border-style: solid;
-    background-color: white;
+  flex: 1;
+  padding: 10px 15px 5px 15px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-color: #e0d03b;
+  border-width: 2px;
+  border-style: solid;
+  background-color: white;
 }
 
 .UniversitiesTab:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 .UniversitiesTab:active {
-    background-color: #ccc;
+  background-color: #ccc;
 }
 
 .CoursesTab {
-    flex: 1;
-    padding: 10px 15px 5px 15px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-left: none;
-    border-color: #E0D03B;
-    border-width: 2px;
-    border-style: solid;
-    background-color: white;
+  flex: 1;
+  padding: 10px 15px 5px 15px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-left: none;
+  border-color: #e0d03b;
+  border-width: 2px;
+  border-style: solid;
+  background-color: white;
 }
 
 .CoursesTab:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
 .CoursesTab:active {
-    background-color: #ccc;
+  background-color: #ccc;
 }
