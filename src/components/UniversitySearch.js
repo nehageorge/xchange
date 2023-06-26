@@ -1,24 +1,17 @@
-import "./Home.css";
+import "./UniversitySearch.css";
 import { Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  TextField,
-  Stack,
-  AppBar,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { Box, TextField, Stack, TableCell, TableRow } from "@mui/material";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import XchangeTable from "./XchangeTable";
 
-function Home() {
+function UniversitySearch() {
   const [unis, setUnis] = useState([]);
   const [allUnis, setAllUnis] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/index").then((res) =>
+    fetch("/universities").then((res) =>
       res.json().then((data) => {
         console.log(data);
         setAllUnis(data);
@@ -49,10 +42,10 @@ function Home() {
       <XchangeTabbedHeader />
       <View>
         <img
-          src="https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg"
+          src="/singapore_skyline.png"
           alt="Panoramic view of Singapore city"
           style={{
-            maxHeight: 335,
+            maxHeight: 340,
             objectFit: "cover",
           }}
         ></img>
@@ -118,4 +111,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default UniversitySearch;

@@ -33,7 +33,7 @@ with app.app_context():
 uni_schema = UniversitySchema()
 unis_schema = UniversitySchema(many=True)
 
-@app.route('/index', methods=['GET'])
+@app.route('/universities', methods=['GET'])
 def index():
 	unis = University.query.all()
 	res = unis_schema.dump(unis)

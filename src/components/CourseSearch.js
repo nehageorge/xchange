@@ -1,4 +1,4 @@
-import "./Home.css";
+import "./UniversitySearch.css";
 import { View } from "react-native";
 import React from "react";
 import Box from "@mui/material/Box";
@@ -17,7 +17,7 @@ function CourseSearch() {
 
   return (
     <div className="CourseSearch">
-      <XchangeTabbedHeader uniActive={false}/>
+      <XchangeTabbedHeader uniActive={false} />
       <View>
         <img
           src={"/matt-ragland-02z1I7gv4ao-unsplash-cropped.jpg"}
