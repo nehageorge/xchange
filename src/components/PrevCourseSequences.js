@@ -16,7 +16,7 @@ function PreviousCourseSequences() {
 
   return (
     <div className="PreviousCourseSequences">
-      <XchangeTabbedHeader/>
+      <XchangeTabbedHeader uniActive={false}/>
 
 
       <View>

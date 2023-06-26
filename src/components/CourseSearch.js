@@ -18,7 +18,7 @@ function CourseSearch() {
 
   return (
     <div className="CourseSearch">
-      <XchangeTabbedHeader/>
+      <XchangeTabbedHeader uniActive={false}/>
 
 
       <View>

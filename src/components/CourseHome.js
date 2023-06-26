@@ -12,7 +12,7 @@ function CourseHome() {
 
   return (
     <div className="CourseHome">
-      <XchangeTabbedHeader/>
+      <XchangeTabbedHeader uniActive={false}/>
 
       <View>
         <img src={'/matt-ragland-02z1I7gv4ao-unsplash-cropped.jpg'} alt="Macbook, bagpack and notes" style={{ maxHeight: 400, paddingBottom: '0.5rem' }}></img>
