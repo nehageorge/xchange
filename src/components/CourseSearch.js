@@ -46,8 +46,13 @@ function CourseSearch() {
               <br></br>
 
               <XchangeTable
-                headers={["Course Name", "University", "Terms Offered"]}
-                colWidths={["33.3%", "33.3%", "33.3%"]}
+                headers={[
+                  "UW Course Name",
+                  "Host School Course Name",
+                  "University",
+                  "Terms Offered",
+                ]}
+                colWidths={["25%", "30%", "25%", "20%"]}
                 tableBody={tempTableBody}
                 // TO-DO Connect to the course endpoint
               />
@@ -68,12 +73,13 @@ const tempTableBody = [
       "&:last-child td, &:last-child th": { border: 0 },
     }}
   >
+    <TableCell>SE380: Feedback Control Systems</TableCell>
     <TableCell
       component="th"
       scope="row"
       style={{ color: "blue", textDecoration: "underline" }}
     >
-      Data Structures and Algorithms
+      EE3331C: Feedback Control
     </TableCell>
     <TableCell>National University of Singapore (NUS)</TableCell>
     <TableCell>
@@ -88,32 +94,13 @@ const tempTableBody = [
       "&:last-child td, &:last-child th": { border: 0 },
     }}
   >
+    <TableCell>CS 341: Data Structures and Algorithms</TableCell>
     <TableCell
       component="th"
       scope="row"
       style={{ color: "blue", textDecoration: "underline" }}
     >
-      Data Structures and Algorithms
-    </TableCell>
-    <TableCell>National University of Singapore (NUS)</TableCell>
-    <TableCell>
-      <div>
-        <p>Fall 2023</p>
-        <p>Winter 2024</p>
-      </div>
-    </TableCell>
-  </TableRow>,
-  <TableRow
-    sx={{
-      "&:last-child td, &:last-child th": { border: 0 },
-    }}
-  >
-    <TableCell
-      component="th"
-      scope="row"
-      style={{ color: "blue", textDecoration: "underline" }}
-    >
-      Data Structures and Algorithms
+      CS3230: Design and Analysis of Algorithms
     </TableCell>
     <TableCell>National University of Singapore (NUS)</TableCell>
     <TableCell>

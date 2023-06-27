@@ -29,14 +29,14 @@ function XchangeTabbedHeader({ uniActive = true }) {
           <button
             className="UniversitiesTab"
             onClick={() => navigate("/universities")}
-            style={{ background: uniActive ? "#ccc" : "#fff" }}
+            style={{ background: uniActive ? "#fff" : "#ccc" }}
           >
             <h5>Universities</h5>
           </button>
           <button
             className="CoursesTab"
             onClick={() => navigate("/course/home")}
-            style={{ background: uniActive ? "#fff" : "#ccc" }}
+            style={{ background: uniActive ? "#ccc" : "#fff" }}
           >
             <h5>Courses</h5>
           </button>

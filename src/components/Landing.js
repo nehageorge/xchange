@@ -102,7 +102,7 @@ function Landing() {
                 color: "#1E1E1E",
               }}
             >
-              Login with Quest
+              Login with email
             </Text>
             {loginField("Email")}
             {loginField("Password")}
