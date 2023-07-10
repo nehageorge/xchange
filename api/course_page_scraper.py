@@ -32,5 +32,4 @@ for i in range(len(divtables)):
 
 print(title)
 print(description)
-time.sleep(3)
 driver.close()
