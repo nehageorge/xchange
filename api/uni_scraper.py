@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import csv
 
 options = Options()
 options.add_experimental_option('detach', True)
@@ -26,8 +27,8 @@ tablebody = driver.find_element(By.XPATH, "//table[@id='lst_index_phpprogram']/t
 all_table_entries = tablebody.find_elements(By.TAG_NAME, "tr")
 entrytest = all_table_entries[-3].find_elements(By.TAG_NAME, "td")
 
-#Format: University name, Competitiveness, Language, Program Info, Term
-university_list = [[None]*5 for _ in range(len(all_table_entries) - 5)]
+#Format: University name, Competitiveness, Language, Program Info, Term, Location
+university_list = [[None]*6 for _ in range(len(all_table_entries) - 5)]
 
 for i in range(3, len(all_table_entries) - 2):
     #We have to relocate each time because of staleness
@@ -37,7 +38,8 @@ for i in range(3, len(all_table_entries) - 2):
     #Iterate backwards to avoid staleness
     for j in range(len(entry) -1 , -1, -1):
         if entry[j].get_attribute("class") == "cspList_rightmain lst-cl-_term_list" or entry[j].get_attribute("class") == "cspList_rightmainbot lst-cl-_term_list":
-            university_list[i - 3][4] = entry[j].text
+            terms = entry[j].text.split('\n')
+            university_list[i - 3][4] = ', '.join(terms)
         if entry[j].get_attribute("class") == "cspList_main lst-cl-language" or entry[j].get_attribute("class") == "cspList_mainbot lst-cl-language":
             university_list[i - 3][2] = entry[j].text
         if entry[j].get_attribute("class") == "cspList_main lst-cl-inst_name" or entry[j].get_attribute("class") == "cspList_mainbot lst-cl-inst_name":
@@ -45,7 +47,9 @@ for i in range(3, len(all_table_entries) - 2):
         if entry[j].get_attribute("class") == "cspList_main lst-cl-p_name" or entry[j].get_attribute("class") == "cspList_mainbot lst-cl-p_name":
             inner_div = entry[j].find_element(By.TAG_NAME, "div")
             link = inner_div.find_element(By.TAG_NAME, "a")
+            location = inner_div.find_element(By.TAG_NAME, "i")
             university_list[i - 3][3] = link.text
+            university_list[i - 3][5] = location.text
             link.click()
             try:
                 element = WebDriverWait(driver, 10).until(
@@ -54,12 +58,15 @@ for i in range(3, len(all_table_entries) - 2):
                 widgetcol = driver.find_element(By.XPATH, "//td[@class='widgetcol']/div[@class='widgetcolwrap']/div[@class='widget inline']/table/tbody/tr")
                 link2 = widgetcol.find_elements(By.TAG_NAME, "a")
                 if link2: university_list[i - 3][1] = link2[0].text
-                # print(university_list[i - 3][0])
             finally:
                 back_btn = driver.find_element(By.XPATH, "//div[@class='buttonbar']/input")
                 back_btn.click()
                 time.sleep(3)
                 break
 
-print(university_list)
+with open('seed_university.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter='|', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+    for i, row in enumerate(university_list):
+        writer.writerow([i] + row)
+
 driver.close()
