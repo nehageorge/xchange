@@ -65,6 +65,7 @@ function UniversitySearch() {
         <XchangeTable
           headers={["University Name", "Languages", "Terms", "Competitiveness"]}
           colWidths={["30%", "20%", "25%", "25%"]}
+          numRows={unis.length}
           tableBody={unis.map((uni) => (
             <TableRow
               key={uni.name}
