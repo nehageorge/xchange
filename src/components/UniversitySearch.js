@@ -1,24 +1,17 @@
-import "./Home.css";
+import "./UniversitySearch.css";
 import { Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  TextField,
-  Stack,
-  AppBar,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { Box, TextField, Stack, TableCell, TableRow } from "@mui/material";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import XchangeTable from "./XchangeTable";
 
-function Home() {
+function UniversitySearch() {
   const [unis, setUnis] = useState([]);
   const [allUnis, setAllUnis] = useState([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/index").then((res) =>
+    fetch("/universities").then((res) =>
       res.json().then((data) => {
         console.log(data);
         setAllUnis(data);
@@ -46,17 +39,15 @@ function Home() {
 
   return (
     <div className="Home">
-      <AppBar
-        position="sticky"
-        style={{ background: "white", paddingTop: 20, color: "black" }}
-      >
-        <XchangeTabbedHeader />
-      </AppBar>
+      <XchangeTabbedHeader />
       <View>
         <img
-          src="https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg"
+          src="/singapore_skyline.png"
           alt="Panoramic view of Singapore city"
-          style={{ maxHeight: 400 }}
+          style={{
+            maxHeight: 340,
+            objectFit: "cover",
+          }}
         ></img>
       </View>
       <View style={{ flex: 1, padding: 45 }}>
@@ -66,27 +57,32 @@ function Home() {
             handleSearch(event.target.value);
           }}
           name="search"
-          label="Search for universities"
+          label="Search for university programs"
           variant="outlined"
           InputLabelProps={{ style: { fontSize: 20 } }}
         />
         <br></br>
         <XchangeTable
-          headers={["University Name", "Languages", "Terms", "Competitiveness"]}
-          colWidths={["30%", "20%", "25%", "25%"]}
+          headers={["Program Name", "Languages", "Terms", "Competitiveness"]}
+          colWidths={["35%", "15%", "25%", "25%"]}
+          numRows={unis.length}
           tableBody={unis.map((uni) => (
             <TableRow
-              key={uni.name}
+              key={uni.program}
               sx={{
                 "&:last-child td, &:last-child th": { border: 0 },
               }}
             >
-              <TableCell
-                component="th"
-                scope="row"
-                style={{ color: "blue", textDecoration: "underline" }}
-              >
-                {uni.name}
+              <TableCell>
+                <Text
+                  component="th"
+                  scope="row"
+                  style={{ color: "blue", textDecoration: "underline" }}
+                >
+                  {uni.program}
+                </Text>
+                <br></br>
+                <Text style={{ fontStyle: "italic" }}>{uni.location}</Text>
               </TableCell>
               <TableCell>{uni.languages}</TableCell>
               <TableCell>{uni.terms}</TableCell>
@@ -99,7 +95,7 @@ function Home() {
                         if (comp == "ultra competitive") return "red";
                         else if (comp == "very competitive") return "#ECE54B";
                         else if (comp == "competitive") return "#48C246";
-                        else return "blue";
+                        else return "rgba(0, 0, 0, 0)";
                       },
                       borderRadius: "50%",
                       height: "40px",
@@ -120,4 +116,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default UniversitySearch;

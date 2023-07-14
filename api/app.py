@@ -4,8 +4,6 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import flask_appbuilder
-import importlib
-import sys
 import json
 
 app = Flask(__name__)
@@ -22,13 +20,15 @@ class University(db.Model):
     languages = db.Column(db.String(128))
     terms = db.Column(db.String(128))
     competition = db.Column(db.String(128))
+    program = db.Column(db.String(128))
+    location = db.Column(db.String(128))
     courses = db.relationship('Course', backref='university')
 
 
 class UniversitySchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("name", "languages", "terms", "competition")
+        fields = ("program", "location", "languages", "terms", "competition")
 
 
 # Many to Many Relationship between UW Course and a Foreign University Course
@@ -74,8 +74,7 @@ with app.app_context():
 uni_schema = UniversitySchema()
 unis_schema = UniversitySchema(many=True)
 
-
-@app.route('/index', methods=['GET'])
+@app.route('/universities', methods=['GET'])
 def index():
     unis = University.query.all()
     res = unis_schema.dump(unis)
@@ -84,7 +83,7 @@ def index():
 
 @app.route('/search_unis/<param>', methods=['GET'])
 def search_unis(param):
-    unis = University.query.filter(University.name.like('%'+param+'%'))
+    unis = University.query.filter(University.program.like('%'+param+'%') | University.location.like('%'+param+'%'))
     res = unis_schema.dump(unis)
     return jsonify(res)
 
@@ -93,6 +92,8 @@ def get_all_courses_for_university(uni_id):
     university = University.query.filter_by(id =uni_id).first()  
     data = courses_schema.dump(university.courses)
     return jsonify(data)
+
+@app.route('/search_courses/')
 
 @app.route('/courses', methods=['GET'])
 def get_all_courses():
@@ -105,6 +106,7 @@ def get_course_by_id(course_id):
     courses = Course.query.filter_by(id =course_id).first()
     data = course_schema.dump(courses)
     return jsonify(data)
+	
 
 @app.route('/course/<string:course_name>', methods=['GET'])
 def get_courses_by_name(course_name):
