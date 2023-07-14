@@ -21,11 +21,13 @@ class University(db.Model):
 	languages = db.Column(db.String(128))
 	terms = db.Column(db.String(128))
 	competition = db.Column(db.String(128))
+	program = db.Column(db.String(128))
+	location = db.Column(db.String(128))
 
 class UniversitySchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("name", "languages", "terms", "competition")
+        fields = ("program", "location", "languages", "terms", "competition")
 
 with app.app_context():
     db.create_all()
@@ -41,7 +43,7 @@ def index():
 
 @app.route('/search_unis/<param>', methods=['GET'])
 def search_unis(param):
-	unis = University.query.filter(University.name.like('%'+param+'%'))
+	unis = University.query.filter(University.program.like('%'+param+'%') | University.location.like('%'+param+'%'))
 	res = unis_schema.dump(unis)
 	return jsonify(res)
 
