@@ -9,10 +9,37 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import CoursePageFilters from "./CoursePageFilters";
+import { useState, useEffect } from "react";
 
 function CourseSearch() {
-  const search = (query) => {
-    console.log(query);
+  const [courseEquivalencies, setCoursesEquivalency] = useState([]);
+  const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
+  const [query, setQuery] = useState("");
+
+
+  useEffect(() => {
+    fetch("/uw/courses").then((res) =>
+      res.json().then((data) => {
+        setCoursesEquivalency(data);
+        setAllCoursesEquivalency(data);
+      })
+    );
+  }, []);
+
+  const search = (newQuery) => {
+    setQuery(newQuery);
+    if (newQuery.length == 0) {
+      setCoursesEquivalency(allCourseEquivalencies);
+      return;
+    }
+
+    fetch("/search_courses/" + newQuery).then((res) =>
+      res.json().then((data) => {
+        if (newQuery.length != 0) {
+          setCoursesEquivalency(data);
+        }
+      })
+    );
   };
 
   return (
@@ -53,8 +80,43 @@ function CourseSearch() {
                   "Terms Offered",
                 ]}
                 colWidths={["25%", "30%", "25%", "20%"]}
-                tableBody={tempTableBody}
-                // TO-DO Connect to the course endpoint
+                tableBody={courseEquivalencies.map((uwCourse) => {
+                  const course_rows = []
+                  console.log(uwCourse.foreign_courses);
+                  uwCourse.foreign_courses.map((course) => {
+                    course_rows.push(
+                      <TableRow
+                        key={course.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell>
+                          {uwCourse.code}: {uwCourse.name}
+                        </TableCell>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          style={{ color: "blue", textDecoration: "underline" }}
+                        >
+                          {course.code}: {course.name}
+                        </TableCell>
+                        <TableCell>
+                          {course.university_id}
+                        </TableCell>
+                        <TableCell>
+                          <div>
+                            {course.terms}
+                            {/* <p>Fall 2023</p>
+                            <p>Winter 2024</p> */}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  });
+                  return course_rows;
+                })}
+              // TO-DO Connect to the course endpoint
               />
             </Grid>
             <Grid item xs={3}>
@@ -66,50 +128,5 @@ function CourseSearch() {
     </div>
   );
 }
-
-const tempTableBody = [
-  <TableRow
-    sx={{
-      "&:last-child td, &:last-child th": { border: 0 },
-    }}
-  >
-    <TableCell>SE380: Feedback Control Systems</TableCell>
-    <TableCell
-      component="th"
-      scope="row"
-      style={{ color: "blue", textDecoration: "underline" }}
-    >
-      EE3331C: Feedback Control
-    </TableCell>
-    <TableCell>National University of Singapore (NUS)</TableCell>
-    <TableCell>
-      <div>
-        <p>Fall 2023</p>
-        <p>Winter 2024</p>
-      </div>
-    </TableCell>
-  </TableRow>,
-  <TableRow
-    sx={{
-      "&:last-child td, &:last-child th": { border: 0 },
-    }}
-  >
-    <TableCell>CS 341: Data Structures and Algorithms</TableCell>
-    <TableCell
-      component="th"
-      scope="row"
-      style={{ color: "blue", textDecoration: "underline" }}
-    >
-      CS3230: Design and Analysis of Algorithms
-    </TableCell>
-    <TableCell>National University of Singapore (NUS)</TableCell>
-    <TableCell>
-      <div>
-        <p>Fall 2023</p>
-        <p>Winter 2024</p>
-      </div>
-    </TableCell>
-  </TableRow>,
-];
 
 export default CourseSearch;

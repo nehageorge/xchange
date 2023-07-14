@@ -39,8 +39,6 @@ course_equivalency = db.Table('course_equivalency',
 """
 Course Model
 """
-
-
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
@@ -62,7 +60,7 @@ class CourseSchema(ma.Schema):
     foreign_courses = ma.Nested(lambda: CourseSchema(), many=True)
     class Meta:
         # Fields to expose
-        fields = ("name", "code", "terms", "school", "foreign_courses")
+        fields = ("name", "code", "terms", "foreign_courses", "university_id")
 
 
 course_schema = CourseSchema()
@@ -93,7 +91,21 @@ def get_all_courses_for_university(uni_id):
     data = courses_schema.dump(university.courses)
     return jsonify(data)
 
-@app.route('/search_courses/')
+@app.route('/search_courses/<string:query>', methods=['GET'])
+def search_courses(query):
+    uw_uni = University.query.filter_by(name='University of Waterloo').first()
+
+    courses = Course.query.filter((Course.name.like('%'+query+'%') | Course.code.like('%'+query+'%')) & Course.university_id.like(uw_uni.id) ).all()
+    data = courses_schema.dump(courses)
+    return jsonify(data)
+
+@app.route('/uw/courses', methods=['GET'])
+def get_all_uw_courses():
+    uw_uni = University.query.filter_by(name='University of Waterloo').first()
+    courses = Course.query.filter(Course.university_id.like(uw_uni.id) ).all()
+
+    data = courses_schema.dump(courses)
+    return jsonify(data)
 
 @app.route('/courses', methods=['GET'])
 def get_all_courses():
