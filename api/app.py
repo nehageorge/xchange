@@ -22,6 +22,7 @@ class University(db.Model):
     languages = db.Column(db.String(128))
     terms = db.Column(db.String(128))
     competition = db.Column(db.String(128))
+    courses = db.relationship('Course', backref='university')
 
 
 class UniversitySchema(ma.Schema):
@@ -45,7 +46,7 @@ class Course(db.Model):
     name = db.Column(db.String(120))
     code = db.Column(db.String(20))
     terms = db.Column(db.String(120))
-    school = db.Column(db.String(128))
+    university_id = db.Column(db.Integer, db.ForeignKey('university.id'))
     description = db.Column(db.String(128), nullable=True)
 
     foreign_courses = db.relationship(
@@ -87,6 +88,11 @@ def search_unis(param):
     res = unis_schema.dump(unis)
     return jsonify(res)
 
+@app.route('/university/<int:uni_id>/courses', methods=['GET'])
+def get_all_courses_for_university(uni_id):
+    university = University.query.filter_by(id =uni_id).first()  
+    data = courses_schema.dump(university.courses)
+    return jsonify(data)
 
 @app.route('/courses', methods=['GET'])
 def get_all_courses():
@@ -95,9 +101,9 @@ def get_all_courses():
     return jsonify(data)
 
 @app.route('/course/<int:course_id>', methods=['GET'])
-def get_courses_by_id(course_id):
-    courses = Course.query.all()
-    data = courses_schema.dump(courses)
+def get_course_by_id(course_id):
+    courses = Course.query.filter_by(id =course_id).first()
+    data = course_schema.dump(courses)
     return jsonify(data)
 
 @app.route('/course/<string:course_name>', methods=['GET'])
@@ -108,18 +114,9 @@ def get_courses_by_name(course_name):
 
 @app.route('/course/<int:course_id>/equivalency', methods=['GET'])
 def get_course_equivalencies(course_id):
-    course = Course.query.get_or_404(course_id)  
-    data = course_schema.dump(course)
+    course = Course.query.filter_by(id =course_id).first()  
+    data = courses_schema.dump(course.foreign_courses)
     return jsonify(data)
-
-
-# @app.route('/get_uni/<name>', methods=['GET'])
-# def get_uni(name):
-# 	result = University.get_by_name(col, name)
-# 	if not result: return json_response("University not found", 400)
-# 	resultDct = dict(result)
-# 	resultDct.pop("_id")
-# 	return json_response(resultDct)
 
 if __name__ == '__main__':
     app.run()
