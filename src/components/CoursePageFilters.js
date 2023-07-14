@@ -1,7 +1,7 @@
 import "./CoursePageFilters.css";
-import { Box, List, ListItem, ListItemButton } from "@mui/material";
+import { Box, List, ListItem, ListItemButton, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 
 function CoursePageFilters() {
     const xchangeGold = "rgba(224, 208, 59, 0.54)";
@@ -51,20 +51,47 @@ function CoursePageFilters() {
         setUnis(newUniMap);
     }
 
+    function handleProgramSearch(newSearch) {
+        console.log(newSearch);
+        const newProgramMap = new Map(unis);
+        
+    }
+
     return(
         <div className="CoursePageFilters">
             <Box sx={{maxWidth: 350, maxHeight: 550, border:borderStyle, borderRadius:2}}>
                 <div className="ProgramFilter">
                     <div className="FilterTitle"><h5>Program</h5></div>
-                    <ScrollView horizontal={true}>
-                        {[...selectPrograms.keys()].map((key) => 
-                            <div style={{paddingLeft:5, paddingTop:5}}>
-                                <ListItem sx={{background:xchangeGold, borderRadius:2}} onClick={() => {onProgramFilterClick(key)}}>
-                                    {selectPrograms.get(key)[1]}
-                                </ListItem>
-                            </div>
-                        )}
-                    </ScrollView>
+                    <View style={{ flex: 1, flexDirection:"row" }}>
+                        <div className="SearchBar" style={{paddingLeft:5, paddingTop:5, paddingRight: 5}}>
+                            <TextField
+                                sx={{ backgroundColor: "rgba(52, 52, 52, 0.1)", width: 145}}
+                                inputProps={{
+                                    style: {
+                                    padding: 10,
+                                    fontSize: 16 
+                                    }
+                                }}
+                                onChange={(event) => {
+                                    handleProgramSearch(event.target.value);
+                                }}
+                                name="search"
+                                placeholder="Search program"
+                                variant="outlined"
+                                InputLabelProps={{ style: { fontSize: 12} }}
+                            />
+                        </div>     
+                        <ScrollView horizontal={true}>
+                            {[...selectPrograms.keys()].map((key) => 
+                                <div style={{paddingTop:5, paddingRight:5}}>
+                                    <ListItem sx={{background:xchangeGold, borderRadius:2}} onClick={() => {onProgramFilterClick(key)}}>
+                                        {selectPrograms.get(key)[1]}
+                                    </ListItem>
+                                </div>
+                            )}
+                        </ScrollView>                                          
+                    </View>
+                    
                     <List sx={{maxHeight: 175, overflow:"auto"}}>
                         {[...programs.keys()].map((key) =>
                             <ListItemButton onClick={() => {onProgramFilterClick(key)}}>
@@ -76,15 +103,35 @@ function CoursePageFilters() {
                 <div style={{paddingBottom:10}}></div>
                 <div className="UniversityFilter" style={{borderTop:borderStyle, borderRadius:5}}>
                     <div className="FilterTitle"><h5>University</h5></div>
-                    <ScrollView horizontal={true}>
-                        {[...selectUnis.keys()].map((key) => (
-                            <div style={{paddingLeft:5, paddingTop:5}}>
-                                <ListItem sx={{background:xchangeGold, borderRadius:3}} onClick={() => {onUniFilterClick(key)}}>
-                                    {selectUnis.get(key)[1]}
-                                </ListItem>
-                            </div>
-                        ))}
-                    </ScrollView>
+                    <View style={{ flex: 1, flexDirection:"row" }}>
+                        <div className="SearchBar" style={{paddingLeft:5, paddingTop:5, paddingRight: 5}}>
+                            <TextField
+                                sx={{ backgroundColor: "rgba(52, 52, 52, 0.1)", width: 145}}
+                                inputProps={{
+                                    style: {
+                                    padding: 10,
+                                    fontSize: 16
+                                    }
+                                }}
+                                onChange={(event) => {
+                                    //handleSearch(event.target.value);
+                                }}
+                                name="search"
+                                placeholder="Search university"
+                                variant="outlined"
+                                InputLabelProps={{ style: { fontSize: 12} }}
+                            />
+                        </div>      
+                        <ScrollView horizontal={true} contentContainerStyle={{  justifyContent: 'center' }}>
+                            {[...selectUnis.keys()].map((key) => (
+                                <div style={{paddingTop:5, paddingRight: 5}}>
+                                    <ListItem sx={{background:xchangeGold, borderRadius:3}} onClick={() => {onUniFilterClick(key)}}>
+                                        {selectUnis.get(key)[1]}
+                                    </ListItem>
+                                </div>
+                            ))}
+                        </ScrollView>                 
+                    </View>
                     <List sx={{maxHeight: 175, overflow:"auto"}}>
                         {[...unis.keys()].map((key) =>
                             <ListItemButton onClick={() => {onUniFilterClick(key)}}>
