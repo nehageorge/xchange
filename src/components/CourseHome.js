@@ -1,15 +1,12 @@
 import "./UniversitySearch.css";
 import { View } from "react-native";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import PagePreview from "./PagePreview";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 
 function CourseHome() {
-  const navigate = useNavigate();
-
   return (
     <div className="CourseHome">
       <XchangeTabbedHeader uniActive={false} />

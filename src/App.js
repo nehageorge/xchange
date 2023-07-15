@@ -6,6 +6,7 @@ import PreviousCourseSequences from "./components/PrevCourseSequences";
 import CourseSearch from "./components/CourseSearch";
 import Landing from "./components/Landing";
 import UniversitySearch from "./components/UniversitySearch";
+import Signup from "./components/Signup";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Landing />} />
+          <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/universities" element={<UniversitySearch />} />
           <Route exact path="/get_uni/:name" element={<ViewUni />} />
           <Route exact path="/course/home" element={<CourseHome />} />

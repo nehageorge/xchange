@@ -3,6 +3,8 @@ import XChangeButton from "./XChangeButton.js";
 import { Text } from "react-native";
 import React from "react";
 import TextField from "@mui/material/TextField";
+import Link from "@mui/joy/Link";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as Plane } from "./assets/Vector-5.svg";
 import { ReactComponent as Suitcase } from "./assets/Vector-6.svg";
 import { ReactComponent as Baggage } from "./assets/Vector-7.svg";
@@ -12,7 +14,7 @@ const font = "Helvetica";
 const TitleText = () => {
   const titleText = "Change";
   const bodyText =
-    "\nEverything you need to plan your exchange term is here,\nwith hundreds of universities and student reviews, as\nwell as all past approved course equivalents by school\nand program.";
+    "\nEverything you need to plan your exchange term is here,\nwith hundreds of universities and student reviews, as\nwell as past approved course equivalents by school\nand program.";
 
   return (
     <Text style={{ fontFamily: font }}>
@@ -63,6 +65,8 @@ function loginField(txt) {
 }
 
 function Landing() {
+  const navigate = useNavigate();
+
   return (
     <div class="flex-container">
       <div class="flex-item1">
@@ -106,17 +110,46 @@ function Landing() {
             </Text>
             {loginField("Email")}
             {loginField("Password")}
-            <Text
-              style={{
-                fontFamily: font,
-                fontSize: 15,
-                fontWeight: "100",
-                fontStyle: "italic",
-                textDecorationLine: "underline",
-              }}
-            >
-              Forgot your password?
-            </Text>
+            <div class="login-link">
+              <Link
+                style={{
+                  fontFamily: font,
+                  fontSize: 15,
+                  fontWeight: "100",
+                  fontStyle: "italic",
+                  textDecorationLine: "underline",
+                  textDecorationColor: "black",
+                  color: "black",
+                }}
+              >
+                Forgot your password?
+              </Link>
+              <p
+                style={{
+                  fontFamily: font,
+                  fontSize: 15,
+                  fontWeight: "100",
+                  fontStyle: "italic",
+                  color: "black",
+                }}
+              >
+                Don't have an account?
+              </p>
+              <Link
+                style={{
+                  fontFamily: font,
+                  fontSize: 15,
+                  fontWeight: "100",
+                  fontStyle: "italic",
+                  textDecorationLine: "underline",
+                  textDecorationColor: "black",
+                  color: "black",
+                }}
+                onClick={() => navigate("/signup")}
+              >
+                Sign up.
+              </Link>
+            </div>
             {XChangeButton("Login", "/", undefined, {
               width: "325px",
             })}
