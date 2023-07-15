@@ -18,7 +18,7 @@ function CourseSearch() {
 
 
   useEffect(() => {
-    fetch("/uw/courses").then((res) =>
+    fetch("/course_equivalencies").then((res) =>
       res.json().then((data) => {
         setCoursesEquivalency(data);
         setAllCoursesEquivalency(data);
@@ -64,7 +64,7 @@ function CourseSearch() {
                   search(event.target.value);
                 }}
                 name="search"
-                label="Search for courses"
+                label="Search previously approved course equivalents by UW course codes/name "
                 variant="outlined"
                 fullWidth
                 InputLabelProps={{ style: { fontSize: 20 } }}
@@ -75,47 +75,41 @@ function CourseSearch() {
               <XchangeTable
                 headers={[
                   "UW Course Name",
-                  "Host School Course Name",
-                  "University",
-                  "Terms Offered",
+                  "Host University Course",
+                  "Host University",
+                  "Year Taken",
+                  "Program of Student"
                 ]}
-                colWidths={["25%", "30%", "25%", "20%"]}
-                tableBody={courseEquivalencies.map((uwCourse) => {
-                  const course_rows = []
-                  console.log(uwCourse.foreign_courses);
-                  uwCourse.foreign_courses.map((course) => {
-                    course_rows.push(
-                      <TableRow
-                        key={course.id}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell>
-                          {uwCourse.code}: {uwCourse.name}
-                        </TableCell>
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          style={{ color: "blue", textDecoration: "underline" }}
-                        >
-                          {course.code}: {course.name}
-                        </TableCell>
-                        <TableCell>
-                          {course.university_id}
-                        </TableCell>
-                        <TableCell>
-                          <div>
-                            {course.terms}
-                            {/* <p>Fall 2023</p>
-                            <p>Winter 2024</p> */}
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    )
-                  });
-                  return course_rows;
-                })}
+                colWidths={["25%", "20%", "25%", "10%", "20%"]}
+                tableBody={courseEquivalencies.map((ce) => (
+                  <TableRow
+                    key={ce.id}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                    }}
+                  >
+                    <TableCell>
+                      {ce.uwcourse.code}: {ce.uwcourse.name}
+                    </TableCell>
+                    <TableCell>
+                      {ce.code}
+                    </TableCell>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      style={{ color: "blue", textDecoration: "underline" }}
+                    >
+                      {ce.university.name}
+                    </TableCell>
+
+                    <TableCell>
+                      {ce.year_taken}
+                    </TableCell>
+                    <TableCell>
+                      {ce.student_program}
+                    </TableCell>
+                  </TableRow>
+                ))}
               // TO-DO Connect to the course endpoint
               />
             </Grid>
