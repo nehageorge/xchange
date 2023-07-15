@@ -4,7 +4,6 @@ import { Text } from "react-native";
 import React from "react";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/joy/Link";
-import { useNavigate } from "react-router-dom";
 import { ReactComponent as Plane } from "./assets/Vector-5.svg";
 import { ReactComponent as Suitcase } from "./assets/Vector-6.svg";
 import { ReactComponent as Baggage } from "./assets/Vector-7.svg";
@@ -65,8 +64,6 @@ function loginField(txt) {
 }
 
 function Landing() {
-  const navigate = useNavigate();
-
   return (
     <div class="flex-container">
       <div class="flex-item1">
@@ -133,22 +130,23 @@ function Landing() {
                   color: "black",
                 }}
               >
-                Don't have an account?
+                Don't have an account?{" "}
+                <Link
+                  href="/signup"
+                  style={{
+                    fontFamily: font,
+                    fontSize: 15,
+                    fontWeight: "100",
+                    fontStyle: "italic",
+                    textDecorationLine: "underline",
+                    textDecorationColor: "black",
+                    color: "black",
+                  }}
+                >
+                  {" "}
+                  Sign up
+                </Link>
               </p>
-              <Link
-                style={{
-                  fontFamily: font,
-                  fontSize: 15,
-                  fontWeight: "100",
-                  fontStyle: "italic",
-                  textDecorationLine: "underline",
-                  textDecorationColor: "black",
-                  color: "black",
-                }}
-                onClick={() => navigate("/signup")}
-              >
-                Sign up.
-              </Link>
             </div>
             {XChangeButton("Login", "/", undefined, {
               width: "325px",
