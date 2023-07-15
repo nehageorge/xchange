@@ -29,7 +29,7 @@ function CourseHome() {
               altText="Planning to travel, Bag, field notes, camera and travel pamphlets laid out over a map"
               page="/course/prevSequence"
               title="Previously Accepted Course Sequences"
-              description="Take a look at the previously accepted course sequences students (Engineers) at the university of waterloo have done at universities when exchange on a particular study term"
+              description="Take a look at the previously accepted course plans students at the University of Waterloo have done when on exchange at foreign institutions (engineering only)."
             />
           </Grid>
           <Grid item xs={6}>
@@ -38,7 +38,7 @@ function CourseHome() {
               altText="Person Searching for a course on their laptop"
               page="/course/search"
               title="Search for a Course"
-              description="Interested in courses students have taken at a particular university abroad ? Want to check a previously approved UW course equivalent at another institute ? Search for the course, university and your program here !"
+              description="Interested in courses students have taken at a particular university abroad? Want to check a previously approved UW course equivalent at another institute? Search for the course, university and your program here!"
             />
           </Grid>
         </Grid>
