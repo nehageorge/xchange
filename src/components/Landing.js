@@ -27,28 +27,22 @@ const TitleText = () => {
   );
 };
 
-const OtherLinks = () => {
-  const about = "About";
-  const contact = "Contact";
-  const priv = "Privacy Policy";
-
+const OtherLinks = (linkText, path) => {
   return (
-    <Text
+    <Link
+      href={path}
       style={{
         fontFamily: font,
         fontSize: 15,
-        textDecorationLine: "underline",
-        color: "#000000",
         fontWeight: "100",
         fontStyle: "italic",
+        textDecorationLine: "underline",
+        textDecorationColor: "black",
+        color: "black",
       }}
     >
-      {about}
-      {"\n"}
-      {contact}
-      {"\n"}
-      {priv}
-    </Text>
+      {linkText}
+    </Link>
   );
 };
 
@@ -72,7 +66,11 @@ function Landing() {
           {XChangeButton("Search for schools", "/universities")}
           {XChangeButton("Search for courses", "/course/home")}
         </div>
-        <div class="links-padding">{OtherLinks()}</div>
+        <div class="links-padding">
+          {OtherLinks("About", "/about")}
+          {OtherLinks("Contact", "/contact")}
+          {OtherLinks("Privacy Policy", "/privacy")}
+        </div>
       </div>
       <div class="flex-item2">
         <div class="login-panel">
