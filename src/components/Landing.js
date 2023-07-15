@@ -4,7 +4,6 @@ import { Text } from "react-native";
 import React from "react";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/joy/Link";
-import { useNavigate } from "react-router-dom";
 import { ReactComponent as Plane } from "./assets/Vector-5.svg";
 import { ReactComponent as Suitcase } from "./assets/Vector-6.svg";
 import { ReactComponent as Baggage } from "./assets/Vector-7.svg";
@@ -65,8 +64,6 @@ function loginField(txt) {
 }
 
 function Landing() {
-  const navigate = useNavigate();
-
   return (
     <div class="flex-container">
       <div class="flex-item1">
@@ -135,7 +132,7 @@ function Landing() {
               >
                 Don't have an account?{" "}
                 <Link
-                  onClick={() => navigate("/signup")}
+                  href="/signup"
                   style={{
                     fontFamily: font,
                     fontSize: 15,
