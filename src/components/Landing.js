@@ -29,10 +29,6 @@ const TitleText = () => {
 };
 
 const OtherLinks = (linkText, path) => {
-  const about = "About";
-  const contact = "Contact";
-  const priv = "Privacy Policy";
-
   return (
     <Link
       href={path}
