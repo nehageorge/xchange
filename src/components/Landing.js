@@ -133,22 +133,23 @@ function Landing() {
                   color: "black",
                 }}
               >
-                Don't have an account?
+                Don't have an account?{" "}
+                <Link
+                  onClick={() => navigate("/signup")}
+                  style={{
+                    fontFamily: font,
+                    fontSize: 15,
+                    fontWeight: "100",
+                    fontStyle: "italic",
+                    textDecorationLine: "underline",
+                    textDecorationColor: "black",
+                    color: "black",
+                  }}
+                >
+                  {" "}
+                  Sign up
+                </Link>
               </p>
-              <Link
-                style={{
-                  fontFamily: font,
-                  fontSize: 15,
-                  fontWeight: "100",
-                  fontStyle: "italic",
-                  textDecorationLine: "underline",
-                  textDecorationColor: "black",
-                  color: "black",
-                }}
-                onClick={() => navigate("/signup")}
-              >
-                Sign up.
-              </Link>
             </div>
             {XChangeButton("Login", "/", undefined, {
               width: "325px",
