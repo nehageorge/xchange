@@ -7,6 +7,9 @@ import CourseSearch from "./components/CourseSearch";
 import Landing from "./components/Landing";
 import UniversitySearch from "./components/UniversitySearch";
 import Signup from "./components/Signup";
+import AboutPage from "./components/AboutPage";
+import ContactPage from "./components/ContactPage";
+import PrivacyPolicyPage from "./components/PrivacyPolicyPage";
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Landing />} />
           <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/about" element={<AboutPage />} />
+          <Route exact path="/contact" element={<ContactPage />} />
+          <Route exact path="/privacy" element={<PrivacyPolicyPage />} />
           <Route exact path="/universities" element={<UniversitySearch />} />
           <Route exact path="/get_uni/:name" element={<ViewUni />} />
           <Route exact path="/course/home" element={<CourseHome />} />
