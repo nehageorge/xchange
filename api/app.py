@@ -28,12 +28,46 @@ class UniversitySchema(ma.Schema):
     class Meta:
         # Fields to expose
         fields = ("program", "location", "languages", "terms", "competition")
-
-with app.app_context():
-    db.create_all()
+	
 
 uni_schema = UniversitySchema()
 unis_schema = UniversitySchema(many=True)
+
+"""
+Course Model
+"""
+class UWCourse(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120))
+    code = db.Column(db.String(20))
+    terms = db.Column(db.String(120))
+    description = db.Column(db.String(128), nullable=True)
+
+
+class UWCourseSchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ("name", "code", "terms", "description")
+
+
+course_schema = UWCourseSchema()
+courses_schema = UWCourseSchema(many=True)
+
+class CourseEquivalency(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    uwcourse_id = db.Column(db.Integer,db.ForeignKey("uw_course.id"),nullable=False)
+    university_id = db.Column(db.Integer, db.ForeignKey('university.id'),nullable=False)
+    code = db.Column(db.String(20))
+    year_taken = db.Column(db.String(4))
+    student_program =  db.Column(db.String(120))
+
+class CourseEquivalencySchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ("uwcourse_id", "university_id", "code", "year_taken", "student_program")
+    
+course_equivalency_schema = CourseEquivalencySchema()
+courses_equivalency_schema = CourseEquivalencySchema(many=True)
 
 @app.route('/universities', methods=['GET'])
 def index():
