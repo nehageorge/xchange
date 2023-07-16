@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ViewUni from "./components/ViewUni";
 import CourseHome from "./components/CourseHome";
+import CoursePage from "./components/CoursePage";
 import PreviousCourseSequences from "./components/PrevCourseSequences";
 import CourseSearch from "./components/CourseSearch";
 import Landing from "./components/Landing";
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/universities" element={<UniversitySearch />} />
           <Route exact path="/get_uni/:name" element={<ViewUni />} />
           <Route exact path="/course/home" element={<CourseHome />} />
+          <Route exact path="/get_uni/:name/courses/:course_name" element={<CoursePage />} />
           <Route
             exact
             path="/course/prevSequence"
