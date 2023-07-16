@@ -81,6 +81,7 @@ function CourseSearch() {
                   "Program of Student"
                 ]}
                 colWidths={["25%", "20%", "25%", "10%", "20%"]}
+                numRows={courseEquivalencies.length}
                 tableBody={courseEquivalencies.map((ce) => (
                   <TableRow
                     key={ce.id}
