@@ -1,19 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
 } from "@mui/material";
 
 function XchangeCourseTable(props) {
-    const search = (query) => {
-        console.log(query);
-    };
+  const [courseEquivalencies, setCoursesEquivalency] = useState([]);
+  const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    fetch("/course_equivalencies").then((res) =>
+      res.json().then((data) => {
+        setCoursesEquivalency(data);
+        setAllCoursesEquivalency(data);
+      })
+    );
+  }, []);
+
+  const search = (newQuery) => {
+    setQuery(newQuery);
+    if (newQuery.length == 0) {
+      setCoursesEquivalency(allCourseEquivalencies);
+      return;
+    }
+
+    fetch("/search_courses/" + newQuery).then((res) =>
+      res.json().then((data) => {
+        if (newQuery.length != 0) {
+          setCoursesEquivalency(data);
+        }
+      })
+    );
+  };
   return (
+    <>
     <TableContainer
       sx={{ borderRadius: "15px", border: 2, borderColor: "#E0D03B" }}
     >
@@ -47,9 +74,36 @@ function XchangeCourseTable(props) {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>{props.tableBody}</TableBody>
+        <TableBody>{courseEquivalencies.map((ce) => {
+                  if(ce.uwcourse.id === props.courseId && ce.university.id === props.uniId)
+                  return(
+                  <TableRow
+                    key={ce.id}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                    }}
+                  >
+                    <TableCell>
+                      {ce.uwcourse.name}
+                    </TableCell>
+                    <TableCell>
+                      {ce.uwcourse.code}
+                    </TableCell>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      style={{ color: "blue", textDecoration: "underline" }}
+                    >
+                      {ce.university.name}
+                    </TableCell>
+                  </TableRow>)
+                })}</TableBody>
       </Table>
     </TableContainer>
+    <TablePagination
+      count={courseEquivalencies.length}
+    />
+    </>
   );
 }
 

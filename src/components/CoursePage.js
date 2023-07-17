@@ -5,38 +5,7 @@ import { TableCell, TableRow } from "@mui/material";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import XchangeCourseTable from "./XchangeCourseTable";
 
-function CoursePage() {
-  const [unis, setUnis] = useState([]);
-  const [allUnis, setAllUnis] = useState([]);
-  const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    fetch("/universities").then((res) =>
-      res.json().then((data) => {
-        console.log(data);
-        setAllUnis(data);
-        if (search.length == 0) {
-          setUnis(data);
-        }
-      })
-    );
-  }, []);
-
-  function handleSearch(newSearch) {
-    setSearch(newSearch);
-    if (newSearch.length == 0) {
-      setUnis(allUnis);
-      return;
-    }
-    fetch("/search_unis/" + newSearch).then((res) =>
-      res.json().then((data) => {
-        if (newSearch.length != 0) {
-          setUnis(data);
-        }
-      })
-    );
-  }
-
+function CoursePage({uniId, courseId}) {
   return (
     <div>
       <XchangeTabbedHeader />
@@ -67,7 +36,8 @@ function CoursePage() {
                 "Previously Approved Course Sequences",
             ]}
             colWidths={["40%"]}
-            tableBody={tempTableBody}
+            uniID={uniId}
+            courseID={courseId}
             // TO-DO Connect to the course endpoint
         />
 
@@ -75,47 +45,5 @@ function CoursePage() {
     </div>
   );
 }
-
-const tempTableBody = [
-    <TableRow
-      sx={{
-        "&:last-child td, &:last-child th": { border: 0 },
-      }}
-    >
-      <TableCell
-        component="th"
-        scope="row"
-        style={{ color: "blue", textDecoration: "underline" }}
-      >
-        Feedback Control Systems
-      </TableCell>
-      <TableCell>EE3331C</TableCell>
-      <TableCell
-       component="th"
-       scope="row"
-       style={{ color: "blue", textDecoration: "underline" }}
-      >National University of Singapore (NUS)</TableCell>
-    </TableRow>,
-    <TableRow
-      sx={{
-        "&:last-child td, &:last-child th": { border: 0 },
-      }}
-    >
-      <TableCell
-        component="th"
-        scope="row"
-        style={{ color: "blue", textDecoration: "underline" }}
-      >
-        Feedback Control Systems
-      </TableCell>
-      <TableCell>EE3331C</TableCell>
-      <TableCell
-       component="th"
-       scope="row"
-       style={{ color: "blue", textDecoration: "underline" }}
-      >Another National University of Singapore (aNUS)</TableCell>
-    </TableRow>,
-  ];
-  
 
 export default CoursePage;
