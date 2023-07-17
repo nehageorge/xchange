@@ -1,7 +1,6 @@
 import "./CoursePage.css";
 import { Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import { TableCell, TableRow } from "@mui/material";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import XchangeCourseTable from "./XchangeCourseTable";
 
