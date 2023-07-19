@@ -64,33 +64,35 @@ def get_all_course_equivalencies():
     course_equivalencies = course_equivalencies_join_to_dict(result)
     return jsonify(course_equivalencies)
 
-@app.route('/search_courses/<string:query>', methods=['GET', 'POST'])
+@app.route('/search_courses/<string:query>', methods=['GET'])
 def search_courses(query):
-    if request.method == 'GET':
+    result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%'))).all()
+    course_equivalencies = course_equivalencies_join_to_dict(result)
+    return jsonify(course_equivalencies)
+
+@app.route('/course_equivalencies/search', methods=['POST'])
+def course_equivalencies_search():
+    content_type = request.headers.get('Content-Type')
+    if (content_type != 'application/json'):
+            return 'Content-Type not supported!'
+    request_body = request.json
+
+    query = request_body.get('query', "")
+    programs = request_body.get('programs', [])
+    unis = request_body.get('unis', [])
+    
+    result = None
+    if programs and unis: 
+        result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (University.name.in_(unis)) & (CourseEquivalency.student_program.in_(programs)) )).all()
+    elif not programs and unis: 
+        result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (University.name.in_(unis)))).all()
+    elif programs and not unis:
+        result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (CourseEquivalency.student_program.in_(programs)) )).all()
+    else:
         result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%'))).all()
-        course_equivalencies = course_equivalencies_join_to_dict(result)
-        return jsonify(course_equivalencies)
-    elif request.method == 'POST':
-        content_type = request.headers.get('Content-Type')
-        if (content_type != 'application/json'):
-             return 'Content-Type not supported!'
-        
-        request_body = request.json
-        programs = request_body.get('programs', [])
-        unis = request_body.get('unis', [])
-        
-        result = None
-        if programs and unis: 
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (University.name.in_(unis)) & (CourseEquivalency.student_program.in_(programs)) )).all()
-        elif not programs and unis: 
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (University.name.in_(unis)))).all()
-        elif programs and not unis:
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (CourseEquivalency.student_program.in_(programs)) )).all()
-        else:
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%'))).all()
-        
-        course_equivalencies = course_equivalencies_join_to_dict(result)
-        return jsonify(course_equivalencies)
+    
+    course_equivalencies = course_equivalencies_join_to_dict(result)
+    return jsonify(course_equivalencies)
 
 
 if __name__ == '__main__':
