@@ -16,7 +16,7 @@ function XchangeCourseTable(props) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    fetch("/course_equivalencies").then((res) =>
+    fetch("/course_equivalencies/course_matching", headers={"Content-Type": "application/json"}, body={"cid": props.courseId}).then((res) =>
       res.json().then((data) => {
         setCoursesEquivalency(data);
         setAllCoursesEquivalency(data);
@@ -31,7 +31,7 @@ function XchangeCourseTable(props) {
       return;
     }
 
-    fetch("/search_courses/" + newQuery).then((res) =>
+    fetch("/course_equivalencies/course_matching", headers={"Content-Type": "application/json"}, body={"cid": props.courseId, "query": newQuery}).then((res) =>
       res.json().then((data) => {
         if (newQuery.length != 0) {
           setCoursesEquivalency(data);
@@ -75,8 +75,6 @@ function XchangeCourseTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>{courseEquivalencies.map((ce) => {
-                  if(ce.uwcourse.id === props.courseId && ce.university.id === props.uniId)
-                  return(
                   <TableRow
                     key={ce.id}
                     sx={{
@@ -96,7 +94,7 @@ function XchangeCourseTable(props) {
                     >
                       {ce.university.name}
                     </TableCell>
-                  </TableRow>)
+                  </TableRow>
                 })}</TableBody>
       </Table>
     </TableContainer>
