@@ -16,7 +16,7 @@ function XchangeCourseTable(props) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    fetch("/course_equivalencies/course_matching", headers={"Content-Type": "application/json"}, body={"cid": props.courseId}).then((res) =>
+    fetch("/course_equivalencies/course_matching", {headers={"Content-Type": "application/json"}, body={"cid": props.courseId}}).then((res) =>
       res.json().then((data) => {
         setCoursesEquivalency(data);
         setAllCoursesEquivalency(data);
@@ -31,7 +31,7 @@ function XchangeCourseTable(props) {
       return;
     }
 
-    fetch("/course_equivalencies/course_matching", headers={"Content-Type": "application/json"}, body={"cid": props.courseId, "query": newQuery}).then((res) =>
+    fetch("/course_equivalencies/course_matching", {headers={"Content-Type": "application/json"}, body={"cid": props.courseId, "query": newQuery}}).then((res) =>
       res.json().then((data) => {
         if (newQuery.length != 0) {
           setCoursesEquivalency(data);
