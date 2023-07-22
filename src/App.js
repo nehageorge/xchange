@@ -11,6 +11,7 @@ import Signup from "./components/Signup";
 import AboutPage from "./components/AboutPage";
 import ContactPage from "./components/ContactPage";
 import PrivacyPolicyPage from "./components/PrivacyPolicyPage";
+import Discussion from "./components/Discussion";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             element={<PreviousCourseSequences />}
           />
           <Route exact path="/course/search" element={<CourseSearch />} />
+          <Route exact path="/discussion" element={<Discussion/>} />
         </Routes>
       </BrowserRouter>
     </>
