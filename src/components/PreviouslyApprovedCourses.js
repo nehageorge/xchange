@@ -47,8 +47,8 @@ useEffect(() => {
         />
         <br></br>
         <PreviouslyApprovedTable
-          headers={["Course Name", "UW Course Equivalent", "Terms Offered"]}
-          colWidths={["15%", "15%", "25%",]}
+          headers={["Course Name", "UW Course Equivalent", "Terms Taken", "Students Program"]}
+          colWidths={["15%", "15%", "15%", "15%"]}
           tableBody={courseEquivalencies.map((ce) => (
             <TableRow
               key={ce.id}
@@ -76,6 +76,7 @@ useEffect(() => {
                 </Text>
               </TableCell>
               <TableCell>{ce.university.terms}</TableCell>
+              <TableCell>{ce.student_program}</TableCell>
             </TableRow>
           ))}
         /> 

@@ -1,5 +1,5 @@
 import React from "react";
-import XChangeButton from "./XChangeButton.js";
+import XChangeButtonGrey from "./XChangeButtonGrey.js";
 import {
   Table,
   TableBody,
@@ -33,7 +33,7 @@ function PreviouslyApprovedTable(props) {
             })}
             <TableCell style={{ fontSize: "1.2rem", fontWeight: "bold" }}></TableCell>
             <TableCell>
-            {XChangeButton("Show All Approved Courses", "/course/search")}
+            {XChangeButtonGrey("Show All Approved Courses", "/course/search")}
             </TableCell>
           </TableRow>
         </TableHead>
