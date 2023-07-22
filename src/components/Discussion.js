@@ -1,9 +1,10 @@
+import "./Discussion.css"
+import XChangeButton from "./XChangeButton.js";
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Circle from '@mui/icons-material/Circle';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Typography from '@mui/material/Typography';
 
 const StyledRating = styled(Rating)({
@@ -18,41 +19,54 @@ const StyledRating = styled(Rating)({
   },
 });
 
-function CustomizedRating() {
+function CustomizedRating(text) {
 
     const [value, setValue] = React.useState(2);
     const [hover, setHover] = React.useState(-1);
 
   return (
-    <Box
-      sx={{
-        '& > legend': { mt: 2 },
-      }}
-    >
-      <Typography component="legend">Custom icon and color</Typography>
-      <StyledRating
-        name="customized-color"
-        defaultValue={2}
-        max={10}
-        getLabelText={(value) => `${value} Circle${value !== 1 ? 's' : ''}`}
-        precision={1}
-        icon={<Circle fontSize="inherit" />}
-        emptyIcon={<Circle fontSize="inherit" />}
-        onChange={(event, newValue) => {
-            setValue(newValue);
+    <div>
+        <Typography component="legend">{text}</Typography>
+        <Box
+        sx={{
+            '& > legend': { mt: 2 },
+            display: 'flex',
+            flexFlow: 'row',
+            alignItems: 'center',
         }}
-        onChangeActive={(event, newHover) => {
-            setHover(newHover);
-        }}
-      />
-      <div>{`Selected: ${value}`}</div>
-    </Box>
+        >
+        <StyledRating
+            name="customized-color"
+            defaultValue={2}
+            max={10}
+            getLabelText={(value) => `${value} Circle${value !== 1 ? 's' : ''}`}
+            precision={1}
+            icon={<Circle fontSize="inherit" />}
+            emptyIcon={<Circle fontSize="inherit" />}
+            onChange={(event, newValue) => {
+                setValue(newValue);
+            }}
+            onChangeActive={(event, newHover) => {
+                setHover(newHover);
+            }}
+        />
+        <div>{`${value} / 10`}</div>
+        </Box>
+    </div>
   );
 }
 
 function Discussion() {
     return (
-        CustomizedRating()
+        <div class='ratings-box'>
+            <div class='ratings'>
+                {CustomizedRating("Safe")}
+                {CustomizedRating("Fun")}
+                {CustomizedRating("Affordable")}
+                {CustomizedRating("Easy")}
+                {XChangeButton("Add a Review")}
+            </div>
+        </div>
     );
 }
 
