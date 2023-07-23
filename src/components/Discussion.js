@@ -3,9 +3,13 @@ import XChangeButton from "./XChangeButton.js";
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
 import Rating from '@mui/material/Rating';
 import Circle from '@mui/icons-material/Circle';
-import Typography from '@mui/material/Typography';
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
@@ -25,7 +29,7 @@ function CustomizedRating(text) {
     const [hover, setHover] = React.useState(-1);
 
   return (
-    <div>
+    <div style={{ maxHeight: 400, paddingBottom: "1rem" }}>
         <Typography component="legend">{text}</Typography>
         <Box
         sx={{
@@ -56,16 +60,67 @@ function CustomizedRating(text) {
   );
 }
 
+function Review() {
+    return (
+        <div class='review-bg'>
+            <div class='user'>
+                <div class='duck-img'></div>
+                Katie George
+            </div>
+            <div class='review'>
+                <div class='review-title'>
+                    <div class='bold'> Science / 3B </div>
+                </div>
+                <div class='text'>
+                    <div class='bold'> Housing:</div>
+                    &nbsp;Provided and Guaranteed by school 
+                </div>
+                <div class='text'>
+                    <div class='bold'> Favourite Aspect:</div>
+                    &nbsp;Cultural immersion
+                    </div>
+                <div class='text'>
+                    <div class='bold'> Food Situation:</div>
+                    &nbsp;Most often cooked
+                </div>
+            </div>
+            <div class='vertical-line'></div>
+            <div class='user-rating-categories'>
+                <div class='bold'> Safe:</div>
+                <div class='bold'> Fun:</div>
+                <div class='bold'> Affordable: </div>
+                <div class='bold'> Easy:</div>
+            </div>
+            <div class='user-ratings'>
+                <Typography>9/10</Typography>
+                <Typography>9/10</Typography>
+                <Typography>9/10</Typography>
+                <Typography>9/10</Typography>
+            </div>
+        </div>
+    );
+}
+
 function Discussion() {
     return (
-        <div class='ratings-box'>
-            <div class='ratings'>
-                {CustomizedRating("Safe")}
-                {CustomizedRating("Fun")}
-                {CustomizedRating("Affordable")}
-                {CustomizedRating("Easy")}
-                {XChangeButton("Add a Review")}
+        <div>
+            <div class='section-title'>
+                Ratings
             </div>
+            <div class='ratings-box'>
+                <div class='ratings'>
+                    {CustomizedRating("Safe")}
+                    {CustomizedRating("Fun")}
+                    {CustomizedRating("Affordable")}
+                    {CustomizedRating("Easy")}
+                    <div style={{ maxHeight: 20, paddingBottom: "1.5rem" }}></div>
+                    {XChangeButton("Add a Review")}
+                </div>
+            </div>
+            <div class='section-title'>
+                Reviews
+            </div>
+            {Review()}
         </div>
     );
 }
