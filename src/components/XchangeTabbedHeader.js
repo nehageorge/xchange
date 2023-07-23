@@ -14,7 +14,7 @@ function XchangeTabbedHeader({ uniActive = true }) {
     >
       <div className="TabbedHeader">
         <XchangeTopBar />
-        <View style={{ flex: 1, padding: 5 }}></View>
+        <View style={{ flex: 1 }}></View>
         <div className="Tabs">
           <button
             className="UniversitiesTab"

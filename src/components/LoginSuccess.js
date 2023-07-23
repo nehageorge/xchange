@@ -1,15 +1,18 @@
 import React from "react";
 import { Button } from "@mui/material";
+import XchangeTopBar from "./XchangeTopBar";
 import { Text } from "react-native";
 import { useSearchParams } from "react-router-dom";
-import XchangeTopBar from "./XchangeTopBar";
 
-function SignupError() {
+function LoginSuccess() {
   const [searchParams, _] = useSearchParams();
+  window.sessionStorage.setItem("token", searchParams.get("token"));
+  window.sessionStorage.setItem("user", searchParams.get("user"));
+
   return (
     <>
       <XchangeTopBar />
-      <div className="Signup">
+      <div className="Login">
         <center>
           <div
             style={{
@@ -26,20 +29,29 @@ function SignupError() {
                 color: "#1E1E1E",
               }}
             >
-              Sign Up Unsuccessful
+              Log In Successful!
             </Text>
             <br></br>
             <br></br>
-            <Text style={{ fontSize: 15 }}>{searchParams.get("problem")}</Text>
+            <Text style={{ fontSize: 15 }}>You're all set!</Text>
             <br></br>
             <br></br>
             <Button
               sx={{ backgroundColor: "#E0D03B" }}
-              style={{ width: "100%" }}
-              href="/signup"
+              style={{ width: "100%", marginBottom: 10 }}
+              href="/universities"
             >
               <div class="button-text">
-                <Text style={{ width: "325px" }}>Try again</Text>
+                <Text style={{ width: "325px" }}>Search for universities</Text>
+              </div>
+            </Button>
+            <Button
+              sx={{ backgroundColor: "#E0D03B" }}
+              style={{ width: "100%" }}
+              href="/course/home"
+            >
+              <div class="button-text">
+                <Text style={{ width: "325px" }}>Search for courses</Text>
               </div>
             </Button>
           </div>
@@ -49,4 +61,4 @@ function SignupError() {
   );
 }
 
-export default SignupError;
+export default LoginSuccess;

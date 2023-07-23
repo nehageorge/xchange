@@ -2,7 +2,7 @@ import "./Landing.css";
 import XChangeButton from "./XChangeButton.js";
 import { Text } from "react-native";
 import React from "react";
-import TextField from "@mui/material/TextField";
+import { TextField, Button } from "@mui/material";
 import Link from "@mui/joy/Link";
 import { ReactComponent as Plane } from "./assets/Vector-5.svg";
 import { ReactComponent as Suitcase } from "./assets/Vector-6.svg";
@@ -46,17 +46,6 @@ const OtherLinks = (linkText, path) => {
   );
 };
 
-function loginField(txt) {
-  return (
-    <TextField
-      id="outlined-basic"
-      label={txt}
-      variant="outlined"
-      style={{ backgroundColor: "#FFFFFF", borderRadius: "4pt", width: "100%" }}
-    ></TextField>
-  );
-}
-
 function Landing() {
   return (
     <div class="flex-container">
@@ -93,19 +82,40 @@ function Landing() {
             <Baggage style={{ scale: "2.5" }} />
           </div>
           <div class="login-body">
-            <Text
-              style={{
-                fontFamily: font,
-                fontSize: 30,
-                fontWeight: "bold",
-                color: "#1E1E1E",
-              }}
-            >
-              Login with email
-            </Text>
-            {loginField("Email")}
-            {loginField("Password")}
-            <div class="login-link">
+            <form action="/" method="POST">
+              <Text
+                style={{
+                  fontFamily: font,
+                  fontSize: 30,
+                  fontWeight: "bold",
+                  color: "#1E1E1E",
+                }}
+              >
+                Login with email
+              </Text>
+              <TextField
+                id="outlined-basic"
+                label="Email"
+                name="email"
+                variant="outlined"
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  borderRadius: "4pt",
+                  width: "100%",
+                }}
+              ></TextField>
+              <TextField
+                id="outlined-basic"
+                label="Password"
+                name="password"
+                type="password"
+                variant="outlined"
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  borderRadius: "4pt",
+                  width: "100%",
+                }}
+              ></TextField>
               <Link
                 style={{
                   fontFamily: font,
@@ -145,10 +155,16 @@ function Landing() {
                   Sign up
                 </Link>
               </p>
-            </div>
-            {XChangeButton("Login", "/", undefined, {
-              width: "325px",
-            })}
+              <Button
+                sx={{ backgroundColor: "#E0D03B" }}
+                style={{ width: "100%" }}
+                type="submit"
+              >
+                <div class="button-text">
+                  <Text style={{ width: "325px" }}>Log in</Text>
+                </div>
+              </Button>
+            </form>
           </div>
         </div>
         <div style={{ marginTop: "30px", marginLeft: "285px" }}>
