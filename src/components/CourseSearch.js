@@ -54,6 +54,7 @@ function CourseSearch() {
                 ]}
                 colWidths={["25%", "30%", "25%", "20%"]}
                 tableBody={tempTableBody}
+                outline={true}
                 // TO-DO Connect to the course endpoint
               />
             </Grid>

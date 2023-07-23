@@ -76,6 +76,7 @@ function PreviousCourseSequences() {
                       </TableCell>
                     </TableRow>,
                   ]}
+                  outline={true}
                 />
               </Grid>
               <Grid item xs={3} sx={{ padding: "2rem" }}>

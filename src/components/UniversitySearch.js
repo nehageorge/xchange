@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Box, TextField, Stack, TableCell, TableRow } from "@mui/material";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import XchangeTable from "./XchangeTable";
+import Competitiveness from "./Competitiveness";
 
 function UniversitySearch() {
   const [unis, setUnis] = useState([]);
@@ -82,29 +83,11 @@ function UniversitySearch() {
               <TableCell>{uni.languages}</TableCell>
               <TableCell>{uni.terms}</TableCell>
               <TableCell>
-                <Stack direction="row">
-                  <Box
-                    sx={{
-                      backgroundColor: () => {
-                        let comp = uni.competition.toLowerCase();
-                        if (comp == "ultra competitive") return "red";
-                        else if (comp == "very competitive") return "#ECE54B";
-                        else if (comp == "competitive") return "#48C246";
-                        else return "blue";
-                      },
-                      borderRadius: "50%",
-                      height: "40px",
-                      width: "40px",
-                      marginRight: "5px",
-                    }}
-                  ></Box>
-                  <Text style={{ margin: "10px", top: "50%" }}>
-                    {uni.competition}
-                  </Text>
-                </Stack>
+                {Competitiveness(uni.competition)}
               </TableCell>
             </TableRow>
           ))}
+          outline={true}
         />
       </View>
     </div>
