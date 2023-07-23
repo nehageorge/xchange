@@ -9,7 +9,6 @@ import Rating from '@mui/material/Rating';
 import Circle from '@mui/icons-material/Circle';
 
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
@@ -103,24 +102,35 @@ function Review() {
 
 function Discussion() {
     return (
-        <div>
-            <div class='section-title'>
-                Ratings
-            </div>
-            <div class='ratings-box'>
-                <div class='ratings'>
-                    {CustomizedRating("Safe")}
-                    {CustomizedRating("Fun")}
-                    {CustomizedRating("Affordable")}
-                    {CustomizedRating("Easy")}
-                    <div style={{ maxHeight: 20, paddingBottom: "1.5rem" }}></div>
-                    {XChangeButton("Add a Review")}
+        <div class='row'>
+            <div class='col'>
+                <div class='section-title'>
+                    Ratings
+                </div>
+                <div class='ratings-box'>
+                    <div class='ratings'>
+                        {CustomizedRating("Safe")}
+                        {CustomizedRating("Fun")}
+                        {CustomizedRating("Affordable")}
+                        {CustomizedRating("Easy")}
+                        <div style={{ maxHeight: 20, paddingBottom: "1.5rem" }}></div>
+                        {XChangeButton("Add a Review")}
+                    </div>
                 </div>
             </div>
-            <div class='section-title'>
-                Reviews
+            <div class='col'>
+                <div class='row'>
+                    <div class='section-title'>
+                        Reviews
+                    </div>
+                    {XChangeButton("Add a Review")}
+                </div>
+                <List style={{maxHeight: '400px', overflow: 'auto'}}>
+                    {Review()}
+                    {Review()}
+                    {Review()}
+                </List>
             </div>
-            {Review()}
         </div>
     );
 }
