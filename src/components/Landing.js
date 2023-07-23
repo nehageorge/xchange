@@ -3,6 +3,7 @@ import XChangeButton from "./XChangeButton.js";
 import { Text } from "react-native";
 import React from "react";
 import TextField from "@mui/material/TextField";
+import Link from "@mui/joy/Link";
 import { ReactComponent as Plane } from "./assets/Vector-5.svg";
 import { ReactComponent as Suitcase } from "./assets/Vector-6.svg";
 import { ReactComponent as Baggage } from "./assets/Vector-7.svg";
@@ -12,7 +13,7 @@ const font = "Helvetica";
 const TitleText = () => {
   const titleText = "Change";
   const bodyText =
-    "\nEverything you need to plan your exchange term is here,\nwith hundreds of universities and student reviews, as\nwell as all past approved course equivalents by school\nand program.";
+    "\nEverything you need to plan your exchange term is here,\nwith hundreds of universities and student reviews, as\nwell as past approved course equivalents by school\nand program.";
 
   return (
     <Text style={{ fontFamily: font }}>
@@ -26,28 +27,22 @@ const TitleText = () => {
   );
 };
 
-const OtherLinks = () => {
-  const about = "About";
-  const contact = "Contact";
-  const priv = "Privacy Policy";
-
+const OtherLinks = (linkText, path) => {
   return (
-    <Text
+    <Link
+      href={path}
       style={{
         fontFamily: font,
         fontSize: 15,
-        textDecorationLine: "underline",
-        color: "#000000",
         fontWeight: "100",
         fontStyle: "italic",
+        textDecorationLine: "underline",
+        textDecorationColor: "black",
+        color: "black",
       }}
     >
-      {about}
-      {"\n"}
-      {contact}
-      {"\n"}
-      {priv}
-    </Text>
+      {linkText}
+    </Link>
   );
 };
 
@@ -71,7 +66,11 @@ function Landing() {
           {XChangeButton("Search for schools", "/universities")}
           {XChangeButton("Search for courses", "/course/home")}
         </div>
-        <div class="links-padding">{OtherLinks()}</div>
+        <div class="links-padding">
+          {OtherLinks("About", "/about")}
+          {OtherLinks("Contact", "/contact")}
+          {OtherLinks("Privacy Policy", "/privacy")}
+        </div>
       </div>
       <div class="flex-item2">
         <div class="login-panel">
@@ -106,17 +105,47 @@ function Landing() {
             </Text>
             {loginField("Email")}
             {loginField("Password")}
-            <Text
-              style={{
-                fontFamily: font,
-                fontSize: 15,
-                fontWeight: "100",
-                fontStyle: "italic",
-                textDecorationLine: "underline",
-              }}
-            >
-              Forgot your password?
-            </Text>
+            <div class="login-link">
+              <Link
+                style={{
+                  fontFamily: font,
+                  fontSize: 15,
+                  fontWeight: "100",
+                  fontStyle: "italic",
+                  textDecorationLine: "underline",
+                  textDecorationColor: "black",
+                  color: "black",
+                }}
+              >
+                Forgot your password?
+              </Link>
+              <p
+                style={{
+                  fontFamily: font,
+                  fontSize: 15,
+                  fontWeight: "100",
+                  fontStyle: "italic",
+                  color: "black",
+                }}
+              >
+                Don't have an account?{" "}
+                <Link
+                  href="/signup"
+                  style={{
+                    fontFamily: font,
+                    fontSize: 15,
+                    fontWeight: "100",
+                    fontStyle: "italic",
+                    textDecorationLine: "underline",
+                    textDecorationColor: "black",
+                    color: "black",
+                  }}
+                >
+                  {" "}
+                  Sign up
+                </Link>
+              </p>
+            </div>
             {XChangeButton("Login", "/", undefined, {
               width: "325px",
             })}

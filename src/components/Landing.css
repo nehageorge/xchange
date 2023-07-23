@@ -1,76 +1,83 @@
 .flex-container {
-    display: flex;
-    flex-flow: row;
-    align-items: stretch;
-    justify-content: space-around;
-    list-style: none;
+  display: flex;
+  flex-flow: row;
+  align-items: stretch;
+  justify-content: space-around;
+  list-style: none;
 }
 
 .flex-item1 {
-    background: white;
-    height: 100vh;
-    width: 60vw;
-    display: flex;
-    flex-flow: column;
-    border-right: 3px solid #000000;
+  background: white;
+  height: 100vh;
+  width: 60vw;
+  display: flex;
+  flex-flow: column;
+  border-right: 3px solid #000000;
 }
 
 .flex-item2 {
-    background: #FFFDED;
-    display: flex;
-    flex: 1;
-    flex-flow: column;
-    height: 100vh;
-    color: white;
-    font-weight: bold;
-    font-size: 3em;
-    align-items: center;
+  background: #fffded;
+  display: flex;
+  flex: 1;
+  flex-flow: column;
+  height: 100vh;
+  color: white;
+  font-weight: bold;
+  font-size: 3em;
+  align-items: center;
 }
 
 .landing-text-padding {
-    margin-top: 25vh;
-    margin-left: 15vh;
-    width: 550px;
+  margin-top: 25vh;
+  margin-left: 15vh;
+  width: 550px;
 
-    font-family: 'Helvetica';
-    color: black;  
+  font-family: "Helvetica";
+  color: black;
 }
 
 .body-padding {
-    height: 0px;
+  height: 0px;
 }
 
 .left-buttons-padding {
-    margin-top: 25px;
-    margin-left: 15vh;
-    display: flex;
-    flex-flow: row;
-    gap: 12px;
-    justify-content: flex-start;
+  margin-top: 25px;
+  margin-left: 15vh;
+  display: flex;
+  flex-flow: row;
+  gap: 12px;
+  justify-content: flex-start;
 }
 
 .links-padding {
-    margin-top: 100px;
-    margin-left: 15vh;
+  margin-top: 100px;
+  margin-left: 15vh;
+  display: flex;
+  flex-flow: column;
 }
 
 .login-panel {
-    background: #D8D8D8;
-    border-radius: 12pt;
-    margin-top: 18vh;
-    height: 500px;
-    width: 400px;
-    z-index: 2;
+  background: #d8d8d8;
+  border-radius: 12pt;
+  margin-top: 18vh;
+  height: 500px;
+  width: 400px;
+  z-index: 2;
 }
 
 .login-body {
-    margin-top: 15px;
-    margin-left: 35px;
-    margin-right: 40px;
+  margin-top: 15px;
+  margin-left: 35px;
+  margin-right: 40px;
 }
 
-.picture{
-    position: fixed;
+.login-link {
+  margin: 0px;
+  padding: 0px;
+}
+
+.picture {
+  position: fixed;
 }
 
 /*.vl {

@@ -1,38 +1,58 @@
 from urllib.parse import urlparse
-from flask import Flask, request, redirect, jsonify
+from flask import Flask, request, redirect, jsonify, url_for
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
 import flask_appbuilder
 import importlib
 import sys
 import json
+from user_builder import UserBuilder
+from helpers import course_equivalencies_join_to_dict
+from schemas import *
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://xchange@localhost/xchange'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-ma = Marshmallow()
 
+
+"""
+Models 
+"""
 class University(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(128))
 	languages = db.Column(db.String(128))
 	terms = db.Column(db.String(128))
 	competition = db.Column(db.String(128))
+	program = db.Column(db.String(128))
+	location = db.Column(db.String(128))
 
-class UniversitySchema(ma.Schema):
-    class Meta:
-        # Fields to expose
-        fields = ("name", "languages", "terms", "competition")
+class UWCourse(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120))
+    code = db.Column(db.String(20))
+    terms = db.Column(db.String(120))
+    description = db.Column(db.String(128), nullable=True)
 
-with app.app_context():
-    db.create_all()
+class CourseEquivalency(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    uwcourse_id = db.Column(db.Integer,db.ForeignKey("uw_course.id"),nullable=False)
+    university_id = db.Column(db.Integer, db.ForeignKey('university.id'),nullable=False)
+    code = db.Column(db.String(20))
+    year_taken = db.Column(db.String(4))
+    student_program =  db.Column(db.String(120))
 
-uni_schema = UniversitySchema()
-unis_schema = UniversitySchema(many=True)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(128))
+    password = db.Column(db.String(128))
+    is_admin = db.Column(db.Integer)
 
+"""
+Routes
+"""
 @app.route('/universities', methods=['GET'])
 def index():
 	unis = University.query.all()
@@ -41,18 +61,75 @@ def index():
 
 @app.route('/search_unis/<param>', methods=['GET'])
 def search_unis(param):
-	unis = University.query.filter(University.name.like('%'+param+'%'))
+	unis = University.query.filter(University.program.like('%'+param+'%') | University.location.like('%'+param+'%'))
 	res = unis_schema.dump(unis)
 	return jsonify(res)
 
+@app.route('/course_equivalencies', methods=['GET'])
+def get_all_course_equivalencies():
+    result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).all()
+    course_equivalencies = course_equivalencies_join_to_dict(result)
+    return jsonify(course_equivalencies)
 
-# @app.route('/get_uni/<name>', methods=['GET'])
-# def get_uni(name):
-# 	result = University.get_by_name(col, name)
-# 	if not result: return json_response("University not found", 400)
-# 	resultDct = dict(result)
-# 	resultDct.pop("_id")
-# 	return json_response(resultDct)
+@app.route('/search_courses/<string:query>', methods=['GET'])
+def search_courses(query):
+    result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%'))).all()
+    course_equivalencies = course_equivalencies_join_to_dict(result)
+    return jsonify(course_equivalencies)
+
+@app.route('/course_equivalencies/search', methods=['POST'])
+def course_equivalencies_search():
+    content_type = request.headers.get('Content-Type')
+    if (content_type != 'application/json'):
+            return 'Content-Type not supported!'
+    request_body = request.json
+
+    query = request_body.get('query', "")
+    programs = request_body.get('programs', [])
+    unis = request_body.get('unis', [])
+    
+    result = None
+    if programs and unis: 
+        result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (University.name.in_(unis)) & (CourseEquivalency.student_program.in_(programs)) )).all()
+    elif not programs and unis: 
+        result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (University.name.in_(unis)))).all()
+    elif programs and not unis:
+        result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (CourseEquivalency.student_program.in_(programs)) )).all()
+    else:
+        result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%'))).all()
+    
+    course_equivalencies = course_equivalencies_join_to_dict(result)
+    return jsonify(course_equivalencies)
+
+@app.route('/signup', methods=['GET','POST'])
+def signup():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+        if User.query.filter(User.email == email).first() is not None:
+            e = "User with this email already exists. Please log in instead."
+            return redirect(url_for('signup_error', problem=e))
+        try:
+            user = UserBuilder(email, password, confirm_password)
+            db.session.add(User(email=user.email,password=user.password,is_admin=user.is_admin))
+            db.session.commit()
+        except Exception as e:
+            return redirect(url_for('signup_error', problem=str(e)))
+
+        return redirect(url_for('signup_success'))
+    else:
+        return jsonify("")
+
+@app.route('/signup_error', methods=['GET'])
+def signup_error():
+    return jsonify("")
+
+@app.route('/signup_success', methods=['GET'])
+def signup_success():
+    return jsonify("")
+
+
 
 if __name__ == '__main__':
 	app.run()

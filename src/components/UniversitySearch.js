@@ -58,27 +58,32 @@ function UniversitySearch() {
             handleSearch(event.target.value);
           }}
           name="search"
-          label="Search for universities"
+          label="Search for university programs"
           variant="outlined"
           InputLabelProps={{ style: { fontSize: 20 } }}
         />
         <br></br>
         <XchangeTable
-          headers={["University Name", "Languages", "Terms", "Competitiveness"]}
-          colWidths={["30%", "20%", "25%", "25%"]}
+          headers={["Program Name", "Languages", "Terms", "Competitiveness"]}
+          colWidths={["35%", "15%", "25%", "25%"]}
+          numRows={unis.length}
           tableBody={unis.map((uni) => (
             <TableRow
-              key={uni.name}
+              key={uni.program}
               sx={{
                 "&:last-child td, &:last-child th": { border: 0 },
               }}
             >
-              <TableCell
-                component="th"
-                scope="row"
-                style={{ color: "blue", textDecoration: "underline" }}
-              >
-                {uni.name}
+              <TableCell>
+                <Text
+                  component="th"
+                  scope="row"
+                  style={{ color: "blue", textDecoration: "underline" }}
+                >
+                  {uni.program}
+                </Text>
+                <br></br>
+                <Text style={{ fontStyle: "italic" }}>{uni.location}</Text>
               </TableCell>
               <TableCell>{uni.languages}</TableCell>
               <TableCell>{uni.terms}</TableCell>
