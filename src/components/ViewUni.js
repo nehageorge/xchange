@@ -4,6 +4,7 @@ import { Button, Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import UniversityOverviewContent from "./UniversityOverviewContent";
+import PreviouslyApprovedCourses from "./PreviouslyApprovedCourses";
 
 function ViewUni() {
   const params = useParams();
@@ -50,7 +51,7 @@ function ViewUni() {
             </Grid>
         </Grid>
         {content === 0 ? 
-          <UniversityOverviewContent /> : <div></div>
+          <UniversityOverviewContent /> : content === 1 ? <PreviouslyApprovedCourses uniName ={currUni["name"]} /> : <div></div>
           // TODO: put the previously approved courses page (1) and disscussion page (2) heres
         }
     </View>
