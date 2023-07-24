@@ -26,11 +26,7 @@ function XchangeTable(props) {
   return (
     <>
       <TableContainer
-        sx={{
-          borderRadius: "15px",
-          border: 1,
-          borderColor: "gray",
-        }}
+        sx={props.outline? { borderRadius: "15px", border: 1, borderColor: "gray" } : { border: 0}}
       >
         <Table>
           <colgroup>
