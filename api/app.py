@@ -6,6 +6,9 @@ import flask_appbuilder
 import importlib
 import sys
 import json
+import bcrypt
+import jwt
+import os
 from user_builder import UserBuilder
 from helpers import course_equivalencies_join_to_dict
 from schemas import *
@@ -127,6 +130,42 @@ def signup_error():
 
 @app.route('/signup_success', methods=['GET'])
 def signup_success():
+    return jsonify("")
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        result = User.query.filter(User.email == email).first()
+        if result is None:
+            e = "This email is not registered."
+            return redirect(url_for('login_error', problem=str(e)))
+        
+        hashedPw = result.password
+        isSuccess = bcrypt.checkpw(password.encode('utf-8'), hashedPw.encode())
+        
+        if not isSuccess:
+            e = "The password is incorrect"
+            return redirect(url_for('login_error', problem=str(e)))
+            
+        userForToken = {
+            'email': email,
+            'id': str(result.id),
+        }
+        
+        encoded_jwt = jwt.encode(userForToken, os.getenv('SECRET'), algorithm='HS256')
+        return redirect(url_for('login_success', token=encoded_jwt, user=email.removesuffix('@uwaterloo.ca')))
+    else:
+        return jsonify("")
+
+@app.route('/login_error', methods=['GET'])
+def login_error():
+    return jsonify("")
+
+@app.route('/login_success', methods=['GET'])
+def login_success():
     return jsonify("")
 
 

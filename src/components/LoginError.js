@@ -4,12 +4,12 @@ import { Text } from "react-native";
 import { useSearchParams } from "react-router-dom";
 import XchangeTopBar from "./XchangeTopBar";
 
-function SignupError() {
+function LoginError() {
   const [searchParams, _] = useSearchParams();
   return (
     <>
       <XchangeTopBar />
-      <div className="Signup">
+      <div className="Login">
         <center>
           <div
             style={{
@@ -26,7 +26,7 @@ function SignupError() {
                 color: "#1E1E1E",
               }}
             >
-              Sign Up Unsuccessful
+              Log In Unsuccessful
             </Text>
             <br></br>
             <br></br>
@@ -36,7 +36,7 @@ function SignupError() {
             <Button
               sx={{ backgroundColor: "#E0D03B" }}
               style={{ width: "100%" }}
-              href="/signup"
+              href="/"
             >
               <div class="button-text">
                 <Text style={{ width: "325px" }}>Try again</Text>
@@ -49,4 +49,4 @@ function SignupError() {
   );
 }
 
-export default SignupError;
+export default LoginError;

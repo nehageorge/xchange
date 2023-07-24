@@ -27,6 +27,10 @@ When a migration is made ensure that you perform the following steps before runn
 
 1. Go to https://sites.google.com/chromium.org/driver/downloads?authuser=0 and download the correct version of WebDriver depending on your chrome browser version
 
+## Environment setup
+1. Go to the root directory and create a `.env` file. 
+2. In that file, write `SECRET="somestring"`, where "somestring" is a string of your choice.
+
 ## How to run the backend
 
 1. Go to the project root directory.

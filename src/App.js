@@ -13,6 +13,8 @@ import ContactPage from "./components/ContactPage";
 import PrivacyPolicyPage from "./components/PrivacyPolicyPage";
 import SignupError from "./components/SignupError";
 import SignupSuccess from "./components/SignupSuccess";
+import LoginError from "./components/LoginError";
+import LoginSuccess from "./components/LoginSuccess";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Landing />} />
+          <Route exact path="/login_error" element={<LoginError />} />
+          <Route exact path="/login_success" element={<LoginSuccess />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/signup_error" element={<SignupError />} />
           <Route exact path="/signup_success" element={<SignupSuccess />} />
