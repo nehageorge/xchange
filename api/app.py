@@ -1,11 +1,15 @@
 from urllib.parse import urlparse
-from flask import Flask, request, redirect, jsonify
+from flask import Flask, request, redirect, jsonify, url_for
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import flask_appbuilder
 import importlib
 import sys
 import json
+import bcrypt
+import jwt
+import os
+from user_builder import UserBuilder
 from helpers import course_equivalencies_join_to_dict
 from schemas import *
 
@@ -42,6 +46,12 @@ class CourseEquivalency(db.Model):
     code = db.Column(db.String(20))
     year_taken = db.Column(db.String(4))
     student_program =  db.Column(db.String(120))
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(128))
+    password = db.Column(db.String(128))
+    is_admin = db.Column(db.Integer)
 
 """
 Routes
@@ -93,6 +103,71 @@ def course_equivalencies_search():
     
     course_equivalencies = course_equivalencies_join_to_dict(result)
     return jsonify(course_equivalencies)
+
+@app.route('/signup', methods=['GET','POST'])
+def signup():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+        if User.query.filter(User.email == email).first() is not None:
+            e = "User with this email already exists. Please log in instead."
+            return redirect(url_for('signup_error', problem=e))
+        try:
+            user = UserBuilder(email, password, confirm_password)
+            db.session.add(User(email=user.email,password=user.password,is_admin=user.is_admin))
+            db.session.commit()
+        except Exception as e:
+            return redirect(url_for('signup_error', problem=str(e)))
+
+        return redirect(url_for('signup_success'))
+    else:
+        return jsonify("")
+
+@app.route('/signup_error', methods=['GET'])
+def signup_error():
+    return jsonify("")
+
+@app.route('/signup_success', methods=['GET'])
+def signup_success():
+    return jsonify("")
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        result = User.query.filter(User.email == email).first()
+        if result is None:
+            e = "This email is not registered."
+            return redirect(url_for('login_error', problem=str(e)))
+        
+        hashedPw = result.password
+        isSuccess = bcrypt.checkpw(password.encode('utf-8'), hashedPw.encode())
+        
+        if not isSuccess:
+            e = "The password is incorrect"
+            return redirect(url_for('login_error', problem=str(e)))
+            
+        userForToken = {
+            'email': email,
+            'id': str(result.id),
+        }
+        
+        encoded_jwt = jwt.encode(userForToken, os.getenv('SECRET'), algorithm='HS256')
+        return redirect(url_for('login_success', token=encoded_jwt, user=email.removesuffix('@uwaterloo.ca')))
+    else:
+        return jsonify("")
+
+@app.route('/login_error', methods=['GET'])
+def login_error():
+    return jsonify("")
+
+@app.route('/login_success', methods=['GET'])
+def login_success():
+    return jsonify("")
+
 
 
 if __name__ == '__main__':

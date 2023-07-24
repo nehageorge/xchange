@@ -111,6 +111,7 @@ function CourseSearch() {
                     </TableCell>
                   </TableRow>
                 ))}
+                outline={true}
               // TO-DO Connect to the course endpoint
               />
             </Grid>

@@ -12,6 +12,10 @@ import AboutPage from "./components/AboutPage";
 import ContactPage from "./components/ContactPage";
 import PrivacyPolicyPage from "./components/PrivacyPolicyPage";
 import Discussion from "./components/Discussion";
+import SignupError from "./components/SignupError";
+import SignupSuccess from "./components/SignupSuccess";
+import LoginError from "./components/LoginError";
+import LoginSuccess from "./components/LoginSuccess";
 
 function App() {
   return (
@@ -19,14 +23,22 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Landing />} />
+          <Route exact path="/login_error" element={<LoginError />} />
+          <Route exact path="/login_success" element={<LoginSuccess />} />
           <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/signup_error" element={<SignupError />} />
+          <Route exact path="/signup_success" element={<SignupSuccess />} />
           <Route exact path="/about" element={<AboutPage />} />
           <Route exact path="/contact" element={<ContactPage />} />
           <Route exact path="/privacy" element={<PrivacyPolicyPage />} />
           <Route exact path="/universities" element={<UniversitySearch />} />
           <Route exact path="/get_uni/:name" element={<ViewUni />} />
           <Route exact path="/course/home" element={<CourseHome />} />
-          <Route exact path="/get_uni/:name/courses/:course_name" element={<CoursePage />} />
+          <Route
+            exact
+            path="/get_uni/:name/courses/:course_name"
+            element={<CoursePage />}
+          />
           <Route
             exact
             path="/course/prevSequence"

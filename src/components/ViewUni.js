@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Text } from "react-native";
+import { View, Text } from "react-native";
+import { Button, Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
+import XchangeTabbedHeader from "./XchangeTabbedHeader";
+import UniversityOverviewContent from "./UniversityOverviewContent";
+import PreviouslyApprovedCourses from "./PreviouslyApprovedCourses";
 
 function ViewUni() {
   const params = useParams();
+  const [content, setContent] = useState(0);    // Defaults to overview page
   const [currUni, setCurrUni] = useState({});
 
   useEffect(() => {
@@ -14,13 +19,43 @@ function ViewUni() {
     );
   }, []);
 
+  function UniversityButton(txt = "", disabled = false, id = 0) {
+    return(
+      <div class='button'>
+        <Button 
+          sx={{backgroundColor: disabled ? "#D8D8D8" : "#E0D03B", boxShadow: content === id ? 3 : 0}} 
+          style={{width: '100%'}}
+          onClick={() => { setContent(id); }}>
+            <div class="button-text">
+                <Text style={{fontWeight:"bold"}}>{txt}</Text>
+            </div>
+        </Button>
+      </div>
+    )
+  }
+
   return (
-    <div>
-      <h2>{currUni["name"]}</h2>
-      <Text>Info: </Text>
-      <br></br>
-      <Text>{currUni["info"]} </Text>
-    </div>
+    <div className="UniversityOverview">
+    <XchangeTabbedHeader />
+    <h4>{currUni["name"]}</h4>
+    <View style={{ flex: 1, paddingHorizontal: 25, paddingVertical: 20 }}>
+        <Grid container spacing = {2} paddingBottom={3}>
+            <Grid item xs={2}>
+              {UniversityButton("Overview", content!==0, 0)}
+            </Grid>
+            <Grid item xs={3}>
+              {UniversityButton("Previously Approved Courses", content!==1, 1)} 
+            </Grid>
+            <Grid item xs={2}>
+              {UniversityButton("Discussion", content!==2, 2)}
+            </Grid>
+        </Grid>
+        {content === 0 ? 
+          <UniversityOverviewContent /> : content === 1 ? <PreviouslyApprovedCourses uniName ={currUni["name"]} /> : <div></div>
+          // TODO: put the previously approved courses page (1) and disscussion page (2) heres
+        }
+    </View>
+</div>
   );
 }
 
