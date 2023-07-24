@@ -1,35 +1,12 @@
 import React from "react";
 import { TextField, Button } from "@mui/material";
 import { Text } from "react-native";
-import { useNavigate } from "react-router-dom";
-import XChangeButton from "./XChangeButton";
+import XchangeTopBar from "./XchangeTopBar";
 
 function Signup() {
-  const navigate = useNavigate();
   return (
     <>
-      <div
-        className="TopHeader"
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          paddingLeft: 20,
-          paddingRight: 20,
-          paddingTop: 10,
-          paddingBottom: 10,
-        }}
-      >
-        <h2 style={{ color: "#E0D03B" }}>X</h2>
-        <h2>Change </h2>
-        <div style={{ flex: 1 }}></div>
-        <button
-          className="LoginButton"
-          variant="contained"
-          onClick={() => navigate("/")}
-        >
-          <h5>Log in</h5>
-        </button>
-      </div>
+      <XchangeTopBar />
       <div className="Signup">
         <center>
           <div
@@ -55,6 +32,7 @@ function Signup() {
               <Text style={{ fontSize: 15 }}>University of Waterloo Email</Text>
               <TextField
                 label="Email"
+                name="email"
                 variant="outlined"
                 style={{
                   backgroundColor: "#FFFFFF",
@@ -67,6 +45,7 @@ function Signup() {
               <Text style={{ fontSize: 15 }}>Password</Text>
               <TextField
                 type="password"
+                name="password"
                 label="Password"
                 variant="outlined"
                 style={{
@@ -80,6 +59,7 @@ function Signup() {
               <Text style={{ fontSize: 15 }}>Confirm password</Text>
               <TextField
                 type="password"
+                name="confirm_password"
                 label="Password"
                 variant="outlined"
                 style={{
@@ -90,9 +70,15 @@ function Signup() {
               ></TextField>
               <br></br>
               <br></br>
-              {XChangeButton("Sign Up", "/", undefined, {
-                width: "325px",
-              })}
+              <Button
+                sx={{ backgroundColor: "#E0D03B" }}
+                style={{ width: "100%" }}
+                type="submit"
+              >
+                <div class="button-text">
+                  <Text style={{ width: "325px" }}>Sign Up</Text>
+                </div>
+              </Button>
             </form>
           </div>
         </center>
