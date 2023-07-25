@@ -32,7 +32,7 @@ function CourseSearch() {
     console.log("University Filters  " + uniFilters);
     console.log("Program Filters  " + programFilters);
     console.log("Query  " + query);
-    if (query.length == 0) {
+    if (query.length == 0 && uniFilters === [] && programFilters === [] ) {
       setCoursesEquivalency(allCourseEquivalencies);
       return;
     }
@@ -49,27 +49,13 @@ function CourseSearch() {
       },
     }).then((res) =>
       res.json().then((data) => {
-        if (query.length != 0) {
-          setCoursesEquivalency(data);
-        }
+        setCoursesEquivalency(data);
       })
     );
   }, [uniFilters, programFilters, query]);
 
   const search = (newQuery) => {
     setQuery(newQuery);
-    // if (newQuery.length == 0) {
-    //   setCoursesEquivalency(allCourseEquivalencies);
-    //   return;
-    // }
-
-    // fetch("/search_courses/" + newQuery).then((res) =>
-    //   res.json().then((data) => {
-    //     if (newQuery.length != 0) {
-    //       setCoursesEquivalency(data);
-    //     }
-    //   })
-    // );
   };
 
   return (
