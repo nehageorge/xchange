@@ -90,27 +90,17 @@ def course_equivalencies_search():
     query = request_body.get('query', "")
     programs = request_body.get('programs', [])
     unis = request_body.get('unis', [])
-    
-    result = None
-    if query is None: 
-        if programs and unis: 
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter((University.name.in_(unis)) & (CourseEquivalency.student_program.in_(programs))).all()
-        elif not programs and unis: 
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(University.name.in_(unis)).all()
-        elif programs and not unis:
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter((CourseEquivalency.student_program.in_(programs))).all()
-        else:
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).all()
-    else: 
-        if programs and unis: 
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (University.name.in_(unis)) & (CourseEquivalency.student_program.in_(programs)) )).all()
-        elif not programs and unis: 
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (University.name.in_(unis)))).all()
-        elif programs and not unis:
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')) & (CourseEquivalency.student_program.in_(programs)) )).all()
-        else:
-            result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%'))).all()
         
+    filters = []
+    if query is not None:
+        filters.append((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')))
+    if programs: 
+        filters.append((CourseEquivalency.student_program.in_(programs)))
+    if unis: 
+        filters.append(University.name.in_(unis))
+
+    result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(*filters).all()
+
     course_equivalencies = course_equivalencies_join_to_dict(result)
     return jsonify(course_equivalencies)
 
