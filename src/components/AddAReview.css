@@ -1,0 +1,44 @@
+.row {
+    display: flex; 
+    flex-flow: row;
+}
+
+.col {
+    display: flex; 
+    flex-flow: column;
+    align-items: space-evenly;
+    width: 100%;
+    
+    padding-left: 20px;
+    padding-right: 30px;
+}
+
+.input {
+    display: flex; 
+    flex-flow: column;
+}
+
+.name {
+    padding-left: 8px;
+}
+
+.add-a-review {
+    font-weight: 600;
+    font-size: 36px;
+    
+    margin-left: 28px;
+    margin-top: 20px;
+}
+
+.ratings-box {
+    background: #f3f3f3;
+    outline-style: solid;
+    outline-color: #f3f3f3;
+
+    display: flex;
+    flex-flow: column;
+    align-items: start;
+
+    border-radius: 12pt;
+    width: fit-content;
+}

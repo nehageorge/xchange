@@ -103,7 +103,7 @@ function Review() {
 function Discussion() {
     return (
         <div class='row'>
-            <div class='col'>
+            <div class='col' style={{maxWidth: 450}}>
                 <div class='section-title'>
                     Ratings
                 </div>
@@ -119,13 +119,10 @@ function Discussion() {
                 </div>
             </div>
             <div class='col'>
-                <div class='row'>
-                    <div class='section-title'>
-                        Reviews
-                    </div>
-                    {XChangeButton("Add a Review")}
+                <div class='section-title'>
+                    Reviews
                 </div>
-                <List style={{maxHeight: '400px', overflow: 'auto'}}>
+                <List style={{maxHeight: '65vh', overflow: 'auto'}}>
                     {Review()}
                     {Review()}
                     {Review()}

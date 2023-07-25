@@ -16,6 +16,7 @@ import SignupError from "./components/SignupError";
 import SignupSuccess from "./components/SignupSuccess";
 import LoginError from "./components/LoginError";
 import LoginSuccess from "./components/LoginSuccess";
+import AddAReview from "./components/AddAReview";
 
 function App() {
   return (
@@ -45,7 +46,7 @@ function App() {
             element={<PreviousCourseSequences />}
           />
           <Route exact path="/course/search" element={<CourseSearch />} />
-          <Route exact path="/discussion" element={<Discussion/>} />
+          <Route exact path="/review" element={<AddAReview/>}/>
         </Routes>
       </BrowserRouter>
     </>

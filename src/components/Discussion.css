@@ -1,6 +1,8 @@
 .row {
     display: flex; 
     flex-flow: row;
+    justify-content: start;
+    align-items: start;
 }
 
 .col {
@@ -41,10 +43,9 @@
 .review-bg {
     background-image: url(./assets/Review.svg);
     background-size: 900px;
+    background-repeat: no-repeat;
     width: 900px;
     height: 210px;
-    border: 2px solid;
-    color: #000000;
 
     display: flex;
     flex-flow: row;
