@@ -15,7 +15,8 @@ function CourseSearch() {
   const [courseEquivalencies, setCoursesEquivalency] = useState([]);
   const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
   const [query, setQuery] = useState("");
-
+  const [programFilters, setProgramFilters] = useState([]);
+  const [uniFilters, setUniFilters] = useState([]);
 
   useEffect(() => {
     fetch("/course_equivalencies").then((res) =>
@@ -26,20 +27,49 @@ function CourseSearch() {
     );
   }, []);
 
-  const search = (newQuery) => {
-    setQuery(newQuery);
-    if (newQuery.length == 0) {
+  useEffect(() => {
+    console.log("Par: Change detected");
+    console.log("University Filters  " + uniFilters);
+    console.log("Program Filters  " + programFilters);
+    console.log("Query  " + query);
+    if (query.length == 0) {
       setCoursesEquivalency(allCourseEquivalencies);
       return;
     }
 
-    fetch("/search_courses/" + newQuery).then((res) =>
+    fetch("/course_equivalencies/search", {
+      method: "POST",
+      body: JSON.stringify({
+        query: query,
+        programs: programFilters,
+        unis: uniFilters,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    }).then((res) =>
       res.json().then((data) => {
-        if (newQuery.length != 0) {
+        if (query.length != 0) {
           setCoursesEquivalency(data);
         }
       })
     );
+  }, [uniFilters, programFilters, query]);
+
+  const search = (newQuery) => {
+    setQuery(newQuery);
+    // if (newQuery.length == 0) {
+    //   setCoursesEquivalency(allCourseEquivalencies);
+    //   return;
+    // }
+
+    // fetch("/search_courses/" + newQuery).then((res) =>
+    //   res.json().then((data) => {
+    //     if (newQuery.length != 0) {
+    //       setCoursesEquivalency(data);
+    //     }
+    //   })
+    // );
   };
 
   return (
@@ -78,7 +108,7 @@ function CourseSearch() {
                   "Host University Course",
                   "Host University",
                   "Year Taken",
-                  "Program of Student"
+                  "Program of Student",
                 ]}
                 colWidths={["25%", "20%", "25%", "10%", "20%"]}
                 numRows={courseEquivalencies.length}
@@ -92,9 +122,7 @@ function CourseSearch() {
                     <TableCell>
                       {ce.uwcourse.code}: {ce.uwcourse.name}
                     </TableCell>
-                    <TableCell>
-                      {ce.code}
-                    </TableCell>
+                    <TableCell>{ce.code}</TableCell>
                     <TableCell
                       component="th"
                       scope="row"
@@ -103,20 +131,21 @@ function CourseSearch() {
                       {ce.university.name}
                     </TableCell>
 
-                    <TableCell>
-                      {ce.year_taken}
-                    </TableCell>
-                    <TableCell>
-                      {ce.student_program}
-                    </TableCell>
+                    <TableCell>{ce.year_taken}</TableCell>
+                    <TableCell>{ce.student_program}</TableCell>
                   </TableRow>
                 ))}
                 outline={true}
-              // TO-DO Connect to the course endpoint
+                // TO-DO Connect to the course endpoint
               />
             </Grid>
             <Grid item xs={3}>
-              <CoursePageFilters />
+              <CoursePageFilters
+                uniFiltersState={uniFilters}
+                setUniFiltersState={setUniFilters}
+                programFiltersState={programFilters}
+                setProgramFiltersState={setProgramFilters}
+              />
             </Grid>
           </Grid>
         </Box>
