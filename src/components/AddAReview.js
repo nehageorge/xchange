@@ -45,7 +45,6 @@ function Slct(txt) {
 }
 
 function AddAReview(props) {
-
   function close() {
     props.setOpen(false);
   }
@@ -70,7 +69,7 @@ function AddAReview(props) {
           <Grid item xs={3}>
             <div>
               <p>Exchange Term</p>
-              <p>{Slct("Exchange Termn")}</p>
+              <p>{Slct("Exchange Term")}</p>
             </div>
           </Grid>
           <Grid item xs={6}>
