@@ -1,7 +1,7 @@
 import { Box, Stack } from "@mui/material";
 import React from "react";
 
-function AddEquivalencyButton() {
+function AddEquivalencyButton(props) {
   return (
     <div className="AddEquivalencyButton">
       <button
@@ -11,6 +11,7 @@ function AddEquivalencyButton() {
           border: "none",
           color: "black",
         }}
+        onClick={props.onClick}
       >
         <Stack direction="row" spacing={-5}>
           <Stack spacing={-10}>
