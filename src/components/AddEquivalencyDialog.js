@@ -3,6 +3,8 @@ import React from "react";
 import XChangeButton from "./XChangeButton";
 
 function AddEquivalencyDialog(props) {
+  const user = window.sessionStorage.getItem("user");
+  const userPresent = user ? true : false;
   // placeholder data
   const uwCourseNames = [
     { label: "Concurrent and Parallel Programming", code: "CS 343" },
@@ -47,50 +49,57 @@ function AddEquivalencyDialog(props) {
     <Dialog
       open={props.open}
       onClose={props.onClose}
-      fullWidth={true}
+      fullWidth={userPresent}
       maxWidth="md"
       PaperProps={{ style: { padding: 20 } }}
     >
-      <div className="DialogContent">
-        <h3>Add Your Course Equivalency</h3>
-        <div
-          style={{ height: 3, width: 400, backgroundColor: "#e0d03b" }}
-        ></div>
-        <Grid container spacing={2} direction="row" padding={3}>
-          <Grid item xs={4}>
-            <p>UW Course Name</p>
-            {DropdownMenu("", uwCourseNames)}
+      {userPresent && (
+        <div className="DialogContent">
+          <h3>Add Your Course Equivalency</h3>
+          <div
+            style={{ height: 3, width: 400, backgroundColor: "#e0d03b" }}
+          ></div>
+          <Grid container spacing={2} direction="row" padding={3}>
+            <Grid item xs={4}>
+              <p>UW Course Name</p>
+              {DropdownMenu("", uwCourseNames)}
+            </Grid>
+            <Grid item xs={4}>
+              <p>Your Program</p>
+              {DropdownMenu("", uwPrograms)}
+            </Grid>
+            <Grid item xs={4}>
+              <p>Year Taken</p>
+              {DropdownMenu("", pastTenYears)}
+            </Grid>
+            <Grid item xs={4}>
+              <p>Host University</p>
+              {DropdownMenu("", hostUnis)}
+            </Grid>
+            <Grid item xs={4}>
+              <p>Host Course Name</p>
+              <TextField sx={{ width: "100%" }}></TextField>
+            </Grid>
+            <Grid item xs={4}>
+              <p>Host University Course Code</p>
+              <TextField sx={{ width: "100%" }}></TextField>
+            </Grid>
+            <Grid item xs={12}></Grid>
+            <Grid item xs={6}></Grid>
+            <Grid item xs={3}>
+              <div onClick={props.onClose}>{XChangeButton("Cancel")}</div>
+            </Grid>
+            <Grid item xs={3}>
+              <div onClick={props.saveOnClick}>{XChangeButton("Save")}</div>
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <p>Your Program</p>
-            {DropdownMenu("", uwPrograms)}
-          </Grid>
-          <Grid item xs={4}>
-            <p>Year Taken</p>
-            {DropdownMenu("", pastTenYears)}
-          </Grid>
-          <Grid item xs={4}>
-            <p>Host University</p>
-            {DropdownMenu("", hostUnis)}
-          </Grid>
-          <Grid item xs={4}>
-            <p>Host Course Name</p>
-            <TextField sx={{ width: "100%" }}></TextField>
-          </Grid>
-          <Grid item xs={4}>
-            <p>Host University Course Code</p>
-            <TextField sx={{ width: "100%" }}></TextField>
-          </Grid>
-          <Grid item xs={12}></Grid>
-          <Grid item xs={6}></Grid>
-          <Grid item xs={3}>
-            <div onClick={props.onClose}>{XChangeButton("Cancel")}</div>
-          </Grid>
-          <Grid item xs={3}>
-            <div onClick={props.saveOnClick}>{XChangeButton("Save")}</div>
-          </Grid>
-        </Grid>
-      </div>
+        </div>
+      )}
+      {!userPresent && (
+        <div className="UnloggedDialogContent">
+          <h3>You must be logged in first!</h3>
+        </div>
+      )}
     </Dialog>
   );
 }
