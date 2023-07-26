@@ -1,7 +1,8 @@
 import "./UniversitySearch.css";
 import { Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import { Box, TextField, Stack, TableCell, TableRow } from "@mui/material";
+import { TextField, TableCell, TableRow } from "@mui/material";
+import { Link } from "react-router-dom";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import XchangeTable from "./XchangeTable";
 import Competitiveness from "./Competitiveness";
@@ -75,21 +76,20 @@ function UniversitySearch() {
               }}
             >
               <TableCell>
-                <Text
+                <Link
                   component="th"
                   scope="row"
-                  style={{ color: "blue", textDecoration: "underline" }}
+                  style={{ fontSize: 15 }}
+                  to={`/get_uni/${uni.name}`}
                 >
                   {uni.program}
-                </Text>
+                </Link>
                 <br></br>
                 <Text style={{ fontStyle: "italic" }}>{uni.location}</Text>
               </TableCell>
               <TableCell>{uni.languages}</TableCell>
               <TableCell>{uni.terms}</TableCell>
-              <TableCell>
-                {Competitiveness(uni.competition)}
-              </TableCell>
+              <TableCell>{Competitiveness(uni.competition)}</TableCell>
             </TableRow>
           ))}
           outline={true}
