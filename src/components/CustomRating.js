@@ -20,7 +20,7 @@ const StyledRating = styled(Rating)({
   });
   
   function CustomRating(text) {
-    const [value, setValue] = React.useState(2);
+    const [value, setValue] = React.useState(9);
     const [hover, setHover] = React.useState(-1);
   
     return (
@@ -36,7 +36,7 @@ const StyledRating = styled(Rating)({
         >
           <StyledRating
             name="customized-color"
-            defaultValue={2}
+            defaultValue={9}
             max={10}
             style={{ paddingRight: 10 }}
             getLabelText={(value) => `${value} Circle${value !== 1 ? "s" : ""}`}
