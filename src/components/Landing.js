@@ -117,6 +117,7 @@ function Landing() {
                 }}
               ></TextField>
               <Link
+                href="/forgot_password"
                 style={{
                   fontFamily: font,
                   fontSize: 15,

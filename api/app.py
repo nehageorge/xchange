@@ -124,6 +124,20 @@ def signup():
     else:
         return jsonify("")
 
+@app.route('/forgot_password', methods=['GET','POST'])
+#Need to use UserBuilder, or do the same salting protocol as in UserBuilder
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form['email']
+
+        result = User.query.filter(User.email == email).first()
+        if result is None:
+            e = "This email is not registered."
+            return redirect(url_for('login_error', problem=str(e)))
+        else:
+            flash('You did it!', 'success')
+
+
 @app.route('/signup_error', methods=['GET'])
 def signup_error():
     return jsonify("")
