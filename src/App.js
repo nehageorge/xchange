@@ -16,6 +16,7 @@ import SignupSuccess from "./components/SignupSuccess";
 import LoginError from "./components/LoginError";
 import LoginSuccess from "./components/LoginSuccess";
 import ForgotPassword from "./components/ForgotPassword";
+import ForgotPasswordSuccess from "./components/ForgotPasswordSuccess";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/signup_error" element={<SignupError />} />
           <Route exact path="/signup_success" element={<SignupSuccess />} />
           <Route exact path="/forgot_password" element={<ForgotPassword />} />
+          <Route exact path="/forgot_password_success/:token" element={<ForgotPasswordSuccess />} />
           <Route exact path="/about" element={<AboutPage />} />
           <Route exact path="/contact" element={<ContactPage />} />
           <Route exact path="/privacy" element={<PrivacyPolicyPage />} />
