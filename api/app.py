@@ -82,25 +82,21 @@ def search_courses(query):
 
 @app.route('/course/search', methods=['POST', 'GET'])
 def course_search():
-    if request.method == 'POST':
-        print("HI LOL")
-        uw_course = request.form['uw_course_name']
-        program = request.form['program']
-        year = request.form['year_taken']
-        uni = request.form['host_uni']
-        course_name = request.form['host_course_name']
-        course_code = request.form['host_course_code']
+    uw_course = request.form['uw_course_name']
+    program = request.form['program']
+    year = request.form['year_taken']
+    uni = request.form['host_uni']
+    course_name = request.form['host_course_name']
+    course_code = request.form['host_course_code']
 
-        uni = University.query.filter(University.name == uni).first()
-        uni_id = uni.id if uni else 54
-        uw_course = UWCourse.query.filter(UWCourse.code == uw_course).first()
-        uw_course_id = uw_course.id if uw_course else 1
+    uni = University.query.filter(University.name == uni).first()
+    uni_id = uni.id if uni else 54
+    uw_course = UWCourse.query.filter(UWCourse.code == uw_course).first()
+    uw_course_id = uw_course.id if uw_course else 1
 
-        db.session.add(CourseEquivalency(uwcourse_id=uw_course_id,university_id=uni_id,code="{0}: {1}".format(course_code,course_name), year_taken=year,student_program=program))
-        db.session.commit()
-        return redirect(url_for('course_search'))
-    else:
-        return jsonify("")
+    db.session.add(CourseEquivalency(uwcourse_id=uw_course_id,university_id=uni_id,code="{0}: {1}".format(course_code,course_name), year_taken=year,student_program=program))
+    db.session.commit()
+    return redirect(url_for('course_search'))
 
 @app.route('/course_equivalencies/search', methods=['POST'])
 def course_equivalencies_search():
