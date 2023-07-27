@@ -43,7 +43,7 @@ class CourseEquivalency(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     uwcourse_id = db.Column(db.Integer,db.ForeignKey("uw_course.id"),nullable=False)
     university_id = db.Column(db.Integer, db.ForeignKey('university.id'),nullable=False)
-    code = db.Column(db.String(20))
+    code = db.Column(db.String(128))
     year_taken = db.Column(db.String(4))
     student_program =  db.Column(db.String(120))
 
@@ -79,6 +79,28 @@ def search_courses(query):
     result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%'))).all()
     course_equivalencies = course_equivalencies_join_to_dict(result)
     return jsonify(course_equivalencies)
+
+@app.route('/course/search', methods=['POST', 'GET'])
+def course_search():
+    if request.method == 'POST':
+        print("HI LOL")
+        uw_course = request.form['uw_course_name']
+        program = request.form['program']
+        year = request.form['year_taken']
+        uni = request.form['host_uni']
+        course_name = request.form['host_course_name']
+        course_code = request.form['host_course_code']
+
+        uni = University.query.filter(University.name == uni).first()
+        uni_id = uni.id if uni else 54
+        uw_course = UWCourse.query.filter(UWCourse.code == uw_course).first()
+        uw_course_id = uw_course.id if uw_course else 1
+
+        db.session.add(CourseEquivalency(uwcourse_id=uw_course_id,university_id=uni_id,code="{0}: {1}".format(course_code,course_name), year_taken=year,student_program=program))
+        db.session.commit()
+        return redirect(url_for('course_search'))
+    else:
+        return jsonify("")
 
 @app.route('/course_equivalencies/search', methods=['POST'])
 def course_equivalencies_search():
