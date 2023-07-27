@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button } from "@mui/material";
+import { useParams } from "react-router-dom";
 import { Text } from "react-native";
 import XchangeTopBar from "./XchangeTopBar";
 
 function ForgotPasswordSuccess() {
+    const params = useParams();
+    const [token, setToken] = useState("");
+  
+    useEffect(() => {
+        fetch("/forgot_password_success/" + params.token).then((res) =>
+            res.json().then((data) => {
+            setToken(data);
+            })
+        );
+        }, []);
   return (
     <>
       <XchangeTopBar />
@@ -17,7 +28,11 @@ function ForgotPasswordSuccess() {
               padding: "50px",
             }}
           >
-            <form action="/forgot_password_success" method="POST">
+            <form action="/forgot_password_success/<token>" method="POST">
+                {/* <Text>
+                    {params.token}
+                </Text> */}
+                
               <Text
                 style={{
                   fontSize: 30,

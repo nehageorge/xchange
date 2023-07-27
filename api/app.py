@@ -163,14 +163,15 @@ def signup():
 def send_mail(user):
     token=user.get_token()
     msg=Message('Password Reset Request',recipients=[user.email], sender='xchangeuw@outlook.com')
+    print(url_for('forgot_password_success', token=token,_external=True).replace("http://127.0.0.1:5000", "http://127.0.0.1:3000"))
     msg.body=f''' To reset your password, please follow the link below:
     
-    {url_for('reset_token', token=token,_external=True)}
+    {url_for('forgot_password_success', token=token,_external=True).replace("http://127.0.0.1:5000", "http://127.0.0.1:3000")}
     If you didn't send a password reset request, please ignore this message.
 
     '''
 
-    mail.send(msg)
+    # mail.send(msg)
 
 @app.route('/forgot_password', methods=['GET','POST'])
 #Need to use UserBuilder, or do the same salting protocol as in UserBuilder
@@ -189,30 +190,36 @@ def forgot_password():
     else:
         return jsonify("")
 
+#Need to pass in token
 @app.route('/forgot_password_success/<token>', methods=['GET', 'POST'])
-def reset_token(token):
+def forgot_password_success(token):
+    print("Token: " + str(token))
     # if request.method == 'POST':
     user=User.verify_token(token)
     print("In reset token, past verify_token")
     if user is None:
+        print("That is an invalid token or it has expired. Please try again")
         flash('That is an invalid token or it has expired. Please try again.', 'warning')
         return redirect(url_for('forgot_password'))
     print("User exists")
     #TODO: I need to get to the forgot_password_success/<token> page first before we try to grab the 
     #passwords and stuff
-    password = request.form['password']
-    confirm_password = request.form['confirm_password']
+    # password = request.form['password']
+    # confirm_password = request.form['confirm_password']
 
-    if not(password == confirm_password):
-        raise ValueError("Passwords do not match")
+    # print("Looking at password form")
 
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
-    user.password = hashed
-    db.session.commit()
-    flash('Password changed! Please login!', 'success')
-    print("TEST")
-    return redirect(url_for('/'))
+    # if not(password == confirm_password):
+    #     raise ValueError("Passwords do not match")
+
+    # salt = bcrypt.gensalt()
+    # hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+    # user.password = hashed
+    # db.session.commit()
+    # flash('Password changed! Please login!', 'success')
+    # print("TEST")
+    # return redirect(url_for('signup'))
+    return jsonify("")
     # else:
     #     return jsonify("test")
 
