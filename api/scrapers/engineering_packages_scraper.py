@@ -7,28 +7,9 @@ page = requests.get(URL)
 
 soup = BeautifulSoup(page.content, "html.parser")
 
-tds = soup.find_all('td')
-for td in tds:
-    rows = int(td.get("rowspan", 0))
-    if rows:
-        print(rows)
+
 
 table = soup.find('table')
-tds = soup.find_all('td')
-rows = []
-for td in tds:
-    row_span = int(td.get("rowspan", 0))
-    if row_span == 0:
-        rows.append(td)
-
-inner_links = set()
-for row in rows:
-    for a in row.find_all('a', href=True):
-        inner_links.add(a['href'])
-
-print(f"\n\nAll inner links in the table:\t{len(inner_links)}")
-
-
 links = set()
 count = 0
 for a in table.find_all('a', href=True):
@@ -37,14 +18,63 @@ for a in table.find_all('a', href=True):
 
 print(f"\n\nAll links in the table:\t{count}")
 
-# print(f"Pages with Course Packages at Universities: {len(links)}\n")
-# for link in links:
-#     print(f"Link:\t{link}")
-#     page = requests.get(f"{UW_URL}{link}")
+print(f"Pages with Course Packages at Universities: {len(links)}\n")
+for link in links:
+    print(f"Link:\t{link}")
+    URL = ""
+    if link[0] == '/': 
+        URL = f"{UW_URL}{link}"
+    elif link[0:5] == "https":
+        URL = link
+    elif link[0] == '#':
+        continue
+        
+    page = requests.get(URL)
 
-#     soup = BeautifulSoup(page.content, "html.parser")
+    soup = BeautifulSoup(page.content, "html.parser")
+
+links = list(links)
 
 
-# page = requests.get(f"{UW_URL}{link[0]}")
+
+
+
+
+
+
+# page = requests.get("https://uwaterloo.ca/engineering/czech-technical-university-ctu-course-packages")
 
 # soup = BeautifulSoup(page.content, "html.parser")
+
+# table = soup.find('table')
+# # print(table)
+# faculties = []
+# rows = table.findChildren('tr')
+# print(f"Rows in table:\t{len(rows)}")
+# faculty = None
+# student = None 
+# for row in rows: 
+#     # The titles of the Engineering on the page have colspan = 2
+#     tds = row.find_all('td')
+#     if len(tds) == 1:
+#         td = tds[0]
+#         col_span = int(td.get("colspan", 0))
+#         if col_span == 2: 
+#             td_faculty = row.findChildren('h2')
+#             if len(td_faculty) == 1:
+#                 faculty = td_faculty[0].get_text() 
+#                 faculties.append(faculty)
+#                 print(f"{faculty}")
+#             # Student details are in a <td> that contains a <strong> tag
+#             td_student = row.findChildren('strong')
+#             if len(td_student) == 1:
+#                 student = td_student[0].get_text()
+#     elif len(tds) == 2:
+#         uwcourse = tds[0].get_text()
+#         foreign_course = tds[1].get_text()
+#         print(f"{student}\t\t{uwcourse}\t\t{foreign_course}\t\t{faculty}")
+
+                
+
+
+
