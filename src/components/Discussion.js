@@ -2,16 +2,16 @@ import "./Discussion.css";
 import XChangeButton from "./XChangeButton.js";
 import CustomRating from "./CustomRating.js";
 import AddAReview from "./AddAReview.js";
-import * as React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import Typography from "@mui/material/Typography";
 import Dialog from "@mui/material/Dialog";
 
 import List from "@mui/material/List";
 
-function SimpleDialogDemo() {
+function SimpleDialogDemo(uniId) {
   const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,91 +19,98 @@ function SimpleDialogDemo() {
 
   const handleClose = (value) => {
     setOpen(false);
-    setSelectedValue(value);
   };
 
   return (
     <div>
       <div onClick={handleClickOpen}>{XChangeButton("Add a Review")}</div>
       <Dialog
-        selectedValue={selectedValue}
         open={open}
         onClose={handleClose}
         fullWidth={true}
         maxWidth={"md"}
       >
-        <AddAReview setOpen={setOpen} />
+        <AddAReview setOpen={setOpen} uniId={uniId} />
       </Dialog>
     </div>
   );
 }
 
-function Review() {
+function Review(post) {
   return (
-    <div class="review-bg">
-      <div class="user">
-        <div class="duck-img"></div>
-        Katie George
+    <div className="review-bg">
+      <div className="user">
+        <div className="duck-img"></div>
+        {post["student_name"]}
       </div>
-      <div class="review">
-        <div class="review-title">
-          <div class="bold"> Science / 3B </div>
+      <div className="review">
+        <div className="review-title">
+          <div className="bold">
+            {`${post["student_faculty"]} / ${post["student_term"]}`}
+          </div>
         </div>
-        <div class="text">
-          <div class="bold"> Housing:</div>
-          &nbsp;Provided and Guaranteed by school
+        <div className="text">
+          <div className="bold"> Housing:</div>
+          &nbsp;{post["housing"]}
         </div>
-        <div class="text">
-          <div class="bold"> Favourite Aspect:</div>
-          &nbsp;Cultural immersion
+        <div className="text">
+          <div className="bold"> Favourite Aspect:</div>
+          &nbsp;{post["favourite_aspect"]}
         </div>
-        <div class="text">
-          <div class="bold"> Food Situation:</div>
-          &nbsp;Most often cooked
+        <div className="text">
+          <div className="bold"> Food Situation:</div>
+          &nbsp;{post["food_situation"]}
         </div>
       </div>
-      <div class="vertical-line"></div>
-      <div class="user-rating-categories">
-        <div class="bold"> Safe:</div>
-        <div class="bold"> Fun:</div>
-        <div class="bold"> Affordable: </div>
-        <div class="bold"> Easy:</div>
+      <div className="vertical-line"></div>
+      <div className="user-rating-categories">
+        <div className="bold"> Safe:</div>
+        <div className="bold"> Fun:</div>
+        <div className="bold"> Affordable: </div>
+        <div className="bold"> Easy:</div>
       </div>
-      <div class="user-ratings">
-        <Typography>9/10</Typography>
-        <Typography>9/10</Typography>
-        <Typography>9/10</Typography>
-        <Typography>9/10</Typography>
+      <div className="user-ratings">
+        <Typography>{`${post["safe_rating"]}/10`}</Typography>
+        <Typography>{`${post["fun_rating"]}/10`}</Typography>
+        <Typography>{`${post["affordable_rating"]}/10`}</Typography>
+        <Typography>{`${post["easy_rating"]}/10`}</Typography>
       </div>
     </div>
   );
 }
 
-function Discussion() {
-  // TODO: the ratings section here allows for it to be changed on this page
-  // it should be fixed, display only, non editable..
-  // add bool param to custom rating function for whether it's fixed or not
+function Discussion(props) {
+  const [posts, setPosts] = useState([]);
+  const params = useParams();
+
+  useEffect(() => {
+    fetch("/get_uni/discussion/" + params.id).then((res) =>
+      res.json().then((data) => {
+        setPosts(data);
+      })
+    );
+  }, []);
+
   return (
-    <div class="row">
-      <div class="col" style={{ maxWidth: 450 }}>
-        <div class="section-title">Ratings</div>
-        <div class="ratings-box">
-          <div class="ratings">
-            {CustomRating("Safe", true)}
-            {CustomRating("Fun", true)}
-            {CustomRating("Affordable", true)}
-            {CustomRating("Easy", true)}
-            <div style={{ maxHeight: 20, paddingBottom: "1.5rem" }}></div>
-            {SimpleDialogDemo()}
+    <div className="row">
+      <div className="col" style={{ maxWidth: 450 }}>
+        <div className="section-title">Ratings</div>
+        <div className="ratings-box">
+          <div className="ratings">
+            {CustomRating("Safe", "", true)}
+            {CustomRating("Fun", "", true)}
+            {CustomRating("Affordable", "", true)}
+            {CustomRating("Easy", "", true)}
+            <div style={{ maxHeight: 20, paddingBottom: "1.5rem" }}>
+              {SimpleDialogDemo(props.uniId)}
+            </div>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="section-title">Reviews</div>
+      <div className="col">
+        <div className="section-title">Reviews</div>
         <List style={{ maxHeight: "65vh", overflow: "auto" }}>
-          {Review()}
-          {Review()}
-          {Review()}
+          {posts.map((post) => Review(post))}
         </List>
       </div>
     </div>

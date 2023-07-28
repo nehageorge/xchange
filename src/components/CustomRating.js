@@ -19,7 +19,7 @@ const StyledRating = styled(Rating)({
   },
 });
 
-function CustomRating(text, readOnly = false) {
+function CustomRating(text, name = "", readOnly = false) {
   const [value, setValue] = React.useState(9);
   const [hover, setHover] = React.useState(9);
 
@@ -35,7 +35,7 @@ function CustomRating(text, readOnly = false) {
         }}
       >
         <StyledRating
-          name="customized-color"
+          name={name}
           readOnly={readOnly}
           defaultValue={9}
           max={10}
@@ -45,13 +45,13 @@ function CustomRating(text, readOnly = false) {
           icon={<Circle fontSize="inherit" />}
           emptyIcon={<Circle fontSize="inherit" />}
           onChange={(event, newValue) => {
-            setValue(newValue == null ? 9 : newValue);
+            setValue(newValue == null ? 0 : newValue);
           }}
           onChangeActive={(event, newHover) => {
-            setHover(newHover == null ? 9 : newHover);
+            setHover(newHover == null ? 0 : newHover);
           }}
         />
-        <div>{`${value} / 10`}</div>
+        <div name={name}>{`${value} / 10`}</div>
       </Box>
     </div>
   );
