@@ -21,7 +21,7 @@ const TitleText = () => {
         <Text style={{ color: "#E0D03B" }}>X</Text>
         {titleText}
       </Text>
-      <div class="body-padding"></div>
+      <div className="body-padding"></div>
       <Text style={{ fontSize: 20, fontStyle: "italic" }}>{bodyText}</Text>
     </Text>
   );
@@ -48,24 +48,23 @@ const OtherLinks = (linkText, path) => {
 
 function Landing() {
   return (
-    <div class="flex-container">
-      <div class="flex-item1">
-        <div class="landing-text-padding">{TitleText()}</div>
-        <div class="left-buttons-padding">
+    <div className="flex-container">
+      <div className="flex-item1">
+        <div className="landing-text-padding">{TitleText()}</div>
+        <div className="left-buttons-padding">
           {XChangeButton("Search for schools", "/universities")}
           {XChangeButton("Search for courses", "/course/home")}
         </div>
-        <div class="links-padding">
+        <div className="links-padding">
           {OtherLinks("About", "/about")}
           {OtherLinks("Contact", "/contact")}
           {OtherLinks("Privacy Policy", "/privacy")}
         </div>
       </div>
-      <div class="flex-item2">
-        <div class="login-panel">
+      <div className="flex-item2">
+        <div className="login-panel">
           <div
             style={{
-              position: "fixed",
               marginTop: "-65px",
               marginLeft: "35px",
             }}
@@ -74,14 +73,13 @@ function Landing() {
           </div>
           <div
             style={{
-              position: "fixed",
-              marginTop: "-90px",
+              marginTop: "-95px",
               marginLeft: "120px",
             }}
           >
             <Baggage style={{ scale: "2.5" }} />
           </div>
-          <div class="login-body">
+          <div className="login-body">
             <form action="/" method="POST">
               <Text
                 style={{
@@ -93,6 +91,7 @@ function Landing() {
               >
                 Login with email
               </Text>
+              <div style={{ padding: 10 }}></div>
               <TextField
                 id="outlined-basic"
                 label="Email"
@@ -104,6 +103,7 @@ function Landing() {
                   width: "100%",
                 }}
               ></TextField>
+              <div style={{ padding: 5 }}></div>
               <TextField
                 id="outlined-basic"
                 label="Password"
@@ -160,7 +160,7 @@ function Landing() {
                 style={{ width: "100%" }}
                 type="submit"
               >
-                <div class="button-text">
+                <div className="button-text">
                   <Text style={{ width: "325px" }}>Log in</Text>
                 </div>
               </Button>

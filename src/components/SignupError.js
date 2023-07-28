@@ -38,7 +38,7 @@ function SignupError() {
               style={{ width: "100%" }}
               href="/signup"
             >
-              <div class="button-text">
+              <div className="button-text">
                 <Text style={{ width: "325px" }}>Try again</Text>
               </div>
             </Button>

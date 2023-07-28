@@ -40,7 +40,7 @@ function SignupSuccess() {
               type="submit"
               href="/"
             >
-              <div class="button-text">
+              <div className="button-text">
                 <Text style={{ width: "325px" }}>Go Home</Text>
               </div>
             </Button>
