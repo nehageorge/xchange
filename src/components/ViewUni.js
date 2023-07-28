@@ -39,6 +39,8 @@ function ViewUni() {
     <div className="UniversityOverview">
     <XchangeTabbedHeader />
     <h4>{currUni["name"]}</h4>
+    {/* <h4>Duck</h4> */}
+    <h4>{params.name}</h4>
     <View style={{ flex: 1, paddingHorizontal: 25, paddingVertical: 20 }}>
         <Grid container spacing = {2} paddingBottom={3}>
             <Grid item xs={2}>
@@ -52,7 +54,7 @@ function ViewUni() {
             </Grid>
         </Grid>
         {content === 0 ? 
-          <UniversityOverviewContent /> : content === 1 ? <PreviouslyApprovedCourses uniName ={currUni["name"]} /> : <Discussion/>
+          <UniversityOverviewContent /> : content === 1 ? <PreviouslyApprovedCourses uniName ={params.name} /> : <Discussion/>
           // TODO: put the previously approved courses page (1) and disscussion page (2) heres
         }
     </View>
