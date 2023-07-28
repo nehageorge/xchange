@@ -53,12 +53,6 @@ class User(db.Model):
     password = db.Column(db.String(128))
     is_admin = db.Column(db.Integer)
 
-class CoursePackages(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    uwcourse = db.Column(db.String(128))
-    foreign_course = db.Column(db.String(128))
-    student_program = db.Column(db.Integer)
-
 """
 Routes
 """
