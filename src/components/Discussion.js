@@ -82,6 +82,10 @@ function Review(post) {
 function Discussion(props) {
   const params = useParams();
   const [posts, setPosts] = useState([]);
+  const [safety, setSafety] = useState(0);
+  const [fun, setfun] = useState(0);
+  const [affordable, setAffordable] = useState(0);
+  const [easy, setEasy] = useState(0);
 
   useEffect(() => {
     fetch("/get_uni/discussion/" + params.id).then((res) =>
@@ -91,16 +95,52 @@ function Discussion(props) {
     );
   }, []);
 
+  useEffect(() => {
+    setSafety(getAveragesRatings(posts, "safe_rating"));
+    setfun(getAveragesRatings(posts, "fun_rating"));
+    setAffordable(getAveragesRatings(posts, "affordable_rating"));
+    setEasy(getAveragesRatings(posts, "easy_rating"));
+  }, [posts]);
+
+  const getAveragesRatings = (posts, param) => {
+    var avg = 0;
+    for (let post of posts) {
+      avg += post[param];
+    }
+
+    return Math.round(avg / posts.length);
+  };
+
   return (
     <div className="row">
       <div className="col" style={{ maxWidth: 450 }}>
         <div className="section-title">Ratings</div>
         <div className="ratings-box">
-          <div className="ratings">
-            {CustomRating("Safe", "", true)}
-            {CustomRating("Fun", "", true)}
-            {CustomRating("Affordable", "", true)}
-            {CustomRating("Easy", "", true)}
+          <div className="ratings" key={safety}>
+            <CustomRating
+              text="Safe"
+              name=""
+              readOnly={true}
+              val={isNaN(safety) ? 0 : safety}
+            ></CustomRating>
+            <CustomRating
+              text="Fun"
+              name=""
+              readOnly={true}
+              val={isNaN(fun) ? 0 : fun}
+            ></CustomRating>
+            <CustomRating
+              text="Affordable"
+              name=""
+              readOnly={true}
+              val={isNaN(affordable) ? 0 : affordable}
+            ></CustomRating>
+            <CustomRating
+              text="Easy"
+              name=""
+              readOnly={true}
+              val={isNaN(easy) ? 0 : easy}
+            ></CustomRating>
             <div style={{ maxHeight: 20, paddingBottom: "1.5rem" }}>
               {AddAReviewDialog(props.uniId)}
             </div>

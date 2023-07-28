@@ -19,13 +19,13 @@ const StyledRating = styled(Rating)({
   },
 });
 
-function CustomRating(text, name = "", readOnly = false, val = 9) {
-  const [value, setValue] = React.useState(val);
-  const [hover, setHover] = React.useState(val);
+function CustomRating(props) {
+  const [value, setValue] = React.useState(props.val);
+  const [hover, setHover] = React.useState(props.val);
 
   return (
     <div style={{ maxHeight: 400, maxWidth: 300, paddingBottom: "1rem" }}>
-      <Typography component="legend">{text}</Typography>
+      <Typography component="legend">{props.text}</Typography>
       <Box
         sx={{
           "& > legend": { mt: 2 },
@@ -35,8 +35,9 @@ function CustomRating(text, name = "", readOnly = false, val = 9) {
         }}
       >
         <StyledRating
-          name={name}
-          readOnly={readOnly}
+          name={props.name}
+          readOnly={props.readOnly}
+          value={value}
           defaultValue={9}
           max={10}
           style={{ paddingRight: 10 }}
@@ -51,7 +52,7 @@ function CustomRating(text, name = "", readOnly = false, val = 9) {
             setHover(newHover == null ? 0 : newHover);
           }}
         />
-        <div name={name}>{`${value} / 10`}</div>
+        <div name={props.name}>{`${value} / 10`}</div>
       </Box>
     </div>
   );

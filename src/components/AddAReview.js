@@ -124,16 +124,44 @@ function AddAReview(props) {
               <p className="my-experience-was">My experience was ...</p>
             </Grid>
             <Grid item xs={6}>
-              <div>{CustomRating("Safe", "safety")}</div>
+              <div>
+                <CustomRating
+                  text="Safe"
+                  name="safety"
+                  readOnly={false}
+                  val={9}
+                ></CustomRating>
+              </div>
             </Grid>
             <Grid item xs={6}>
-              <div>{CustomRating("Fun", "fun")}</div>
+              <div>
+                <CustomRating
+                  text="Fun"
+                  name="fun"
+                  readOnly={false}
+                  val={9}
+                ></CustomRating>
+              </div>
             </Grid>
             <Grid item xs={6}>
-              <div>{CustomRating("Affordable", "affordable")}</div>
+              <div>
+                <CustomRating
+                  text="Affordable"
+                  name="affordable"
+                  readOnly={false}
+                  val={9}
+                ></CustomRating>
+              </div>
             </Grid>
             <Grid item xs={6}>
-              <div>{CustomRating("Easy", "easy")}</div>
+              <div>
+                <CustomRating
+                  text="Easy"
+                  name="easy"
+                  readOnly={false}
+                  val={9}
+                ></CustomRating>
+              </div>
             </Grid>
             <Grid item xs={6}>
               <div></div>
