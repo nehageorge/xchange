@@ -4,7 +4,7 @@ sys.path.append('../../../api')
 import csv
 from app import db, CourseEquivalency, UWCourse, University
 
-with open('./test.csv') as csv_file:
+with open('./engineering_packages.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     next(csv_file) # Skip header line 
     line_count = 0
