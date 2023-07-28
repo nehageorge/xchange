@@ -11,9 +11,9 @@ import {
 } from "@mui/material";
 
 function PreviouslyApprovedTable(props) {
-    const search = (query) => {
-        console.log(query);
-    };
+  const search = (query) => {
+    console.log(query);
+  };
   return (
     <TableContainer
       sx={{ borderRadius: "15px", border: 2, borderColor: "#E0D03B" }}
@@ -28,13 +28,14 @@ function PreviouslyApprovedTable(props) {
           <TableRow>
             {props.headers.map((header) => {
               return (
-                <TableCell style={{ fontSize: "1.2rem", fontWeight: "bold" }}>{header}</TableCell>
+                <TableCell style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
+                  {header}
+                </TableCell>
               );
             })}
-            <TableCell style={{ fontSize: "1.2rem", fontWeight: "bold" }}></TableCell>
-            <TableCell>
-            {XChangeButton("Show All Approved Courses", "/course/search", undefined, "#E4E3E3")}
-            </TableCell>
+            <TableCell
+              style={{ fontSize: "1.2rem", fontWeight: "bold" }}
+            ></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>{props.tableBody}</TableBody>
