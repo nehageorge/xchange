@@ -11,12 +11,10 @@ import Signup from "./components/Signup";
 import AboutPage from "./components/AboutPage";
 import ContactPage from "./components/ContactPage";
 import PrivacyPolicyPage from "./components/PrivacyPolicyPage";
-import Discussion from "./components/Discussion";
 import SignupError from "./components/SignupError";
 import SignupSuccess from "./components/SignupSuccess";
 import LoginError from "./components/LoginError";
 import LoginSuccess from "./components/LoginSuccess";
-import AddAReview from "./components/AddAReview";
 
 function App() {
   return (
@@ -33,7 +31,7 @@ function App() {
           <Route exact path="/contact" element={<ContactPage />} />
           <Route exact path="/privacy" element={<PrivacyPolicyPage />} />
           <Route exact path="/universities" element={<UniversitySearch />} />
-          <Route exact path="/get_uni/:name" element={<ViewUni />} />
+          <Route exact path="/get_uni/:id/:page" element={<ViewUni />} />
           <Route exact path="/course/home" element={<CourseHome />} />
           <Route
             exact
@@ -46,7 +44,6 @@ function App() {
             element={<PreviousCourseSequences />}
           />
           <Route exact path="/course/search" element={<CourseSearch />} />
-          <Route exact path="/review" element={<AddAReview/>}/>
         </Routes>
       </BrowserRouter>
     </>

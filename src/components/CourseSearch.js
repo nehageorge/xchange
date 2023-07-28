@@ -10,6 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import CoursePageFilters from "./CoursePageFilters";
 import { useState, useEffect } from "react";
+import AddEquivalencyButton from "./AddEquivalencyButton";
+import AddEquivalencyDialog from "./AddEquivalencyDialog";
 
 function CourseSearch() {
   const [courseEquivalencies, setCoursesEquivalency] = useState([]);
@@ -32,7 +34,7 @@ function CourseSearch() {
     console.log("University Filters  " + uniFilters);
     console.log("Program Filters  " + programFilters);
     console.log("Query  " + query);
-    if (query.length == 0 && uniFilters === [] && programFilters === [] ) {
+    if (query.length == 0 && uniFilters === [] && programFilters === []) {
       setCoursesEquivalency(allCourseEquivalencies);
       return;
     }
@@ -57,6 +59,25 @@ function CourseSearch() {
   const search = (newQuery) => {
     setQuery(newQuery);
   };
+
+  function OpenAddEquivalencyDialog() {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <div style={{ paddingBottom: 10 }}>
+        <AddEquivalencyButton onClick={handleClickOpen} />
+        <AddEquivalencyDialog open={open} onClose={handleClose} />
+      </div>
+    );
+  }
 
   return (
     <div className="CourseSearch">
@@ -126,6 +147,7 @@ function CourseSearch() {
               />
             </Grid>
             <Grid item xs={3}>
+              {OpenAddEquivalencyDialog()}
               <CoursePageFilters
                 uniFiltersState={uniFilters}
                 setUniFiltersState={setUniFilters}
