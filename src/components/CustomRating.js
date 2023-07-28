@@ -19,9 +19,9 @@ const StyledRating = styled(Rating)({
   },
 });
 
-function CustomRating(text, name = "", readOnly = false) {
-  const [value, setValue] = React.useState(9);
-  const [hover, setHover] = React.useState(9);
+function CustomRating(text, name = "", readOnly = false, val = 9) {
+  const [value, setValue] = React.useState(val);
+  const [hover, setHover] = React.useState(val);
 
   return (
     <div style={{ maxHeight: 400, maxWidth: 300, paddingBottom: "1rem" }}>

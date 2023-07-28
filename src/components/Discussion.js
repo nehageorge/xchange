@@ -10,7 +10,7 @@ import Dialog from "@mui/material/Dialog";
 
 import List from "@mui/material/List";
 
-function SimpleDialogDemo(uniId) {
+function AddAReviewDialog(uniId) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -80,8 +80,8 @@ function Review(post) {
 }
 
 function Discussion(props) {
-  const [posts, setPosts] = useState([]);
   const params = useParams();
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     fetch("/get_uni/discussion/" + params.id).then((res) =>
@@ -102,7 +102,7 @@ function Discussion(props) {
             {CustomRating("Affordable", "", true)}
             {CustomRating("Easy", "", true)}
             <div style={{ maxHeight: 20, paddingBottom: "1.5rem" }}>
-              {SimpleDialogDemo(props.uniId)}
+              {AddAReviewDialog(props.uniId)}
             </div>
           </div>
         </div>

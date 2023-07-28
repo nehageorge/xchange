@@ -193,8 +193,6 @@ def get_uni(param):
 @app.route('/get_uni/discussion/<param>', defaults={'user': None}, methods=['GET'])
 def university_discussion_posts(param, user):
     if request.method == 'POST':
-        print(request)
-        print(request.form)
         name = request.form['name']
         faculty = request.form['faculty']
         term = request.form['term']
@@ -206,7 +204,6 @@ def university_discussion_posts(param, user):
         affordable = request.form['affordable'].split(' ')[0]
         easy = request.form['easy'].split(' ')[0]
         uid = User.query.filter(User.email.like('%'+user+'%')).first().id
-        print(f"uid: {uid}")
         post = DiscussionPost(university_id=param, user_id=uid,student_name=name, student_faculty=faculty, student_term=term,
             housing=housing, favourite_aspect=favourite, food_situation=food, safe_rating=safety,
             fun_rating=fun, affordable_rating=affordable,easy_rating=easy)

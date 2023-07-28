@@ -30,8 +30,6 @@ function Slct(name, options = []) {
 
   return (
     <Select
-      labelId="demo-simple-select-label"
-      id="demo-simple-select"
       value={slct}
       name={name}
       onChange={handleChange}
