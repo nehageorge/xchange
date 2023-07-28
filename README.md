@@ -23,6 +23,9 @@ When a migration is made ensure that you perform the following steps before runn
 2. Run `flask db migrate`.
 3. Run `flask db upgrade`.
 
+To seed the university table, run the following statement in mysql shell:
+1. `LOAD DATA LOCAL INFILE '/path/to/xchange/api/seed_university.csv' INTO TABLE university FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' (id, name, competition, languages, program, terms, location);`
+
 ## Selenium Scraper setup
 
 1. Go to https://sites.google.com/chromium.org/driver/downloads?authuser=0 and download the correct version of WebDriver depending on your chrome browser version
