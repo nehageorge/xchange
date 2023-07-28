@@ -30,7 +30,7 @@ function PreviouslyApprovedCourses({ uniName }) {
     fetch("/course_equivalencies/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body:  JSON.stringify({ unis: [uniName], query: newQuery }),
+      body: JSON.stringify({ unis: [uniName], query: newQuery }),
     }).then((res) =>
       res.json().then((data) => {
         if (newQuery.length != 0) {
@@ -60,7 +60,7 @@ function PreviouslyApprovedCourses({ uniName }) {
           "Term Taken",
           "Student's Program",
         ]}
-        colWidths={["15%", "15%", "15%", "15%"]}
+        colWidths={["30%", "30%", "20%", "20%"]}
         tableBody={courseEquivalencies.map((ce) => (
           <TableRow
             key={ce.id}
