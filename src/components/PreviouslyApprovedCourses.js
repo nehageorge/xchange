@@ -9,8 +9,9 @@ function PreviouslyApprovedCourses({ uniName }) {
   const [query, setQuery] = useState("");
   useEffect(() => {
     fetch("/course_equivalencies/search", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: { unis: [uniName] },
+      body: JSON.stringify({ unis: [uniName] }),
     }).then((res) =>
       res.json().then((data) => {
         setCoursesEquivalency(data);
@@ -27,9 +28,9 @@ function PreviouslyApprovedCourses({ uniName }) {
     }
 
     fetch("/course_equivalencies/search", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: { unis: [uniName] },
-      query: newQuery,
+      body:  JSON.stringify({ unis: [uniName], query: newQuery }),
     }).then((res) =>
       res.json().then((data) => {
         if (newQuery.length != 0) {
