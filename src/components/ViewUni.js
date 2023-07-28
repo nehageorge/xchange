@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { Button, Grid } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import UniversityOverviewContent from "./UniversityOverviewContent";
 import PreviouslyApprovedCourses from "./PreviouslyApprovedCourses";
@@ -9,11 +9,13 @@ import Discussion from "./Discussion";
 
 function ViewUni() {
   const params = useParams();
-  const [content, setContent] = useState(Number(params.page));
+  const navigate = useNavigate();
+  const content = Number(params.page);
+  const curUrl = `/get_uni/${params.id}`;
   const [currUni, setCurrUni] = useState({});
 
   useEffect(() => {
-    fetch("/get_uni/" + params.id).then((res) =>
+    fetch(curUrl).then((res) =>
       res.json().then((data) => {
         setCurrUni(data);
       })
@@ -30,7 +32,7 @@ function ViewUni() {
           }}
           style={{ width: "100%" }}
           onClick={() => {
-            setContent(id);
+            navigate(curUrl + `/${id}`);
           }}
         >
           <div className="button-text">
