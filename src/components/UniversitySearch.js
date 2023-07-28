@@ -68,7 +68,7 @@ function UniversitySearch() {
           headers={["Program Name", "Languages", "Terms", "Competitiveness"]}
           colWidths={["35%", "15%", "25%", "25%"]}
           numRows={unis.length}
-          tableBody={unis.map((uni, id) => (
+          tableBody={unis.map((uni) => (
             <TableRow
               key={uni.program}
               sx={{
@@ -80,7 +80,7 @@ function UniversitySearch() {
                   component="th"
                   scope="row"
                   style={{ fontSize: 15 }}
-                  to={`/get_uni/${id + 1}/0`}
+                  to={`/get_uni/${uni.id}/0`}
                 >
                   {uni.program}
                 </Link>
