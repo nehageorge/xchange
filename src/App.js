@@ -35,7 +35,7 @@ function App() {
           <Route exact path="/course/home" element={<CourseHome />} />
           <Route
             exact
-            path="/get_uni/:name/courses/:course_name"
+            path="/get_uni/:id/:page/:course_name"
             element={<CoursePage />}
           />
           <Route
