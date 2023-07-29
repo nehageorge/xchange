@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Box, TextField, Stack, TableCell, TableRow } from "@mui/material";
 import PreviouslyApprovedTable from "./PreviouslyApprovedTable";
 
@@ -78,14 +79,17 @@ function PreviouslyApprovedCourses({ uniName }) {
               </Text>
             </TableCell>
             <TableCell>
-              <Text
+              {/* <Text
                 component="th"
                 scope="row"
                 style={{ color: "blue", textDecoration: "underline" }}
               >
-                {/* Todo: ce.coursename needs to exist*/}
                 {ce.code}: {ce.uwcourse.name}
-              </Text>
+              </Text> */}
+              <Link to={'/get_uni/:id/:page/' + ce.uwcourse.name} state={{ title: ce.uwcourse.name, description: ce.uwcourse.description, uni_name: uniName }}>
+                {ce.code}: {ce.uwcourse.name}
+              </Link>
+              {/* <a href={'/get_uni/:id/:page/' + ce.uwcourse.name}>{ce.code}: {ce.uwcourse.name}</a> */}
             </TableCell>
             <TableCell>{ce.university.terms}</TableCell>
             <TableCell>{ce.student_program}</TableCell>

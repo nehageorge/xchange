@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Text } from "react-native";
 import {
   Table,
   TableBody,
@@ -10,9 +11,41 @@ import {
 } from "@mui/material";
 
 function XchangeCourseTable(props) {
-    const search = (query) => {
-        console.log(query);
-    };
+  const [courseEquivalencies, setCoursesEquivalency] = useState([]);
+  const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
+  const [query, setQuery] = useState("");
+  useEffect(() => {
+    fetch("/course_equivalencies/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ unis: [props.uniName] }),
+    }).then((res) =>
+      res.json().then((data) => {
+        setCoursesEquivalency(data);
+        setAllCoursesEquivalency(data);
+      })
+    );
+  }, []);
+
+  const search = (newQuery) => {
+    setQuery(newQuery);
+    if (newQuery.length == 0) {
+      setCoursesEquivalency(allCourseEquivalencies);
+      return;
+    }
+
+    fetch("/course_equivalencies/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body:  JSON.stringify({ unis: [props.uniName], query: newQuery, uni_search: true }),
+    }).then((res) =>
+      res.json().then((data) => {
+        if (newQuery.length != 0) {
+          setCoursesEquivalency(data);
+        }
+      })
+    );
+  };
   return (
     <TableContainer
       sx={{ borderRadius: "15px", border: 2, borderColor: "#E0D03B" }}
@@ -47,7 +80,26 @@ function XchangeCourseTable(props) {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>{props.tableBody}</TableBody>
+        <TableBody>{courseEquivalencies.map((ce) => (
+              <TableRow
+                key={ce.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                }}
+              >
+                <TableCell>
+                  <Text
+                    component="th"
+                    scope="row"
+                    style={{ color: "blue", textDecoration: "underline" }}
+                  >
+                    {ce.uwcourse.name}
+                  </Text>
+                </TableCell>
+                <TableCell>{ce.uwcourse.code}</TableCell>
+                <TableCell>{props.uniName}</TableCell>
+              </TableRow>
+            ))}</TableBody>
       </Table>
     </TableContainer>
   );
