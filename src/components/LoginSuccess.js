@@ -41,7 +41,7 @@ function LoginSuccess() {
               style={{ width: "100%", marginBottom: 10 }}
               href="/universities"
             >
-              <div class="button-text">
+              <div className="button-text">
                 <Text style={{ width: "325px" }}>Search for universities</Text>
               </div>
             </Button>
@@ -50,7 +50,7 @@ function LoginSuccess() {
               style={{ width: "100%" }}
               href="/course/home"
             >
-              <div class="button-text">
+              <div className="button-text">
                 <Text style={{ width: "325px" }}>Search for courses</Text>
               </div>
             </Button>
