@@ -1,24 +1,31 @@
 import { Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Box, TextField, Stack, TableCell, TableRow } from "@mui/material";
 import PreviouslyApprovedTable from "./PreviouslyApprovedTable";
 
-function PreviouslyApprovedCourses({ uniName }) {
+function PreviouslyApprovedCourses() {
+  const params = useParams();
+  const curUrl = `/get_uni/${params.id}`;
   const [courseEquivalencies, setCoursesEquivalency] = useState([]);
   const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
+  const [currUni, setCurrUni] = useState({});
   const [query, setQuery] = useState("");
   useEffect(() => {
-    fetch("/course_equivalencies/search", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ unis: [uniName] }),
-    }).then((res) =>
+    fetch(curUrl).then((res) =>
       res.json().then((data) => {
-        setCoursesEquivalency(data);
-        setAllCoursesEquivalency(data);
+        setCurrUni(data);
       })
     );
+  }, []);
+  useEffect(() => {
+    fetch("/course_equivalencies/" + params.id).then((res) =>
+    res.json().then((data) => {
+      setCoursesEquivalency(data);
+      setAllCoursesEquivalency(data);
+    })
+  );
   }, []);
 
   const search = (newQuery) => {
@@ -27,11 +34,10 @@ function PreviouslyApprovedCourses({ uniName }) {
       setCoursesEquivalency(allCourseEquivalencies);
       return;
     }
-
     fetch("/course_equivalencies/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body:  JSON.stringify({ unis: [uniName], query: newQuery }),
+      body:  JSON.stringify({ unis: [currUni["name"]], query: newQuery }),
     }).then((res) =>
       res.json().then((data) => {
         if (newQuery.length != 0) {
@@ -73,23 +79,14 @@ function PreviouslyApprovedCourses({ uniName }) {
               <Text
                 component="th"
                 scope="row"
-                style={{ color: "blue", textDecoration: "underline" }}
               >
                 {ce.uwcourse.code}: {ce.uwcourse.name}
               </Text>
             </TableCell>
             <TableCell>
-              {/* <Text
-                component="th"
-                scope="row"
-                style={{ color: "blue", textDecoration: "underline" }}
-              >
-                {ce.code}: {ce.uwcourse.name}
-              </Text> */}
-              <Link to={'/get_uni/:id/:page/' + ce.uwcourse.name} state={{ title: ce.uwcourse.name, description: ce.uwcourse.description, uni_name: uniName }}>
+              <Link to={'/get_uni/:id/:page/' + ce.uwcourse.name} state={{ title: ce.uwcourse.name, description: ce.uwcourse.description, uni_name: currUni["name"] }}>
                 {ce.code}: {ce.uwcourse.name}
               </Link>
-              {/* <a href={'/get_uni/:id/:page/' + ce.uwcourse.name}>{ce.code}: {ce.uwcourse.name}</a> */}
             </TableCell>
             <TableCell>{ce.university.terms}</TableCell>
             <TableCell>{ce.student_program}</TableCell>

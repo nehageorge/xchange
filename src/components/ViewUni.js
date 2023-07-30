@@ -62,7 +62,7 @@ function ViewUni() {
         {content === 0 ? (
           <UniversityOverviewContent />
         ) : content === 1 ? (
-          <PreviouslyApprovedCourses uniName={currUni["name"]} />
+          <PreviouslyApprovedCourses />
         ) : (
           <Discussion uniId={params.id} />
         )}

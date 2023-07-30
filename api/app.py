@@ -140,6 +140,12 @@ def course_equivalencies_search():
     course_equivalencies = course_equivalencies_join_to_dict(result)
     return jsonify(course_equivalencies)
 
+@app.route('/course_equivalencies/<param>', methods=['GET'])
+def get_uni_course_equivalencies(param):
+    result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(University.id == param).all()
+    course_equivalencies = course_equivalencies_join_to_dict(result)
+    return jsonify(course_equivalencies)
+
 @app.route('/signup', methods=['GET','POST'])
 def signup():
     if request.method == 'POST':
