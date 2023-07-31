@@ -38,6 +38,7 @@ function PreviouslyApprovedCourses() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body:  JSON.stringify({ unis: [currUni["name"]], query: newQuery }),
+
     }).then((res) =>
       res.json().then((data) => {
         if (newQuery.length != 0) {
@@ -67,7 +68,7 @@ function PreviouslyApprovedCourses() {
           "Term Taken",
           "Student's Program",
         ]}
-        colWidths={["15%", "15%", "15%", "15%"]}
+        colWidths={["30%", "30%", "20%", "20%"]}
         tableBody={courseEquivalencies.map((ce) => (
           <TableRow
             key={ce.id}
