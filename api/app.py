@@ -121,15 +121,15 @@ def course_equivalencies_search():
     request_body = request.json
 
     query = request_body.get('query', "")
+    uni_query = request_body.get('uni_query', "")
     programs = request_body.get('programs', [])
     unis = request_body.get('unis', [])
-    uni_search = request_body.get('uni_search', False)
         
     filters = []
-    if query is not None and not uni_search:
+    if query is not None:
         filters.append((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')))
-    if query is not None and uni_search:   
-        filters.append((University.name.like('%'+query+'%')))
+    if uni_query is not None:   
+        filters.append((University.name.like('%'+uni_query+'%')))
     if programs: 
         filters.append((CourseEquivalency.student_program.in_(programs)))
     if unis: 

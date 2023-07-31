@@ -37,7 +37,7 @@ function XchangeCourseTable(props) {
     fetch("/course_equivalencies/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body:  JSON.stringify({ unis: [props.uniName], query: newQuery, uni_search: true }),
+      body:  JSON.stringify({ unis: [props.uniName], uni_query: newQuery }),
     }).then((res) =>
       res.json().then((data) => {
         if (newQuery.length != 0) {
