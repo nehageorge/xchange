@@ -35,11 +35,11 @@ function App() {
           <Route exact path="/contact" element={<ContactPage />} />
           <Route exact path="/privacy" element={<PrivacyPolicyPage />} />
           <Route exact path="/universities" element={<UniversitySearch />} />
-          <Route exact path="/get_uni/:name" element={<ViewUni />} />
+          <Route exact path="/get_uni/:id/:page" element={<ViewUni />} />
           <Route exact path="/course/home" element={<CourseHome />} />
           <Route
             exact
-            path="/get_uni/:name/courses/:course_name"
+            path="/get_uni/:id/:page/:course_name"
             element={<CoursePage />}
           />
           <Route

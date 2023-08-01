@@ -75,7 +75,7 @@ function Signup() {
                 style={{ width: "100%" }}
                 type="submit"
               >
-                <div class="button-text">
+                <div className="button-text">
                   <Text style={{ width: "325px" }}>Sign Up</Text>
                 </div>
               </Button>

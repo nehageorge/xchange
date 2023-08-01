@@ -54,7 +54,7 @@ class CourseEquivalency(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     uwcourse_id = db.Column(db.Integer,db.ForeignKey("uw_course.id"),nullable=False)
     university_id = db.Column(db.Integer, db.ForeignKey('university.id'),nullable=False)
-    code = db.Column(db.String(20))
+    code = db.Column(db.String(128))
     year_taken = db.Column(db.String(4))
     student_program =  db.Column(db.String(120))
 
@@ -88,6 +88,20 @@ class User(db.Model):
         return User.query.filter_by(id=id).first()
 
 
+class DiscussionPost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    university_id = db.Column(db.Integer, db.ForeignKey('university.id'),nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
+    student_name = db.Column(db.String(128))
+    student_faculty = db.Column(db.String(128))
+    student_term = db.Column(db.String(128))
+    housing = db.Column(db.String(128))
+    favourite_aspect = db.Column(db.String(128))
+    food_situation = db.Column(db.String(128))
+    safe_rating = db.Column(db.Integer)
+    fun_rating = db.Column(db.Integer)
+    affordable_rating = db.Column(db.Integer)
+    easy_rating = db.Column(db.Integer)
 
 """
 Routes
@@ -116,6 +130,24 @@ def search_courses(query):
     course_equivalencies = course_equivalencies_join_to_dict(result)
     return jsonify(course_equivalencies)
 
+@app.route('/course/search', methods=['POST', 'GET'])
+def course_search():
+    uw_course = request.form['uw_course_name']
+    program = request.form['program']
+    year = request.form['year_taken']
+    uni = request.form['host_uni']
+    course_name = request.form['host_course_name']
+    course_code = request.form['host_course_code']
+
+    uni = University.query.filter(University.name == uni).first()
+    uni_id = uni.id if uni else 54
+    uw_course = UWCourse.query.filter(UWCourse.code == uw_course).first()
+    uw_course_id = uw_course.id if uw_course else 1
+
+    db.session.add(CourseEquivalency(uwcourse_id=uw_course_id,university_id=uni_id,code="{0}: {1}".format(course_code,course_name), year_taken=year,student_program=program))
+    db.session.commit()
+    return redirect(url_for('course_search'))
+
 @app.route('/course_equivalencies/search', methods=['POST'])
 def course_equivalencies_search():
     content_type = request.headers.get('Content-Type')
@@ -124,12 +156,15 @@ def course_equivalencies_search():
     request_body = request.json
 
     query = request_body.get('query', "")
+    uni_query = request_body.get('uni_query', "")
     programs = request_body.get('programs', [])
     unis = request_body.get('unis', [])
         
     filters = []
     if query is not None:
         filters.append((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%')))
+    if uni_query is not None:   
+        filters.append((University.name.like('%'+uni_query+'%')))
     if programs: 
         filters.append((CourseEquivalency.student_program.in_(programs)))
     if unis: 
@@ -137,6 +172,12 @@ def course_equivalencies_search():
 
     result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(*filters).all()
 
+    course_equivalencies = course_equivalencies_join_to_dict(result)
+    return jsonify(course_equivalencies)
+
+@app.route('/course_equivalencies/<param>', methods=['GET'])
+def get_uni_course_equivalencies(param):
+    result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(University.id == param).all()
     course_equivalencies = course_equivalencies_join_to_dict(result)
     return jsonify(course_equivalencies)
 
@@ -270,7 +311,38 @@ def login_error():
 def login_success():
     return jsonify("")
 
+@app.route('/get_uni/<param>', methods=['GET'])
+def get_uni(param):
+    uni = University.query.filter(University.id == param).first()
+    res = uni_schema.dump(uni)
+    return res
 
+@app.route('/get_uni/discussion/<param>/<user>', methods=['POST'])
+@app.route('/get_uni/discussion/<param>', defaults={'user': None}, methods=['GET'])
+def university_discussion_posts(param, user):
+    if request.method == 'POST':
+        name = request.form['name']
+        faculty = request.form['faculty']
+        term = request.form['term']
+        housing = request.form['housing']
+        favourite = request.form['favourite']
+        food = request.form['food']
+        safety = request.form['safety'].split(' ')[0]
+        fun = request.form['fun'].split(' ')[0]
+        affordable = request.form['affordable'].split(' ')[0]
+        easy = request.form['easy'].split(' ')[0]
+        uid = User.query.filter(User.email.like('%'+user+'%')).first().id
+        post = DiscussionPost(university_id=param, user_id=uid,student_name=name, student_faculty=faculty, student_term=term,
+            housing=housing, favourite_aspect=favourite, food_situation=food, safe_rating=safety,
+            fun_rating=fun, affordable_rating=affordable,easy_rating=easy)
+        db.session.add(post)
+        db.session.commit()
+        redirectUrl = f"/get_uni/{param}/2"
+        return redirect(redirectUrl)
+    else:
+        posts = db.session.query(DiscussionPost).join(University).filter(University.id.like('%'+param+'%')).all()
+        res = discussion_posts_schema.dump(posts)
+        return res
 
 if __name__ == '__main__':
 	app.run()

@@ -1,7 +1,6 @@
-import "./XChangeButton.css";
-import { Text } from "react-native";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { Text } from "react-native-web";
 
 const s = {
   fontStyle: "italic",
