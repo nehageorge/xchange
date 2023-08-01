@@ -28,10 +28,10 @@ function ForgotPasswordSuccess() {
               padding: "50px",
             }}
           >
-            <form action="/forgot_password_success/<token>" method="POST">
-                {/* <Text>
+            <form action={"/forgot_password_success/" + params.token}  method="POST">
+                <Text>
                     {params.token}
-                </Text> */}
+                </Text>
                 
               <Text
                 style={{

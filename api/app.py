@@ -242,24 +242,26 @@ def forgot_password_success(token):
         print("That is an invalid token or it has expired. Please try again")
         flash('That is an invalid token or it has expired. Please try again.', 'warning')
         return redirect(url_for('forgot_password'))
-    print("User exists")
+    else:
+        print("User exists")
     #TODO: I need to get to the forgot_password_success/<token> page first before we try to grab the 
     #passwords and stuff
-    # password = request.form['password']
-    # confirm_password = request.form['confirm_password']
 
-    # print("Looking at password form")
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
 
-    # if not(password == confirm_password):
-    #     raise ValueError("Passwords do not match")
+        print("Looking at password form")
 
-    # salt = bcrypt.gensalt()
-    # hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
-    # user.password = hashed
-    # db.session.commit()
-    # flash('Password changed! Please login!', 'success')
-    # print("TEST")
-    # return redirect(url_for('signup'))
+        if not(password == confirm_password):
+            raise ValueError("Passwords do not match")
+
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+        user.password = hashed
+        db.session.commit()
+        flash('Password changed! Please login!', 'success')
+        print("TEST")
+        return redirect(url_for('signup'))
     return jsonify("")
     # else:
     #     return jsonify("test")
