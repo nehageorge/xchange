@@ -212,7 +212,7 @@ def send_mail(user):
 
     '''
 
-    # mail.send(msg)
+    mail.send(msg)
 
 @app.route('/forgot_password', methods=['GET','POST'])
 #Need to use UserBuilder, or do the same salting protocol as in UserBuilder
@@ -237,20 +237,13 @@ def forgot_password_success(token):
     print("Token: " + str(token))
     # if request.method == 'POST':
     user=User.verify_token(token)
-    print("In reset token, past verify_token")
     if user is None:
         print("That is an invalid token or it has expired. Please try again")
         flash('That is an invalid token or it has expired. Please try again.', 'warning')
         return redirect(url_for('forgot_password'))
     else:
-        print("User exists")
-    #TODO: I need to get to the forgot_password_success/<token> page first before we try to grab the 
-    #passwords and stuff
-
         password = request.form['password']
         confirm_password = request.form['confirm_password']
-
-        print("Looking at password form")
 
         if not(password == confirm_password):
             raise ValueError("Passwords do not match")
@@ -260,11 +253,7 @@ def forgot_password_success(token):
         user.password = hashed
         db.session.commit()
         flash('Password changed! Please login!', 'success')
-        print("TEST")
-        return redirect(url_for('signup'))
-    return jsonify("")
-    # else:
-    #     return jsonify("test")
+        return redirect(url_for('login'))
 
 
 

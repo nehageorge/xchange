@@ -29,9 +29,6 @@ function ForgotPasswordSuccess() {
             }}
           >
             <form action={"/forgot_password_success/" + params.token}  method="POST">
-                <Text>
-                    {params.token}
-                </Text>
                 
               <Text
                 style={{
