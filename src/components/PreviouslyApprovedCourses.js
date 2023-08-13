@@ -81,11 +81,10 @@ function PreviouslyApprovedCourses() {
                 component="th"
                 scope="row"
               >
-                {ce.uwcourse.code}: {ce.uwcourse.name} {ce.uwcourse.id}
+                {ce.uwcourse.code}: {ce.uwcourse.name}
               </Text>
             </TableCell>
             <TableCell>
-              <Text>Hi</Text>
               <Text>{ce.uwcourse_id}</Text>
               <Link to={`/course/${ce.uwcourse.id}` }>
                 {ce.code}: {ce.uwcourse.name}

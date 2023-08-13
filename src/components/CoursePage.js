@@ -7,15 +7,11 @@ import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import XchangeCourseTable from "./XchangeCourseTable";
 
 function CoursePage() {
-  // const location = useLocation()
-  // const { title, description, uni_name } = location.state
   const params = useParams();
   const [course, setCourse] = useState({});
-  // const [courseEquivalencies, setCoursesEquivalency] = useState([]);
-  // const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
-  // const [query, setQuery] = useState("");
-  //THE PREVIOUSLY APPROVED COURSE SEQUENCES IN THE TABLE SHOULD SHOW
-  //ALL THE COURSE EQUIVALENCIES FOR THE UWCOURSE BY COURSE_ID in the CE
+  const [courseEquivalencies, setCoursesEquivalency] = useState([]);
+  const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
+  const [query, setQuery] = useState("");
   useEffect(() => {
     fetch("/course/" + params.id).then((res) =>
     res.json().then((data) => {
@@ -23,16 +19,13 @@ function CoursePage() {
     })
   );
 
-  //   // fetch("/course_equivalencies/search", {
-  //   //   method: "POST",
-  //   //   headers: { "Content-Type": "application/json" },
-  //   //   body: JSON.stringify({ unis: [uni_name] }),
-  //   // }).then((res) =>
-  //   //   res.json().then((data) => {
-  //   //     setCoursesEquivalency(data);
-  //   //     setAllCoursesEquivalency(data);
-  //   //   })
-  //   // );
+    fetch("/course_equivalencies", {
+    }).then((res) =>
+      res.json().then((data) => {
+        setCoursesEquivalency(data);
+        setAllCoursesEquivalency(data);
+      })
+    );
   }, []);
 
   return (
@@ -56,13 +49,12 @@ function CoursePage() {
         <Text>{course["description"]}
         </Text>
         <br></br>
-        {/* <XchangeCourseTable
-            uniName={uni_name}
+        <XchangeCourseTable
             headers={[
                 "Previously Approved Course Sequences",
             ]}
             colWidths={["40%"]}
-        /> */}
+        />
 
       </View>
     </div>

@@ -17,7 +17,7 @@ unis_schema = UniversitySchema(many=True)
 class UWCourseSchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("name", "code", "terms", "description")
+        fields = ("id", "name", "code", "terms", "description")
 uwcourse_schema = UWCourseSchema()
 uwcourses_schema = UWCourseSchema(many=True)
 
