@@ -5,77 +5,65 @@ import { Card, CardContent, Grid, TableCell, TableRow } from "@mui/material";
 import Competitiveness from "./Competitiveness";
 import XchangeTable from "./XchangeTable";
 
-function UniversityOverviewContent() {
+function UniversityOverviewContent(props) {
   const facultyColours = new Map([
-    ["Art", "rgba(243, 23, 23, 0.35)"],
+    ["Arts", "rgba(243, 23, 23, 0.35)"],
     ["Engineering", "rgba(149, 24, 225, 0.35)"],
     ["Environment", "rgba(72, 194, 70, 0.35)"],
     ["Health", "rgba(24, 213, 225, 0.35)"],
     ["Mathematics", "rgba(234, 37, 190, 0.35)"],
     ["Science", "rgba(24, 69, 225, 0.35)"],
   ]);
-  // placeholder data
-  const competitiveness = "Competitive";
+
+  // Competitiveness
+  const competitiveness = String(props.uni.competition);
+  // Faculties, Academic Level, Requirements, Tuition Info
   const firstColumnBlock = [
-    [
-      "Faculties",
-      ["Art", "Engineering", "Environment", "Health", "Mathematics", "Science"],
-    ],
-    ["Level", "Undergraduate"],
-    ["Requirements", "Completed 2 years of university studies; minimum 70 GPA"],
-    [
-      "Tuition",
-      "You will pay your regular tuition fees to Waterloo (2.5 credits)",
-    ],
+    ["Faculties", String(props.uni.faculties).split(",")],
+    ["Level:", props.uni.academic_level],
+    ["Requirements:", props.uni.requirements],
+    ["Tuition:", props.uni.tuition],
   ];
+  // Course Info - currently not scraped
   const courseInfo = [
-    "Course Info",
-    "Engineering, Math and specifically CS modules are in high demand by NUS full time students so NUS CANNOT guarantee any courses for UW students especially core courses...",
+    "Course Info:",
+    props.uni.courseInfo ? props.uni.courseInfo : "",
   ];
-  const termHeaders = [
-    "Host School\nTerm Name",
-    "Term Dates",
-    "Waterloo\nTerm Name",
-  ];
-  const termInfo = [
-    ["First Semester", "August to December", "Fall"],
-    ["Second Semester", "January to May", "Winter"],
-  ];
-  const transcriptInfo = [
-    "Transcript",
-    "An official digital copy of your transcript will be available to you AFTER your final grades become official...",
-  ];
+  // Term Dates
+  const dateInfo = String(props.uni.dates).replace('"', "").split("~");
+  const termHeaders = [dateInfo[0], dateInfo[1], dateInfo[2]];
+  var termInfo = [];
+  for (let i = 3; i < dateInfo.length; i++) {
+    if (i + 2 >= dateInfo.length) break;
+    termInfo.push([dateInfo[i], dateInfo[i + 1], dateInfo[i + 2]]);
+    i += 2;
+  }
+  // Transcript Info
+  const transcriptInfo = ["Transcript:", props.uni.transcript];
+  // Housing, Financial Support, Wellness Planning - currently not scraped, Contacts
   const secondColumnBlock = [
-    [
-      "Housing",
-      "University managed accommodation is available but not guaranteed...",
-    ],
-    [
-      "Financial Support",
-      "Please go to the Student Awards & Financial Aid website where you can find a summary of each of the funding opportunities with links to the applications.",
-    ],
-    ["Wellness Planning", "..."],
-    ["Contacts", "The Global Learning Coordinator for Singapore"],
+    ["Housing:", props.uni.housing],
+    ["Financial Support:", props.uni.financial_support],
+    ["Wellness Planning:", props.uni.wellness ? props.uni.wellness : ""],
+    ["Contacts:", props.uni.contact],
   ];
+  // Other Info - currently not scraped
   const otherInfo = [
-    "Other Info",
-    "For a Fall term exchange NUS Orientation usually begins the 1st of August and classes begin the following week (approx. the 8th of August) so make sure you plan for this..",
+    "Other Info:",
+    props.uni.otherInfo ? props.uni.otherInfo : "",
   ];
-  const costHeaders = [
-    "Costs for one term",
-    "All costs are approximate and in SGD unless otherwise stated",
-  ];
-  const costInfo = [
-    ["Housing", "S$300-1200"],
-    ["Round trip flight", "$1100 CAD"],
-    ["Student fees", "S$130"],
-    ["Books and supplies", "S$200-350"],
-    ["Food", "S$250-500"],
-    ["A cup of coffe", "S$4"],
-  ];
+  // Cost Info
+  const costHeaders = ["Costs for one term", props.uni.cost_disclaimer];
+  const costs = String(props.uni.cost).replace('"', "").split("~");
+  var costInfo = [];
+  for (let i = 0; i < costs.length; i++) {
+    if (i + 1 >= costs.length) break;
+    costInfo.push([costs[i], costs[i + 1]]);
+    i += 1;
+  }
 
   function FacultyBubble(facultyName) {
-    const clr = facultyColours.get(facultyName);
+    const clr = facultyColours.get(facultyName.trim());
 
     return (
       <div
