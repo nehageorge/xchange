@@ -51,7 +51,7 @@ function CoursePage() {
         <br></br>
         <XchangeCourseTable
             headers={[
-                "Previously Approved Course Sequences",
+                "Previously Approved Courses",
             ]}
             colWidths={["40%"]}
         />
