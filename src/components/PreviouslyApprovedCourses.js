@@ -81,11 +81,13 @@ function PreviouslyApprovedCourses() {
                 component="th"
                 scope="row"
               >
-                {ce.uwcourse.code}: {ce.uwcourse.name}
+                {ce.uwcourse.code}: {ce.uwcourse.name} {ce.uwcourse.id}
               </Text>
             </TableCell>
             <TableCell>
-              <Link to={'/get_uni/:id/:page/' + ce.uwcourse.name} state={{ title: ce.uwcourse.name, description: ce.uwcourse.description, uni_name: currUni["name"] }}>
+              <Text>Hi</Text>
+              <Text>{ce.uwcourse_id}</Text>
+              <Link to={`/course/${ce.uwcourse.id}` }>
                 {ce.code}: {ce.uwcourse.name}
               </Link>
             </TableCell>

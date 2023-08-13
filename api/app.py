@@ -113,6 +113,12 @@ def course_search():
     db.session.commit()
     return redirect(url_for('course_search'))
 
+@app.route('/course/<param>', methods=['GET'])
+def get_course(param):
+	course = UWCourse.query.filter(UWCourse.id == param).first()
+	res = uwcourse_schema.dump(course)
+	return jsonify(res)
+
 @app.route('/course_equivalencies/search', methods=['POST'])
 def course_equivalencies_search():
     content_type = request.headers.get('Content-Type')
@@ -213,7 +219,7 @@ def login_success():
 @app.route('/get_uni/<param>', methods=['GET'])
 def get_uni(param):
     uni = University.query.filter(University.id == param).first()
-    res = uni_schema.dump(uni)
+    res = uwcourse_schema.dump(uni)
     return res
 
 @app.route('/get_uni/discussion/<param>/<user>', methods=['POST'])
