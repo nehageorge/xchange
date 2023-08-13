@@ -15,7 +15,6 @@ function UniversitySearch() {
   useEffect(() => {
     fetch("/universities").then((res) =>
       res.json().then((data) => {
-        console.log(data);
         setAllUnis(data);
         if (search.length == 0) {
           setUnis(data);
