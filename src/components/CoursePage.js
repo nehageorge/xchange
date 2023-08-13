@@ -43,7 +43,7 @@ function CoursePage() {
       </View>
       <View style={{ flex: 1, padding: 20, marginLeft: "30px", marginRight: "50px" }}>
         <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "left" }}>
-            {course["name"]}
+            {course["code"]} : {course["name"]}
         </Text>
         <hr style={{opacity: "100%", width: "25%", background: "#E0D03B", height: "3px", border: "none"}}/>  
         <Text>{course["description"]}

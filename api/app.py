@@ -37,7 +37,7 @@ class UWCourse(db.Model):
     name = db.Column(db.String(120))
     code = db.Column(db.String(20))
     terms = db.Column(db.String(120))
-    description = db.Column(db.String(128), nullable=True)
+    description = db.Column(db.String(1000), nullable=True)
 
 class CourseEquivalency(db.Model):
     id = db.Column(db.Integer, primary_key=True)

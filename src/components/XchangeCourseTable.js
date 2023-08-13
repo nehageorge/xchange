@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Text } from "react-native";
+import { Link } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -88,7 +89,7 @@ function XchangeCourseTable(props) {
                   <Text
                     component="th"
                     scope="row"
-                    style={{ color: "blue", textDecoration: "underline" }}
+                    // style={{ color: "blue", textDecoration: "underline" }}
                   >
                     {ce.uwcourse.name}
                   </Text>
