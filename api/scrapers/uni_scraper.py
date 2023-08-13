@@ -27,8 +27,9 @@ tablebody = driver.find_element(By.XPATH, "//table[@id='lst_index_phpprogram']/t
 all_table_entries = tablebody.find_elements(By.TAG_NAME, "tr")
 entrytest = all_table_entries[-3].find_elements(By.TAG_NAME, "td")
 
-#Format: University name, Competitiveness, Language, Program Info, Term, Location
-university_list = [[None]*6 for _ in range(len(all_table_entries) - 5)]
+#Format: University name, Competitiveness, Language, Program Info, Term, Location, Academic Level, Requirements, tuition/program fees, host school transcript, housing, faculties, dates, financial support, contact, costs for 1 term
+#Omitting: Other info (there's a lot of hyperlinks), course info (also hyperlinks)
+university_list = [[None]*16 for _ in range(len(all_table_entries) - 5)]
 
 for i in range(3, len(all_table_entries) - 2):
     #We have to relocate each time because of staleness
@@ -56,8 +57,49 @@ for i in range(3, len(all_table_entries) - 2):
                     EC.presence_of_element_located((By.CLASS_NAME, "widgetcol"))
                 )
                 widgetcol = driver.find_element(By.XPATH, "//td[@class='widgetcol']/div[@class='widgetcolwrap']/div[@class='widget inline']/table/tbody/tr")
-                link2 = widgetcol.find_elements(By.TAG_NAME, "a")
+                table = driver.find_element(By.ID, "_fieldgroup__default_section")
+                link2 = table.find_elements(By.TAG_NAME, "a")
                 if link2: university_list[i - 3][1] = link2[0].text
+                faculties = table.find_elements(By.ID, "dnf_class_values_program__faculty____widget")
+                if faculties: university_list[i - 3][11] = faculties[0].text.split(",")
+                academic_level = table.find_elements(By.ID, "dnf_class_values_program__academic_level_programs__widget")
+                if academic_level: university_list[i - 3][6] = academic_level[0].text
+                requirements = table.find_elements(By.ID, "dnf_class_values_program__requirements__widget")
+                if requirements: university_list[i - 3][7] = requirements[0].text
+                fees = table.find_elements(By.ID, "dnf_class_values_program__tuitionprogram_fee__widget")
+                if fees: university_list[i - 3][8] = fees[0].text
+                host_transcript = table.find_elements(By.ID, "dnf_class_values_program__host_school_transcript__widget")
+                if host_transcript: university_list[i - 3][9] = host_transcript[0].text
+                housing = table.find_elements(By.ID, "dnf_class_values_program__housing__widget")
+                if housing: university_list[i - 3][10] = housing[0].text
+                dates_div = table.find_elements(By.ID, "dnf_class_values_program__dates__widget")
+                if dates_div:
+                    lst = []
+                    dates_table_entries = dates_div[0].find_elements(By.TAG_NAME, "tr")
+                    for k in range(len(dates_table_entries)):
+                        entry = dates_table_entries[k].find_elements(By.TAG_NAME, "td")
+                        for j in range(len(entry)):
+                            txt = entry[j].find_elements(By.TAG_NAME, "span")
+                            lst.append(txt[0].text)
+                    university_list[i - 3][12] = list(lst)
+                financial_support = table.find_elements(By.ID, "dnf_class_values_program__financial_support__widget")
+                if financial_support: university_list[i - 3][13] = financial_support[0].text
+                cost_for_one_term = table.find_elements(By.ID, "dnf_class_values_program__living_expenses__widget")
+                if cost_for_one_term:
+                    lst2 = []
+                    cost_table_entries = cost_for_one_term[0].find_elements(By.TAG_NAME, "tr")
+                    for k in range(len(cost_table_entries)):
+                        entry = cost_table_entries[k].find_elements(By.TAG_NAME, "td")
+                        for j in range(len(entry)):
+                            txt = entry[j].find_elements(By.TAG_NAME, "span")
+                            lst2.append(txt[0].text)
+                    university_list[i - 3][15] = lst2
+                contact = table.find_elements(By.ID, "dnf_class_values_program__contact__widget")
+                if contact: university_list[i - 3][14] = contact[0].text
+
+
+                            
+
             finally:
                 back_btn = driver.find_element(By.XPATH, "//div[@class='buttonbar']/input")
                 back_btn.click()
