@@ -1,4 +1,4 @@
-"""Change uwcourse_description
+"""Change UWcourse Description
 
 Revision ID: ef52e75a2aec
 Revises: c3a8a01b1af0
