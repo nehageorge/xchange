@@ -143,7 +143,8 @@ function CourseSearch() {
                       scope="row"
                       style={{ color: "blue", textDecoration: "underline" }}
                     >
-                      <Link to={`/course/${ce.uwcourse.id}`}>
+                      <Link to={`/uwcourse/${ce.uwcourse.id}`}>
+
                         {ce.uwcourse.code}: {ce.uwcourse.name}
                       </Link>
                     </TableCell>

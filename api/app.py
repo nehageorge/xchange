@@ -51,7 +51,7 @@ class UWCourse(db.Model):
     name = db.Column(db.String(120))
     code = db.Column(db.String(20))
     terms = db.Column(db.String(120))
-    description = db.Column(db.String(128), nullable=True)
+    description = db.Column(db.String(1000), nullable=True)
 
 class CourseEquivalency(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -133,6 +133,12 @@ def course_search():
     db.session.add(CourseEquivalency(uwcourse_id=uw_course_id,university_id=uni_id,code="{0}: {1}".format(course_code,course_name), year_taken=year,student_program=program))
     db.session.commit()
     return redirect(url_for('course_search'))
+
+@app.route('/course/<param>', methods=['GET'])
+def get_course(param):
+	course = UWCourse.query.filter(UWCourse.id == param).first()
+	res = uwcourse_schema.dump(course)
+	return jsonify(res)
 
 @app.route('/course_equivalencies/search', methods=['POST'])
 def course_equivalencies_search():

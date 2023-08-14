@@ -7,18 +7,19 @@ import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import XchangeCourseTable from "./XchangeCourseTable";
 
 function CoursePage() {
-  const location = useLocation()
-  const { title, description, uni_name } = location.state
   const params = useParams();
+  const [course, setCourse] = useState({});
   const [courseEquivalencies, setCoursesEquivalency] = useState([]);
   const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
   const [query, setQuery] = useState("");
-
   useEffect(() => {
-    fetch("/course_equivalencies/search", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ unis: [uni_name] }),
+    fetch("/course/" + params.id).then((res) =>
+    res.json().then((data) => {
+      setCourse(data);
+    })
+  );
+
+    fetch("/course_equivalencies", {
     }).then((res) =>
       res.json().then((data) => {
         setCoursesEquivalency(data);
@@ -42,86 +43,22 @@ function CoursePage() {
       </View>
       <View style={{ flex: 1, padding: 20, marginLeft: "30px", marginRight: "50px" }}>
         <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "left" }}>
-            {title}
+            {course["code"]} : {course["name"]}
         </Text>
         <hr style={{opacity: "100%", width: "25%", background: "#E0D03B", height: "3px", border: "none"}}/>  
-        <Text>{description}
+        <Text>{course["description"]}
         </Text>
         <br></br>
         <XchangeCourseTable
-            uniName={uni_name}
             headers={[
-                "Previously Approved Course Sequences",
+                "Previously Approved Courses",
             ]}
             colWidths={["40%"]}
-            // tableBody={courseEquivalencies.map((ce) => (
-            //   <TableRow
-            //     key={ce.id}
-            //     sx={{
-            //       "&:last-child td, &:last-child th": { border: 0 },
-            //     }}
-            //   >
-            //     <TableCell>
-            //       <Text
-            //         component="th"
-            //         scope="row"
-            //         style={{ color: "blue", textDecoration: "underline" }}
-            //       >
-            //         {ce.uwcourse.name}
-            //       </Text>
-            //     </TableCell>
-            //     <TableCell>{ce.uwcourse.code}</TableCell>
-            //     <TableCell>{uni_name}</TableCell>
-            //   </TableRow>
-            // ))}
-            // TO-DO Connect to the course endpoint
         />
 
       </View>
     </div>
   );
 }
-
-const tempTableBody = [
-    <TableRow
-      sx={{
-        "&:last-child td, &:last-child th": { border: 0 },
-      }}
-    >
-      <TableCell
-        component="th"
-        scope="row"
-        style={{ color: "blue", textDecoration: "underline" }}
-      >
-        Feedback Control Systems
-      </TableCell>
-      <TableCell>EE3331C</TableCell>
-      <TableCell
-       component="th"
-       scope="row"
-       style={{ color: "blue", textDecoration: "underline" }}
-      >National University of Singapore (NUS)</TableCell>
-    </TableRow>,
-    <TableRow
-      sx={{
-        "&:last-child td, &:last-child th": { border: 0 },
-      }}
-    >
-      <TableCell
-        component="th"
-        scope="row"
-        style={{ color: "blue", textDecoration: "underline" }}
-      >
-        Feedback Control Systems
-      </TableCell>
-      <TableCell>EE3331C</TableCell>
-      <TableCell
-       component="th"
-       scope="row"
-       style={{ color: "blue", textDecoration: "underline" }}
-      >Another National University of Singapore (aNUS)</TableCell>
-    </TableRow>,
-  ];
   
-
 export default CoursePage;
