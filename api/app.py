@@ -28,7 +28,7 @@ app.config['MAIL_SERVER'] = 'smtp-mail.outlook.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'xchangeuw@outlook.com'
-app.config['MAIL_PASSWORD'] = '12345Abc@'
+app.config['MAIL_PASSWORD'] = os.getenv('PASSWORD')
 mail = Mail(app)
 
 """
@@ -65,20 +65,15 @@ class User(db.Model):
     is_admin = db.Column(db.Integer)
 
     def get_token(self,expires_sec=600):
-        # serial = Serializer(app.config['SECRET_KEY'], expires_in=expires_sec)
-        # return serial.dumps({'user_id':self.id}).decode('utf-8')
+        if self is None:
+            e = "There was a problem sending the email."
+            return redirect(url_for('login_error', problem=str(e)))
         return jwt.encode({'reset_password': self.id,
                            'exp':    time.time() + expires_sec},
                            key=os.getenv('SECRET_KEY_FLASK'), algorithm="HS256")
 
     @staticmethod
     def verify_token(token):
-        # serial = Serializer(app.config['SECRET_KEY'])
-        # try:
-        #     user_id = serial.loads(token)['user_id']
-        # except:
-        #     return None
-        # return User.query.get(user_id)
         try:
             id = jwt.decode(token,
               key=os.getenv('SECRET_KEY_FLASK'), algorithms="HS256")['reset_password'], 
@@ -215,7 +210,6 @@ def send_mail(user):
     mail.send(msg)
 
 @app.route('/forgot_password', methods=['GET','POST'])
-#Need to use UserBuilder, or do the same salting protocol as in UserBuilder
 def forgot_password():
     if request.method == 'POST':
         email = request.form['email']
@@ -234,11 +228,8 @@ def forgot_password():
 #Need to pass in token
 @app.route('/forgot_password_success/<token>', methods=['GET', 'POST'])
 def forgot_password_success(token):
-    print("Token: " + str(token))
-    # if request.method == 'POST':
     user=User.verify_token(token)
     if user is None:
-        print("That is an invalid token or it has expired. Please try again")
         flash('That is an invalid token or it has expired. Please try again.', 'warning')
         return redirect(url_for('forgot_password'))
     else:
