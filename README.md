@@ -33,6 +33,7 @@ To seed the university table, run the following statement in mysql shell:
 ## Environment setup
 1. Go to the root directory and create a `.env` file. 
 2. In that file, write `SECRET="somestring"`, where "somestring" is a string of your choice.
+3. Also write `PASSWORD="12345Abc@"` for forgot password functionality.
 
 ## How to run the backend
 
