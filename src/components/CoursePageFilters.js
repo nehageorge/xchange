@@ -8,24 +8,25 @@ function CoursePageFilters(props) {
   const borderStyle = "1px solid #A8A8A8";
 
   const programList = [
-    [0, ["Software Engineering", "SE"]],
-    [1, ["Biomedical Engineering", "BME"]],
-    [2, ["Civil Engineering", "CIVE"]],
-    [3, ["Management Engineering", "MSCI"]],
-    [4, ["Mechanical Engineering", "ME"]],
-    [5, ["Computer Science", "CS"]],
+    [0, ["Architectural Engineering", "AE"]],
+    [1, ["Architecture", "ARCH"]],
+    [2, ["Biomedical Engineering", "BME"]],
+    [3, ["Chemical Engineering", "CHE"]],
+    [4, ["Civil Engineering", "CIVE"]],
+    [5, ["Computer Engineering", "CE"]],
+    [6, ["Electrical Engineering", "EE"]],
+    [7, ["Environmental Engineering", "ENVE"]],
+    [8, ["Geological Engineering", "GEOE"]],
+    [9, ["Management Engineering", "MSCI"]],
+    [10, ["Mechanical Engineering", "ME"]],
+    [11, ["Mechatronics Engineering", "MTE"]],
+    [12, ["Nanotechnology  Engineering", "NE"]],
+    [13, ["Software Engineering", "SE"]],
+    [14, ["Systems Design Engineering", "SYDE"]],
   ];
   const programMap = new Map(programList);
 
-  const uniList = [
-    [0, ["National University of Singapore", "NUS"]],
-    [1, ["Bilkent University", "BU"]],
-    [2, ["Deakin University", "DU"]],
-    [3, ["Ewha Womans University", "EWHA"]],
-    [4, ["Griffith University", "GU"]],
-    [5, ["University of Leeds", "LISS"]],
-  ];
-  const uniMap = new Map(uniList);
+  const uniMap = new Map();
 
   const selectedPrograms = new Map();
   const selectedUnis = new Map();
@@ -38,6 +39,35 @@ function CoursePageFilters(props) {
   const [programSearchResults, setProgramSearchResults] = useState(new Map());
   const [uniSearch, setUniSearch] = useState("");
   const [uniSearchResults, setUniSearchResults] = useState(new Map());
+
+  useEffect(() => {
+    fetch("/universities").then((res) =>
+      res.json().then((data) => {
+        setUnis(getInitialUniNames(data));
+      })
+    );
+  }, []);
+
+  function getInitialUniNames(data) {
+    const uniNames = new Map();
+    for (const item of data) {
+      if (String(item.name).includes("(")) {
+        uniNames.set(item.id, [
+          String(item.name).split("(")[0],
+          String(item.name).match(/\(([^)]+)\)/)[1],
+        ]);
+      } else {
+        uniNames.set(item.id, [
+          item.name,
+          String(item.name)
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase())
+            .join(""),
+        ]);
+      }
+    }
+    return uniNames;
+  }
 
   function onProgramFilterClick(id) {
     const newSelectedMap = new Map(selectPrograms);
@@ -142,7 +172,7 @@ function CoursePageFilters(props) {
       <Box
         sx={{
           maxWidth: 350,
-          height: 550,
+          height: 565,
           border: borderStyle,
           borderRadius: 2,
         }}
