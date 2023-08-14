@@ -240,7 +240,7 @@ def login_success():
 @app.route('/get_uni/<param>', methods=['GET'])
 def get_uni(param):
     uni = University.query.filter(University.id == param).first()
-    res = uwcourse_schema.dump(uni)
+    res = uni_schema.dump(uni)
     return res
 
 @app.route('/get_uni/discussion/<param>/<user>', methods=['POST'])
