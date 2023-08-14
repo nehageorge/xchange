@@ -28,6 +28,7 @@ def scrape_uwaterloo_engineering_intl_exchange():
                 link = a['href']
                 links.add(link)
                 university_name = a.get_text()
+                university_name = university_name.replace(u'\xa0', ' ')
                 university_name = re.sub(r'\([^)]*\)', '', university_name)
                 universites[link] = university_name
     
