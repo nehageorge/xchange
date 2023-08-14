@@ -86,7 +86,7 @@ function PreviouslyApprovedCourses() {
             </TableCell>
             <TableCell>
               <Text>{ce.uwcourse_id}</Text>
-              <Link to={`/course/${ce.uwcourse.id}` }>
+              <Link to={`/uwcourse/${ce.uwcourse.id}` }>
                 {ce.code}: {ce.uwcourse.name}
               </Link>
             </TableCell>

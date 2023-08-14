@@ -31,6 +31,20 @@ class University(db.Model):
 	competition = db.Column(db.String(128))
 	program = db.Column(db.String(128))
 	location = db.Column(db.String(128))
+	academic_level = db.Column(db.String(128))
+	requirements = db.Column(db.String(128))
+	tuition = db.Column(db.String(128))
+	transcript = db.Column(db.String(512))
+	housing = db.Column(db.String(512))
+	faculties = db.Column(db.String(128))
+	dates = db.Column(db.String(512))
+	financial_support = db.Column(db.String(512))
+	contact = db.Column(db.String(256))
+	cost = db.Column(db.String(512))
+	cost_disclaimer = db.Column(db.String(128))
+	course_info = db.Column(db.String(512))
+	other_info = db.Column(db.String(512))
+	wellness = db.Column(db.String(512))
 
 class UWCourse(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -43,9 +57,9 @@ class CourseEquivalency(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     uwcourse_id = db.Column(db.Integer,db.ForeignKey("uw_course.id"),nullable=False)
     university_id = db.Column(db.Integer, db.ForeignKey('university.id'),nullable=False)
-    code = db.Column(db.String(128))
+    code = db.Column(db.String(200))
     year_taken = db.Column(db.String(4))
-    student_program =  db.Column(db.String(120))
+    student_program =  db.Column(db.String(150))
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -77,6 +91,12 @@ def index():
 	res = unis_schema.dump(unis)
 	return jsonify(res)
 
+@app.route('/uw_courses', methods=['GET'])
+def uw_course():
+	courses = UWCourse.query.all()
+	res = uwcourses_schema.dump(courses)
+	return jsonify(res)
+
 @app.route('/search_unis/<param>', methods=['GET'])
 def search_unis(param):
 	unis = University.query.filter(University.program.like('%'+param+'%') | University.location.like('%'+param+'%'))
@@ -97,17 +117,18 @@ def search_courses(query):
 
 @app.route('/course/search', methods=['POST', 'GET'])
 def course_search():
-    uw_course = request.form['uw_course_name']
     program = request.form['program']
     year = request.form['year_taken']
-    uni = request.form['host_uni']
     course_name = request.form['host_course_name']
     course_code = request.form['host_course_code']
 
-    uni = University.query.filter(University.name == uni).first()
-    uni_id = uni.id if uni else 54
-    uw_course = UWCourse.query.filter(UWCourse.code == uw_course).first()
-    uw_course_id = uw_course.id if uw_course else 1
+    uni_id = request.form['host_uni_id']
+    uw_course_id = request.form['uw_course_id']
+
+    fields_present = program and year and course_name and course_code and uni_id and uw_course_id
+
+    if not fields_present or int(uni_id) == 0 or int(uw_course_id) == 0:
+        return redirect(url_for('course_search', error="add-fail"))
 
     db.session.add(CourseEquivalency(uwcourse_id=uw_course_id,university_id=uni_id,code="{0}: {1}".format(course_code,course_name), year_taken=year,student_program=program))
     db.session.commit()
