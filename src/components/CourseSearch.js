@@ -14,6 +14,7 @@ import AddEquivalencyButton from "./AddEquivalencyButton";
 import AddEquivalencyDialog from "./AddEquivalencyDialog";
 import FlashMessage from "react-flash-message";
 import { useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function CourseSearch() {
   const [searchParams, _] = useSearchParams();
@@ -137,8 +138,14 @@ function CourseSearch() {
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell>
-                      {ce.uwcourse.code}: {ce.uwcourse.name}
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      style={{ color: "blue", textDecoration: "underline" }}
+                    >
+                      <Link to={`/course/${ce.uwcourse.id}`}>
+                        {ce.uwcourse.code}: {ce.uwcourse.name}
+                      </Link>
                     </TableCell>
                     <TableCell>{ce.code}</TableCell>
                     <TableCell
@@ -146,7 +153,9 @@ function CourseSearch() {
                       scope="row"
                       style={{ color: "blue", textDecoration: "underline" }}
                     >
-                      {ce.university.name}
+                      <Link to={`/get_uni/${ce.university.id}/0`}>
+                        {ce.university.name}
+                      </Link>
                     </TableCell>
 
                     <TableCell>{ce.year_taken}</TableCell>
