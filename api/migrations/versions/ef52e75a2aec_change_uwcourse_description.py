@@ -1,4 +1,4 @@
-"""empty message
+"""Change uwcourse_description
 
 Revision ID: ef52e75a2aec
 Revises: c3a8a01b1af0
