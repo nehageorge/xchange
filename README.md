@@ -23,18 +23,20 @@ When a migration is made ensure that you perform the following steps before runn
 2. Run `flask db migrate`.
 3. Run `flask db upgrade`.
 
-To seed the tables: 
+To seed the tables:
 Run the following statement in mysql shell:
+
 1. mysql> SET_GLOBAL local_infile=1;
-2. mysql> quit 
-Reconnect to the sql shell using: 
+2. mysql> quit
+   Reconnect to the sql shell using:
 3. mysql --local-infile=1 -u root -p
-Run the following commands to seed the University and UWCourse tables:
+   Run the following commands to seed the University and UWCourse tables:
 4. mysql> use xchange;
-5. mysql> `LOAD DATA LOCAL INFILE '/path/to/xchange/api/seed_university.csv' INTO TABLE university FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' (id, name, competition, languages, program, terms, location);`
+5. mysql> `LOAD DATA LOCAL INFILE '/Users/aghimire/Desktop/XChange/xchange/api/scrapers/seed_university.csv' INTO TABLE university FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n\n\n' (id, name, competition, languages, program, terms, location, academic_level, requirements, tuition, transcript, housing, faculties, dates, financial_support, contact, cost, cost_disclaimer, course_info, other_info, wellness);`
 6. mysql> `LOAD DATA LOCAL INFILE './seed_courses.csv' INTO TABLE uw_course FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' (id, name, code, terms, description);`
 
-To seed the CourseEquivalency table: 
+To seed the CourseEquivalency table:
+
 1. Navigate to the data folder using `cd api/scrapers/data`
 2. Run `python upload_engineering_packages.py`
 
