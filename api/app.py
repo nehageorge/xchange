@@ -57,9 +57,9 @@ class CourseEquivalency(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     uwcourse_id = db.Column(db.Integer,db.ForeignKey("uw_course.id"),nullable=False)
     university_id = db.Column(db.Integer, db.ForeignKey('university.id'),nullable=False)
-    code = db.Column(db.String(128))
+    code = db.Column(db.String(200))
     year_taken = db.Column(db.String(4))
-    student_program =  db.Column(db.String(120))
+    student_program =  db.Column(db.String(150))
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

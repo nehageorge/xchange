@@ -39,7 +39,7 @@ with open('./engineering_packages.csv') as csv_file:
                 print(f"Unable to find university:\t{university_name}")
 
         if uwcourse and university:
-            if len(row[3]) < 120:
+            if len(row[3]) < 200:
                 try:
                     ce = CourseEquivalency(
                         uwcourse_id = uwcourse.id,
