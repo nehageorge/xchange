@@ -219,7 +219,6 @@ def forgot_password():
             e = "This email is not registered."
             return redirect(url_for('login_error', problem=str(e)))
         send_mail(result)
-        #TODO: make this actually show up
         flash('Reset request sent. Check your mail.', 'success')
         return redirect(url_for('login'))
     else:
