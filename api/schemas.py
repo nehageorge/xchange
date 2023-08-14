@@ -8,7 +8,9 @@ Schemas for Models
 class UniversitySchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("id","name", "program", "location", "languages", "terms", "competition")
+        fields = ("id", "name", "program", "location", "languages", "terms", "competition",
+        "academic_level", "requirements", "tuition", "transcript", "housing", "faculties",
+        "dates", "financial_support", "contact", "cost", "cost_disclaimer", "course_info", "other_info", "wellness")
 
 uni_schema = UniversitySchema()
 unis_schema = UniversitySchema(many=True)
@@ -17,7 +19,7 @@ unis_schema = UniversitySchema(many=True)
 class UWCourseSchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("name", "code", "terms", "description")
+        fields = ("id", "name", "code", "terms", "description")
 uwcourse_schema = UWCourseSchema()
 uwcourses_schema = UWCourseSchema(many=True)
 

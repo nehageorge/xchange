@@ -60,7 +60,7 @@ function ViewUni() {
           </Grid>
         </Grid>
         {content === 0 ? (
-          <UniversityOverviewContent />
+          <UniversityOverviewContent uni={currUni} />
         ) : content === 1 ? (
           <PreviouslyApprovedCourses />
         ) : (
