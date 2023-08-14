@@ -53,7 +53,7 @@ function CoursePageFilters(props) {
     for (const item of data) {
       if (String(item.name).includes("(")) {
         uniNames.set(item.id, [
-          String(item.name).split("(")[0],
+          String(item.name),
           String(item.name).match(/\(([^)]+)\)/)[1],
         ]);
       } else {
