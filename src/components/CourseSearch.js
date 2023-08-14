@@ -12,8 +12,11 @@ import CoursePageFilters from "./CoursePageFilters";
 import { useState, useEffect } from "react";
 import AddEquivalencyButton from "./AddEquivalencyButton";
 import AddEquivalencyDialog from "./AddEquivalencyDialog";
+import FlashMessage from "react-flash-message";
+import { useSearchParams } from "react-router-dom";
 
 function CourseSearch() {
+  const [searchParams, _] = useSearchParams();
   const [courseEquivalencies, setCoursesEquivalency] = useState([]);
   const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
   const [query, setQuery] = useState("");
@@ -30,10 +33,6 @@ function CourseSearch() {
   }, []);
 
   useEffect(() => {
-    console.log("Par: Change detected");
-    console.log("University Filters  " + uniFilters);
-    console.log("Program Filters  " + programFilters);
-    console.log("Query  " + query);
     if (query.length == 0 && uniFilters === [] && programFilters === []) {
       setCoursesEquivalency(allCourseEquivalencies);
       return;
@@ -89,6 +88,18 @@ function CourseSearch() {
           style={{ maxHeight: 400, paddingBottom: "1rem" }}
         ></img>
       </View>
+      {searchParams.get("error") && (
+        <FlashMessage duration={3000}>
+          <center style={{ background: "#ed897e" }}>
+            <div style={{ padding: 20 }}>
+              <strong>
+                Error submitting course equivalency. Ensure all fields are
+                populated.
+              </strong>
+            </div>
+          </center>
+        </FlashMessage>
+      )}
       <div style={{ padding: "1em", marginLeft: "1rem" }}>
         <h2>Search for a Course</h2>
 

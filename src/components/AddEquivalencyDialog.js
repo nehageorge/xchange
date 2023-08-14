@@ -1,26 +1,58 @@
 import { Autocomplete, Dialog, Grid, TextField } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import XChangeButton from "./XChangeButton";
 import { Button } from "@mui/material";
 import { Text } from "react-native-web";
 
 function AddEquivalencyDialog(props) {
+  const [uwCourseId, setUwCourseId] = useState(0);
+  const [hostUniId, setHostUniId] = useState(0);
+  const [uwCourses, setUwCourses] = useState([]);
+  const [hostUnis, setHostUnis] = useState([]);
+
   const user = window.sessionStorage.getItem("user");
   const userPresent = user ? true : false;
   // placeholder data
-  const uwCourseNames = [
-    { label: "Concurrent and Parallel Programming", code: "CS 343" },
-    { label: "Classical Mechanics", code: "ECE105" },
-    { label: "Electricity and Magnetism", code: "ECE106" },
-    { label: "Algebra for Honours Mathematics", code: "MATH 135" },
-  ];
+  useEffect(() => {
+    fetch("/universities").then((res) =>
+      res.json().then((data) => {
+        setHostUnis(data.map(getHostUniData));
+      })
+    );
+  }, []);
+
+  useEffect(() => {
+    fetch("/uw_courses").then((res) =>
+      res.json().then((data) => {
+        setUwCourses(data.map(getUWCourseData));
+      })
+    );
+  }, []);
+
+  function getHostUniData(item) {
+    return { label: item.name, id: item.id };
+  }
+
+  function getUWCourseData(item) {
+    return { label: `${item.code}: ${item.name}`, id: item.id };
+  }
+
   const uwPrograms = [
-    { label: "Software Engineering" },
+    { label: "Architectural Engineering" },
+    { label: "Architecture" },
     { label: "Biomedical Engineering" },
+    { label: "Chemical Engineering" },
     { label: "Civil Engineering" },
+    { label: "Computer Engineering" },
+    { label: "Electrical Engineering" },
+    { label: "Environmental Engineering" },
+    { label: "Geological Engineering" },
     { label: "Management Engineering" },
     { label: "Mechanical Engineering" },
-    { label: "Computer Science" },
+    { label: "Mechatronics Engineering" },
+    { label: "Nanotechnology Engineering" },
+    { label: "Software Engineering" },
+    { label: "Systems Design Engineering" },
   ];
   const pastTenYears = [
     { label: "2023" },
@@ -28,20 +60,17 @@ function AddEquivalencyDialog(props) {
     { label: "2021" },
     { label: "2020" },
     { label: "2019" },
-  ];
-  const hostUnis = [
-    { label: "National University of Singapore" },
-    { label: "Bilkent University" },
-    { label: "Deakin University" },
-    { label: "Ewha Womans University" },
-    { label: "Griffith University" },
-    { label: "University of Leeds" },
+    { label: "2018" },
+    { label: "2017" },
+    { label: "2016" },
+    { label: "2015" },
   ];
 
-  function DropdownMenu(menuLabel, menuOptions, menuName) {
+  function DropdownMenu(menuLabel, menuOptions, menuName, onChange) {
     return (
       <Autocomplete
         options={menuOptions}
+        onChange={onChange}
         renderInput={(params) => (
           <TextField {...params} label={menuLabel} name={menuName} />
         )}
@@ -67,7 +96,14 @@ function AddEquivalencyDialog(props) {
             <Grid container spacing={2} direction="row" padding={3}>
               <Grid item xs={4}>
                 <p>UW Course Name</p>
-                {DropdownMenu("", uwCourseNames, "uw_course_name")}
+                {DropdownMenu("", uwCourses, "uw_course_name", (_, value) => {
+                  setUwCourseId(value.id);
+                })}
+                <input
+                  type="hidden"
+                  name="uw_course_id"
+                  value={uwCourseId}
+                ></input>
               </Grid>
               <Grid item xs={4}>
                 <p>Your Program</p>
@@ -79,7 +115,14 @@ function AddEquivalencyDialog(props) {
               </Grid>
               <Grid item xs={4}>
                 <p>Host University</p>
-                {DropdownMenu("", hostUnis, "host_uni")}
+                {DropdownMenu("", hostUnis, "host_uni", (_, value) =>
+                  setHostUniId(value.id)
+                )}
+                <input
+                  type="hidden"
+                  name="host_uni_id"
+                  value={hostUniId}
+                ></input>
               </Grid>
               <Grid item xs={4}>
                 <p>Host Course Name</p>
