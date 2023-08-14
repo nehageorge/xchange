@@ -34,6 +34,10 @@ Run the following commands to seed the University and UWCourse tables:
 5. mysql> `LOAD DATA LOCAL INFILE '/path/to/xchange/api/seed_university.csv' INTO TABLE university FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' (id, name, competition, languages, program, terms, location);`
 6. mysql> `LOAD DATA LOCAL INFILE './seed_courses.csv' INTO TABLE uw_course FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' (id, name, code, terms, description);`
 
+To seed the CourseEquivalency table: 
+1. Navigate to the data folder using `cd api/scrapers/data`
+2. Run `python upload_engineering_packages.py`
+
 ## Selenium Scraper setup
 
 1. Go to https://sites.google.com/chromium.org/driver/downloads?authuser=0 and download the correct version of WebDriver depending on your chrome browser version
