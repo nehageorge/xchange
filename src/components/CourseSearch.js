@@ -144,6 +144,7 @@ function CourseSearch() {
                       style={{ color: "blue", textDecoration: "underline" }}
                     >
                       <Link to={`/uwcourse/${ce.uwcourse.id}`}>
+
                         {ce.uwcourse.code}: {ce.uwcourse.name}
                       </Link>
                     </TableCell>

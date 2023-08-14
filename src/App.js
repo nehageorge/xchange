@@ -37,6 +37,7 @@ function App() {
             exact
             path="/course/prevSequence"
             element={<PreviousCourseSequences />}
+
           />
           <Route exact path="/course/search" element={<CourseSearch />} />
         </Routes>
