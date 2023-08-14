@@ -31,8 +31,8 @@ Reconnect to the sql shell using:
 3. mysql --local-infile=1 -u root -p
 Run the following commands to seed the University and UWCourse tables:
 4. mysql> use xchange;
-5. mysql> `LOAD DATA LOCAL INFILE '/path/to/xchange/api/seed_university.csv' INTO TABLE university FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' (id, name, competition, languages, program, terms, location);`
-6. mysql> `LOAD DATA LOCAL INFILE './seed_courses.csv' INTO TABLE uw_course FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' (id, name, code, terms, description);`
+5. mysql> `LOAD DATA LOCAL INFILE '/path/to/xchange/api/scrapers/seed_university.csv' INTO TABLE university FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n\n\n' (id, name, competition, languages, program, terms, location, academic_level, requirements, tuition, transcript, housing, faculties, dates, financial_support, contact, cost, cost_disclaimer);`
+6. mysql> `LOAD DATA LOCAL INFILE '/path/to/xchange/api/scrapers/seed_courses.csv' INTO TABLE uw_course FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' (id, name, code, terms, description);`
 
 To seed the CourseEquivalency table: 
 1. Navigate to the data folder using `cd api/scrapers/data`
