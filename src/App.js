@@ -33,12 +33,6 @@ function App() {
           <Route exact path="/get_uni/:id/:page" element={<ViewUni />} />
           <Route exact path="/course/home" element={<CourseHome />} />
           <Route exact path="/uwcourse/:id" element={<CoursePage />} />
-          <Route
-            exact
-            path="/course/prevSequence"
-            element={<PreviousCourseSequences />}
-
-          />
           <Route exact path="/course/search" element={<CourseSearch />} />
         </Routes>
       </BrowserRouter>
