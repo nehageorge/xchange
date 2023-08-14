@@ -20,16 +20,8 @@ function CourseHome() {
 
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <PagePreview
-              imageURL="https://images.unsplash.com/photo-1488646953014-85cb44e25828"
-              altText="Planning to travel, Bag, field notes, camera and travel pamphlets laid out over a map"
-              page="/course/prevSequence"
-              title="Previously Accepted Course Sequences"
-              description="Take a look at the previously accepted course plans students at the University of Waterloo have done when on exchange at foreign institutions (engineering only)."
-            />
-          </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={2}></Grid>
+          <Grid item xs={8}>
             <PagePreview
               imageURL="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2"
               altText="Person Searching for a course on their laptop"
@@ -38,6 +30,7 @@ function CourseHome() {
               description="Interested in courses students have taken at a particular university abroad? Want to check a previously approved UW course equivalent at another institute? Search for the course, university and your program here!"
             />
           </Grid>
+          <Grid item xs={2}></Grid>
         </Grid>
       </Box>
     </div>

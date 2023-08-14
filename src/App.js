@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ViewUni from "./components/ViewUni";
 import CourseHome from "./components/CourseHome";
 import CoursePage from "./components/CoursePage";
-import PreviousCourseSequences from "./components/PrevCourseSequences";
 import CourseSearch from "./components/CourseSearch";
 import Landing from "./components/Landing";
 import UniversitySearch from "./components/UniversitySearch";
@@ -37,11 +36,6 @@ function App() {
             exact
             path="/get_uni/:id/:page/:course_name"
             element={<CoursePage />}
-          />
-          <Route
-            exact
-            path="/course/prevSequence"
-            element={<PreviousCourseSequences />}
           />
           <Route exact path="/course/search" element={<CourseSearch />} />
         </Routes>
