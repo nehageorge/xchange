@@ -1,7 +1,9 @@
 from urllib.parse import urlparse
-from flask import Flask, request, redirect, jsonify, url_for
+from itsdangerous import URLSafeTimedSerializer as Serializer
+from flask import Flask, request, redirect, jsonify, url_for, flash
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 import flask_appbuilder
 import importlib
 import sys
@@ -9,6 +11,7 @@ import json
 import bcrypt
 import jwt
 import os
+import time
 from user_builder import UserBuilder
 from helpers import course_equivalencies_join_to_dict
 from schemas import *
@@ -16,9 +19,17 @@ from schemas import *
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://xchange@localhost/xchange'
+app.config['SECRET_KEY'] = 'xchangeskey'
+
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
+app.config['MAIL_SERVER'] = 'smtp-mail.outlook.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'xchangeuw@outlook.com'
+app.config['MAIL_PASSWORD'] = os.getenv('PASSWORD')
+mail = Mail(app)
 
 """
 Models 
@@ -66,6 +77,25 @@ class User(db.Model):
     email = db.Column(db.String(128))
     password = db.Column(db.String(128))
     is_admin = db.Column(db.Integer)
+
+    def get_token(self,expires_sec=600):
+        if self is None:
+            e = "There was a problem sending the email."
+            return redirect(url_for('login_error', problem=str(e)))
+        return jwt.encode({'reset_password': self.id,
+                           'exp':    time.time() + expires_sec},
+                           key=os.getenv('SECRET_KEY_FLASK'), algorithm="HS256")
+
+    @staticmethod
+    def verify_token(token):
+        try:
+            id = jwt.decode(token,
+              key=os.getenv('SECRET_KEY_FLASK'), algorithms="HS256")['reset_password'], 
+        except Exception as e:
+            print(e)
+            return
+        return User.query.filter_by(id=id).first()
+
 
 class DiscussionPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -193,6 +223,57 @@ def signup():
     else:
         return jsonify("")
 
+def send_mail(user):
+    token=user.get_token()
+    msg=Message('Password Reset Request',recipients=[user.email], sender='xchangeuw@outlook.com')
+    print(url_for('forgot_password_success', token=token,_external=True).replace("http://127.0.0.1:5000", "http://127.0.0.1:3000"))
+    msg.body=f''' To reset your password, please follow the link below:
+    
+    {url_for('forgot_password_success', token=token,_external=True).replace("http://127.0.0.1:5000", "http://127.0.0.1:3000")}
+    If you didn't send a password reset request, please ignore this message.
+
+    '''
+
+    mail.send(msg)
+
+@app.route('/forgot_password', methods=['GET','POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form['email']
+
+        result = User.query.filter(User.email == email).first()
+        if result is None:
+            e = "This email is not registered."
+            return redirect(url_for('login_error', problem=str(e)))
+        send_mail(result)
+        flash('Reset request sent. Check your mail.', 'success')
+        return redirect(url_for('login'))
+    else:
+        return jsonify("")
+
+#Need to pass in token
+@app.route('/forgot_password_success/<token>', methods=['GET', 'POST'])
+def forgot_password_success(token):
+    user=User.verify_token(token)
+    if user is None:
+        flash('That is an invalid token or it has expired. Please try again.', 'warning')
+        return redirect(url_for('forgot_password'))
+    else:
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+
+        if not(password == confirm_password):
+            raise ValueError("Passwords do not match")
+
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+        user.password = hashed
+        db.session.commit()
+        flash('Password changed! Please login!', 'success')
+        return redirect(url_for('login'))
+
+
+
 @app.route('/signup_error', methods=['GET'])
 def signup_error():
     return jsonify("")
@@ -218,6 +299,7 @@ def login():
         if not isSuccess:
             e = "The password is incorrect"
             return redirect(url_for('login_error', problem=str(e)))
+
             
         userForToken = {
             'email': email,
