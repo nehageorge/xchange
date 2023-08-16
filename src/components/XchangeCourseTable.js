@@ -16,7 +16,10 @@ function XchangeCourseTable(props) {
   const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
   const [query, setQuery] = useState("");
   useEffect(() => {
-    fetch("/course_equivalencies", {
+    fetch("/course_equivalencies/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ course_id: props.course_id }),
     }).then((res) =>
       res.json().then((data) => {
         setCoursesEquivalency(data);
@@ -35,7 +38,7 @@ function XchangeCourseTable(props) {
     fetch("/course_equivalencies/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body:  JSON.stringify({ uni_query: newQuery }),
+      body: JSON.stringify({ uni_query: newQuery, course_id: props.course_id }),
     }).then((res) =>
       res.json().then((data) => {
         if (newQuery.length != 0) {
@@ -58,46 +61,52 @@ function XchangeCourseTable(props) {
           <TableRow>
             {props.headers.map((header) => {
               return (
-                <TableCell style={{ fontSize: "1.2rem", fontWeight: "bold" }}>{header}</TableCell>
+                <TableCell style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
+                  {header}
+                </TableCell>
               );
             })}
-            <TableCell style={{ fontSize: "1.2rem", fontWeight: "bold" }}></TableCell>
+            <TableCell
+              style={{ fontSize: "1.2rem", fontWeight: "bold" }}
+            ></TableCell>
             <TableCell>
-                <TextField
-                    sx={{ backgroundColor: "rgba(52, 52, 52, 0.1)" }}
-                    onChange={(event) => {
-                    search(event.target.value);
-                    }}
-                    name="search"
-                    label="Search by university"
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                    InputLabelProps={{ style: { fontSize: 20 } }}
-                />
+              <TextField
+                sx={{ backgroundColor: "rgba(52, 52, 52, 0.1)" }}
+                onChange={(event) => {
+                  search(event.target.value);
+                }}
+                name="search"
+                label="Search by university"
+                variant="outlined"
+                fullWidth
+                size="small"
+                InputLabelProps={{ style: { fontSize: 20 } }}
+              />
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>{courseEquivalencies.map((ce) => (
-              <TableRow
-                key={ce.id}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                }}
-              >
-                <TableCell>
-                  <Text
-                    component="th"
-                    scope="row"
-                    // style={{ color: "blue", textDecoration: "underline" }}
-                  >
-                    {ce.uwcourse.name}
-                  </Text>
-                </TableCell>
-                <TableCell>{ce.uwcourse.code}</TableCell>
-                <TableCell>{ce.university.name}</TableCell>
-              </TableRow>
-            ))}</TableBody>
+        <TableBody>
+          {courseEquivalencies.map((ce) => (
+            <TableRow
+              key={ce.id}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+              }}
+            >
+              <TableCell>
+                <Text
+                  component="th"
+                  scope="row"
+                  // style={{ color: "blue", textDecoration: "underline" }}
+                >
+                  {ce.uwcourse.name}
+                </Text>
+              </TableCell>
+              <TableCell>{ce.uwcourse.code}</TableCell>
+              <TableCell>{ce.university.name}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
       </Table>
     </TableContainer>
   );
