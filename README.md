@@ -33,7 +33,7 @@ Run the following statement in mysql shell:
    Run the following commands to seed the University and UWCourse tables:
 4. mysql> use xchange;
 5. mysql> `LOAD DATA LOCAL INFILE '/path/to/xchange/api/scrapers/seed_university.csv' INTO TABLE university FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n\n\n' (id, name, competition, languages, program, terms, location, academic_level, requirements, tuition, transcript, housing, faculties, dates, financial_support, contact, cost, cost_disclaimer, course_info, other_info, wellness);`
-6. mysql> `LOAD DATA LOCAL INFILE './seed_courses.csv' INTO TABLE uw_course FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' (id, name, code, terms, description);`
+6. mysql> `LOAD DATA LOCAL INFILE '/path/to/xchange/api/scrapers/seed_courses.csv' INTO TABLE uw_course FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n' (id, name, code, terms, description);`
 
 To seed the CourseEquivalency table:
 

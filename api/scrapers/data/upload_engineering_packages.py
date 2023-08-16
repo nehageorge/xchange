@@ -5,16 +5,20 @@ import csv
 from app import db, CourseEquivalency, UWCourse, University
 
 variations_of_university_names = {
+    "Politecnico di Milano": "Polytechnic University of Milan (POLIMI)",
     "Hong Kong Polytechnical University" : "Hong Kong Polytechnic University (Poly U)", 
     "Indian Institute of Technology": "IIT Delhi",
     "Lunds Universitet": "University of Lund", 
     "Universidad Carlos III de Madrid": "Charles III University of Madrid (UC3M)", 
     "Norwegian University of Science and Technology": "Norwegian University of Science & Technology (NTNU)",
     "Norwegian University of Science of Technology" : "Norwegian University of Science & Technology (NTNU)",
-    "Ecole Polytechnique F�d�rale de Lausanne": "Swiss Federal Institute of Technology Lausanne (EPFL)", 
     "Southern Denmark University": "University of Southern Denmark (SDU)", 
-    "Universit� deTechnologie de Compi�gne ": "University of Technology of Compiègne (UTC)", 
-    "Tampere University of Technology": "Tampere University", 
+    "Tampere University of Technology": "Tampere University",
+    "Technische Universit�t Braunschweig": "Technical University of Braunschweig (TUB)", 
+    "Ecole Polytechnique F�d�rale de Lausanne": "Swiss Federal Institute of Technology Lausanne (EPFL)", 
+    "Universit� deTechnologie de Compi�gne": "University of Technology of Compiègne (UTC)", 
+
+
 }
 
 with open('./engineering_packages.csv') as csv_file:
@@ -29,14 +33,15 @@ with open('./engineering_packages.csv') as csv_file:
         if uwcourse is None:
             print(f"Error: Unable to find course:\t{uw_course_code}")
         # Get University id from Database 
-        university_name = row[4]
-        university = University.query.filter(University.name.like('%'+university_name+'%') | University.name == university_name).first()
+        university_name = row[4].strip()
+        university = University.query.filter(University.name.contains(university_name)).first()
         if university is None:
             # Scraper has an alternate name for the university, check mapping
-            alt_university_name = variations_of_university_names[university_name]
-            university = University.query.filter(University.name == university_name).first()
-            if university is None:
+            alt_university_name = variations_of_university_names.get(university_name, None)
+            if alt_university_name is None: 
                 print(f"Unable to find university:\t{university_name}")
+            else:
+                university = University.query.filter(University.name == alt_university_name).first()        
 
         if uwcourse and university:
             if len(row[3]) < 200:
