@@ -63,7 +63,7 @@ function CoursePage() {
         <br></br>
         <XchangeCourseTable
           headers={["Previously Approved Courses"]}
-          colWidths={["40%"]}
+          colWidths={["20%", "15%", "30%", "35%"]}
           course_id={params.id}
         />
       </View>
