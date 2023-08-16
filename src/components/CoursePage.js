@@ -1,11 +1,9 @@
 import "./CoursePage.css";
 import { Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import { TableCell, TableRow } from "@mui/material";
+import { useParams } from "react-router-dom";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import XchangeCourseTable from "./XchangeCourseTable";
-import { PropaneSharp } from "@mui/icons-material";
 
 function CoursePage() {
   const params = useParams();

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Text } from "react-native";
-import { Link } from "react-router-dom";
 import {
   Table,
   TableBody,
