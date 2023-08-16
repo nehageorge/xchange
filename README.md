@@ -48,7 +48,7 @@ To seed the CourseEquivalency table:
 
 1. Go to the root directory and create a `.env` file.
 2. In that file, write `SECRET="somestring"`, where "somestring" is a string of your choice.
-3. Also write `PASSWORD="12345Abc@"` for forgot password functionality.
+3. Write `SECRET_KEY_FLASK="xchangesecret"` and `PASSWORD="12345Abc@"` for forgot password functionality.
 
 ## How to run the backend
 
