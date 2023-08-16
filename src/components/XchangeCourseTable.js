@@ -60,7 +60,13 @@ function XchangeCourseTable(props) {
           <TableRow>
             {props.headers.map((header) => {
               return (
-                <TableCell style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
+                <TableCell
+                  colSpan={2}
+                  style={{
+                    fontSize: "1.2rem",
+                    fontWeight: "bold",
+                  }}
+                >
                   {header}
                 </TableCell>
               );
@@ -102,6 +108,7 @@ function XchangeCourseTable(props) {
                 </Text>
               </TableCell>
               <TableCell>{ce.uwcourse.code}</TableCell>
+              <TableCell>{ce.code}</TableCell>
               <TableCell>{ce.university.name}</TableCell>
             </TableRow>
           ))}
