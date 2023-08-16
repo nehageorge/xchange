@@ -32,11 +32,7 @@ function App() {
           <Route exact path="/universities" element={<UniversitySearch />} />
           <Route exact path="/get_uni/:id/:page" element={<ViewUni />} />
           <Route exact path="/course/home" element={<CourseHome />} />
-          <Route
-            exact
-            path="/get_uni/:id/:page/:course_name"
-            element={<CoursePage />}
-          />
+          <Route exact path="/uwcourse/:id" element={<CoursePage />} />
           <Route exact path="/course/search" element={<CourseSearch />} />
         </Routes>
       </BrowserRouter>

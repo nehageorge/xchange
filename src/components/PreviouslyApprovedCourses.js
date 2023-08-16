@@ -85,7 +85,8 @@ function PreviouslyApprovedCourses() {
               </Text>
             </TableCell>
             <TableCell>
-              <Link to={'/get_uni/:id/:page/' + ce.uwcourse.name} state={{ title: ce.uwcourse.name, description: ce.uwcourse.description, uni_name: currUni["name"] }}>
+              <Text>{ce.uwcourse_id}</Text>
+              <Link to={`/uwcourse/${ce.uwcourse.id}` }>
                 {ce.code}: {ce.uwcourse.name}
               </Link>
             </TableCell>

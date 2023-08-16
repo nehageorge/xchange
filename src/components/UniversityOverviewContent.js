@@ -27,7 +27,7 @@ function UniversityOverviewContent(props) {
   // Course Info - currently not scraped
   const courseInfo = [
     "Course Info:",
-    props.uni.courseInfo ? props.uni.courseInfo : "",
+    props.uni.course_info ? props.uni.course_info : "",
   ];
   // Term Dates
   const dateInfo = String(props.uni.dates).replace('"', "").split("~");
@@ -50,7 +50,7 @@ function UniversityOverviewContent(props) {
   // Other Info - currently not scraped
   const otherInfo = [
     "Other Info:",
-    props.uni.otherInfo ? props.uni.otherInfo : "",
+    props.uni.other_info ? props.uni.other_info : "",
   ];
   // Cost Info
   const costHeaders = ["Costs for one term", props.uni.cost_disclaimer];
