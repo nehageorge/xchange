@@ -26,6 +26,9 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
+
+      - name: i hate azure
+        run: export FLASK_APP=app.py
           
       - name: Install dependencies
         run: pip install -r api/requirements.txt
