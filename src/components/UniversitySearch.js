@@ -13,7 +13,7 @@ function UniversitySearch() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/universities").then((res) =>
+    fetch("https://xchange-flask.onrender.com/universities").then((res) =>
       res.json().then((data) => {
         setAllUnis(data);
         if (search.length == 0) {
