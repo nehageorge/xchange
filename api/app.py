@@ -118,8 +118,9 @@ Routes
 @app.route('/universities', methods=['GET'])
 def index():
 	unis = University.query.all()
-	res = unis_schema.dump(unis)
-	return jsonify(res)
+	res = jsonify(unis_schema.dump(unis))
+	res.headers.add('Access-Control-Allow-Origin', '*')
+	return res
 
 @app.route('/uw_courses', methods=['GET'])
 def uw_course():
@@ -130,7 +131,8 @@ def uw_course():
 @app.route('/search_unis/<param>', methods=['GET'])
 def search_unis(param):
 	unis = University.query.filter(University.program.like('%'+param+'%') | University.location.like('%'+param+'%'))
-	res = unis_schema.dump(unis)
+	res = jsonify(unis_schema.dump(unis))
+	res.headers.add('Access-Control-Allow-Origin', '*')
 	return jsonify(res)
 
 @app.route('/course_equivalencies', methods=['GET'])
