@@ -363,7 +363,7 @@ def university_discussion_posts(param, user):
         posts = db.session.query(DiscussionPost).join(University).filter(University.id.like('%'+param+'%')).all()
         res = discussion_posts_schema.dump(posts)
         res.headers.add('Access-Control-Allow-Origin', '*')
-	return res
+		return res
 
 if __name__ == '__main__':
 	app.run()
