@@ -14,7 +14,7 @@ function UniversitySearch() {
 
   useEffect(() => {
     console.log("AAAAA");
-    fetch("/api/universities").then((res) =>
+    fetch("https://xchange-flask.onrender.com/universities").then((res) =>
       res.json().then((data) => {
         setAllUnis(data);
         if (search.length == 0) {
@@ -33,7 +33,7 @@ function UniversitySearch() {
       setUnis(allUnis);
       return;
     }
-    fetch("/api/search_unis/" + newSearch).then((res) =>
+    fetch("https://xchange-flask.onrender.com/search_unis/" + newSearch).then((res) =>
       res.json().then((data) => {
         console.log("EEEEE");
         if (newSearch.length != 0) {
