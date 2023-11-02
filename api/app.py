@@ -18,7 +18,7 @@ from schemas import *
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://xchange@localhost/xchange'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:abcd1234@uw-xchange-db.c3pzdva7zeof.us-east-2.rds.amazonaws.com:3306/xchange'
 app.config['SECRET_KEY'] = 'xchangeskey'
 
 
