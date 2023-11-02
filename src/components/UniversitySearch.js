@@ -13,7 +13,6 @@ function UniversitySearch() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    console.log("AAAAA");
     fetch("https://xchange-flask.onrender.com/universities").then((res) =>
       res.json().then((data) => {
         setAllUnis(data);
@@ -25,17 +24,13 @@ function UniversitySearch() {
   }, []);
 
   function handleSearch(newSearch) {
-    console.log("BBBBB");
     setSearch(newSearch);
-    console.log("CCCCC");
     if (newSearch.length == 0) {
-      console.log("DDDDD");
       setUnis(allUnis);
       return;
     }
     fetch("https://xchange-flask.onrender.com/search_unis/" + newSearch).then((res) =>
       res.json().then((data) => {
-        console.log("EEEEE");
         if (newSearch.length != 0) {
           setUnis(data);
         }
