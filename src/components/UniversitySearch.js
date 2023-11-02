@@ -29,7 +29,7 @@ function UniversitySearch() {
     setSearch(newSearch);
     console.log("CCCCC");
     if (newSearch.length == 0) {
-      console.log("DDDDD);
+      console.log("DDDDD");
       setUnis(allUnis);
       return;
     }
