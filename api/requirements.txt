@@ -13,7 +13,7 @@ itsdangerous==2.1.1
 Jinja2==3.1.2
 PyJWT==2.7.0
 MarkupSafe==2.1.2
-mysqldb
+mysqlclient
 python-dateutil==2.8.2
 python-dotenv==0.21.0
 sqlalchemy==1.4.50
