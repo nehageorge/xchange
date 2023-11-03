@@ -127,14 +127,14 @@ def uw_course():
 	courses = UWCourse.query.all()
 	res = jsonify(uwcourses_schema.dump(courses))
 	res.headers.add('Access-Control-Allow-Origin', '*')
-	return jsonify(res)
+	return res
 
 @app.route('/search_unis/<string:param>', methods=['GET'])
 def search_unis(param):
 	unis = University.query.filter(University.program.like('%'+param+'%') | University.location.like('%'+param+'%'))
 	res = jsonify(unis_schema.dump(unis))
 	res.headers.add('Access-Control-Allow-Origin', '*')
-	return jsonify(res)
+	return res
 
 @app.route('/course_equivalencies', methods=['GET'])
 def get_all_course_equivalencies():
@@ -174,7 +174,7 @@ def get_course(param):
 	course = UWCourse.query.filter(UWCourse.id == param).first()
 	res = jsonify(uwcourse_schema.dump(course))
 	res.headers.add('Access-Control-Allow-Origin', '*')
-	return jsonify(res)
+	return res
 
 @app.route('/course_equivalencies/search', methods=['POST'])
 def course_equivalencies_search():
@@ -263,7 +263,7 @@ def forgot_password():
         return jsonify("")
 
 #Need to pass in token
-@app.route('/forgot_password_success/<token>', methods=['GET', 'POST'])
+@app.route('/forgot_password_success/<string:token>', methods=['GET', 'POST'])
 def forgot_password_success(token):
     user=User.verify_token(token)
     if user is None:
