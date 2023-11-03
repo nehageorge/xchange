@@ -13,7 +13,7 @@ function UniversitySearch() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("https://xchange-flask.onrender.com/universities").then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/universities").then((res) =>
       res.json().then((data) => {
         setAllUnis(data);
         if (search.length == 0) {
@@ -24,12 +24,13 @@ function UniversitySearch() {
   }, []);
 
   function handleSearch(newSearch) {
+    console.log(process.env.REACT_APP_PROXY)
     setSearch(newSearch);
     if (newSearch.length == 0) {
       setUnis(allUnis);
       return;
     }
-    fetch("https://xchange-flask.onrender.com/search_unis/" + newSearch).then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/search_unis/" + newSearch).then((res) =>
       res.json().then((data) => {
         if (newSearch.length != 0) {
           setUnis(data);

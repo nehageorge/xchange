@@ -20,7 +20,7 @@ function PreviouslyApprovedCourses() {
     );
   }, []);
   useEffect(() => {
-    fetch("/course_equivalencies/" + params.id).then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/course_equivalencies/" + params.id).then((res) =>
     res.json().then((data) => {
       setCoursesEquivalency(data);
       setAllCoursesEquivalency(data);
@@ -34,7 +34,7 @@ function PreviouslyApprovedCourses() {
       setCoursesEquivalency(allCourseEquivalencies);
       return;
     }
-    fetch("/course_equivalencies/search", {
+    fetch(process.env.REACT_APP_PROXY + "/course_equivalencies/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body:  JSON.stringify({ unis: [currUni["name"]], query: newQuery }),

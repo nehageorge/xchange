@@ -14,7 +14,7 @@ function AddEquivalencyDialog(props) {
   const userPresent = user ? true : false;
   // placeholder data
   useEffect(() => {
-    fetch("/universities").then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/universities").then((res) =>
       res.json().then((data) => {
         setHostUnis(data.map(getHostUniData));
       })
@@ -22,7 +22,7 @@ function AddEquivalencyDialog(props) {
   }, []);
 
   useEffect(() => {
-    fetch("/uw_courses").then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/uw_courses").then((res) =>
       res.json().then((data) => {
         setUwCourses(data.map(getUWCourseData));
       })

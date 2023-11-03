@@ -12,13 +12,13 @@ function CoursePage() {
   const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
   const [query, setQuery] = useState("");
   useEffect(() => {
-    fetch("/course/" + params.id).then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/course/" + params.id).then((res) =>
       res.json().then((data) => {
         setCourse(data);
       })
     );
 
-    fetch("/course_equivalencies", {}).then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/course_equivalencies", {}).then((res) =>
       res.json().then((data) => {
         setCoursesEquivalency(data);
         setAllCoursesEquivalency(data);
