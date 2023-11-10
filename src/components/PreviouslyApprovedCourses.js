@@ -13,7 +13,7 @@ function PreviouslyApprovedCourses() {
   const [currUni, setCurrUni] = useState({});
   const [query, setQuery] = useState("");
   useEffect(() => {
-    fetch(curUrl).then((res) =>
+    fetch(process.env.REACT_APP_PROXY + curUrl).then((res) =>
       res.json().then((data) => {
         setCurrUni(data);
       })

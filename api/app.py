@@ -334,7 +334,6 @@ def login_success():
 def get_uni(param):
     uni = University.query.filter(University.id == param).first()
     res = uni_schema.dump(uni)
-    res.headers.add('Access-Control-Allow-Origin', '*')
     return res
 
 @app.route('/get_uni/discussion/<string:param>/<string:user>', methods=['POST'])
@@ -362,7 +361,6 @@ def university_discussion_posts(param, user):
     else:
         posts = db.session.query(DiscussionPost).join(University).filter(University.id.like('%'+param+'%')).all()
         res = discussion_posts_schema.dump(posts)
-        res.headers.add('Access-Control-Allow-Origin', '*')
         return res
 
 if __name__ == '__main__':
