@@ -222,6 +222,7 @@ def signup():
         confirm_password = request.form['confirm_password']
         if User.query.filter(User.email == email).first() is not None:
             e = "User with this email already exists. Please log in instead."
+            print("signup error")
             return redirect(url_for('signup_error', problem=e))
         try:
             user = UserBuilder(email, password, confirm_password)
@@ -230,6 +231,7 @@ def signup():
         except Exception as e:
             return redirect(url_for('signup_error', problem=str(e)))
 
+        print("signup success")
         return redirect(url_for('signup_success'))
     else:
         return jsonify("")
