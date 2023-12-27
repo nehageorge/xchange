@@ -120,6 +120,7 @@ def index():
 	unis = University.query.all()
 	res = jsonify(unis_schema.dump(unis))
 	res.headers.add('Access-Control-Allow-Origin', '*')
+	res.headers.add('Access-Control-Allow-Methods', 'POST, GET')
 	return res
 
 @app.route('/uw_courses', methods=['GET'])
