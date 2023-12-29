@@ -119,7 +119,7 @@ Routes
 def index():
 	unis = University.query.all()
 	res = jsonify(unis_schema.dump(unis))
-	res.headers.add('Access-Control-Allow-Origin', 'https://uw-xchange.onrender.com')
+	res.headers.add('Access-Control-Allow-Origin', '*') # TODO: move the headers.add thing so that it's global and you don't have to write it so many times
 	return res
 
 @app.route('/uw_courses', methods=['GET'])
