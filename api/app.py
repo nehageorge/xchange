@@ -225,9 +225,11 @@ def signup():
             print("signup error")
             return redirect(url_for('signup_error', problem=e))
         try:
+            print("user building")
             user = UserBuilder(email, password, confirm_password)
             db.session.add(User(email=user.email,password=user.password,is_admin=user.is_admin))
             db.session.commit()
+            print("finish user building")
         except Exception as e:
             return redirect(url_for('signup_error', problem=str(e)))
 
