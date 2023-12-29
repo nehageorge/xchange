@@ -217,6 +217,7 @@ def get_uni_course_equivalencies(param):
 @app.route('/signup', methods=['GET','POST'])
 def signup():
     if request.method == 'POST':
+        print("signup body")
         email = request.form['email']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
@@ -236,6 +237,7 @@ def signup():
         print("signup success")
         return redirect(url_for('signup_success'))
     else:
+        print("signup not a post method")
         return jsonify("")
 
 def send_mail(user):
