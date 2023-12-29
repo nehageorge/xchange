@@ -48,7 +48,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://xchange-flask.onrender.com",
+  "proxy": "http://ec2-18-224-200-188.us-east-2.compute.amazonaws.com:8000",
   "devDependencies": {
     "prettier": "^2.7.1"
   }
