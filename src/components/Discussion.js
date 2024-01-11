@@ -88,7 +88,7 @@ function Discussion(props) {
   const [easy, setEasy] = useState(0);
 
   useEffect(() => {
-    fetch("/get_uni/discussion/" + params.id).then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/get_uni/discussion/" + params.id).then((res) =>
       res.json().then((data) => {
         setPosts(data);
       })

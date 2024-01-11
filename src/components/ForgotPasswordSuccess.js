@@ -9,7 +9,7 @@ function ForgotPasswordSuccess() {
     const [token, setToken] = useState("");
   
     useEffect(() => {
-        fetch("/forgot_password_success/" + params.token).then((res) =>
+        fetch(process.env.REACT_APP_PROXY + "/forgot_password_success/" + params.token).then((res) =>
             res.json().then((data) => {
             setToken(data);
             })
