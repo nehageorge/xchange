@@ -17,7 +17,7 @@ function submit(email, password, confirm_password) {
   };
   fetch(process.env.REACT_APP_PROXY + "/signup", request)
   .then(response => 
-    redirect("/signup_success")
+    this.props.history.push('/signup_success')
   )
 }
 
