@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import { Text } from "react-native";
 import XchangeTopBar from "./XchangeTopBar";
+import { redirect } from "react-router-dom";
+
+
+function submit(email, password, confirm_password) {
+  const request = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+      email: email, 
+      password: password,
+      confirm_password: confirm_password
+    })
+  };
+  fetch(process.env.REACT_APP_PROXY + "/signup", request)
+  .then(response => 
+    redirect("/signup_success")
+  )
+}
 
 function Signup() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   return (
     <>
       <XchangeTopBar />
@@ -39,6 +61,7 @@ function Signup() {
                   borderRadius: "4pt",
                   width: "100%",
                 }}
+                onChange={(e) => setEmail(e.target.value)}
               ></TextField>
               <br></br>
               <br></br>
@@ -53,6 +76,7 @@ function Signup() {
                   borderRadius: "4pt",
                   width: "100%",
                 }}
+                onChange={(e) => setPassword(e.target.value)}
               ></TextField>
               <br></br>
               <br></br>
@@ -67,6 +91,7 @@ function Signup() {
                   borderRadius: "4pt",
                   width: "100%",
                 }}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               ></TextField>
               <br></br>
               <br></br>
@@ -74,6 +99,7 @@ function Signup() {
                 sx={{ backgroundColor: "#E0D03B" }}
                 style={{ width: "100%" }}
                 type="submit"
+                onClick={(e) => submit(email, password, confirmPassword)}
               >
                 <div className="button-text">
                   <Text style={{ width: "325px" }}>Sign Up</Text>

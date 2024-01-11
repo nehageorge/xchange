@@ -218,9 +218,9 @@ def get_uni_course_equivalencies(param):
 def signup():
     if request.method == 'POST':
         print("signup body")
-        email = request.form['email']
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
+        email = request.data['email']
+        password = request.data['password']
+        confirm_password = request.data['confirm_password']
         if User.query.filter(User.email == email).first() is not None:
             e = "User with this email already exists. Please log in instead."
             print("signup error")
