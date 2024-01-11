@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import { Text } from "react-native";
 import XchangeTopBar from "./XchangeTopBar";
-import { redirect } from "react-router-dom";
 
 
 function submit(email, password, confirm_password) {
@@ -39,7 +38,6 @@ function Signup() {
               padding: "50px",
             }}
           >
-            <form action={process.env.REACT_APP_PROXY + "/signup"} method="POST">
               <Text
                 style={{
                   fontSize: 30,
@@ -98,14 +96,12 @@ function Signup() {
               <Button
                 sx={{ backgroundColor: "#E0D03B" }}
                 style={{ width: "100%" }}
-                type="submit"
                 onClick={(e) => submit(email, password, confirmPassword)}
               >
                 <div className="button-text">
                   <Text style={{ width: "325px" }}>Sign Up</Text>
                 </div>
               </Button>
-            </form>
           </div>
         </center>
       </div>
