@@ -235,6 +235,8 @@ def signup():
             return redirect(url_for('signup_error', problem=str(e)))
 
         print("signup success")
+        response = redirect(url_for('signup_success'))
+        response.headers.add('Access-Control-Allow-Origin', '*')
         return redirect(url_for('signup_success'))
     else:
         print("signup not a post method")

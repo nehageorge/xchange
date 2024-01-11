@@ -7,6 +7,7 @@ flask-mail==0.9.1
 flask_marshmallow==0.15.0
 flask_migrate==4.0.4
 flask_appbuilder==4.3.1
+flask_cors
 gunicorn
 importlib-metadata==6.6.0
 itsdangerous==2.1.2

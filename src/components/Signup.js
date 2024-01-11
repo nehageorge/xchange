@@ -2,21 +2,25 @@ import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import { Text } from "react-native";
 import XchangeTopBar from "./XchangeTopBar";
+import { useNavigate } from 'react-router-dom';
 
-
-function submit(email, password, confirm_password) {
+function Submit(email, password, confirm_password) {
   const request = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify({ 
       email: email, 
       password: password,
       confirm_password: confirm_password
     })
   };
+  console.log("HERE");
   fetch(process.env.REACT_APP_PROXY + "/signup", request)
-  .then(response => 
-    this.props.history.push('/signup_success')
+  .then(response => {
+    console.log("did this come back?")
+  }
   )
 }
 
@@ -24,6 +28,8 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -96,7 +102,10 @@ function Signup() {
               <Button
                 sx={{ backgroundColor: "#E0D03B" }}
                 style={{ width: "100%" }}
-                onClick={(e) => submit(email, password, confirmPassword)}
+                onClick={(e) => { 
+                  Submit(email, password, confirmPassword);
+                  navigate('../signup_success', {replace: true})
+                }}
               >
                 <div className="button-text">
                   <Text style={{ width: "325px" }}>Sign Up</Text>
