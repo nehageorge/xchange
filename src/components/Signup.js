@@ -17,7 +17,7 @@ function Signup() {
               padding: "50px",
             }}
           >
-            <form action="/signup" method="POST">
+            <form action={process.env.REACT_APP_PROXY + "/signup"} method="POST">
               <Text
                 style={{
                   fontSize: 30,
