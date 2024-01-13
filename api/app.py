@@ -25,7 +25,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:ASLDKFIu28793rouijqwer3iyFJASDrH@xchange.c3pzdva7zeof.us-east-2.rds.amazonaws.com:3306/xchange'
 app.config['SECRET_KEY'] = 'xchangeskey'
 
-
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 app.config['MAIL_SERVER'] = 'smtp-mail.outlook.com'
@@ -121,7 +120,6 @@ Routes
 """
 @app.route('/universities', methods=['GET'])
 def index():
-	print("HELLLOOO", flush=True)
 	unis = University.query.all()
 	res = jsonify(unis_schema.dump(unis))
 	res.headers.add('Access-Control-Allow-Origin', '*') # TODO: move the headers.add thing so that it's global and you don't have to write it so many times
@@ -221,7 +219,6 @@ def get_uni_course_equivalencies(param):
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
-    print("reached", flush=True)
     if request.method == 'POST':
         print("signup body", flush=True)
         email = request.get_json().get('email')
@@ -299,8 +296,6 @@ def forgot_password_success(token):
         flash('Password changed! Please login!', 'success')
         return redirect(url_for('login'))
 
-
-
 @app.route('/signup_success', methods=['GET'])
 def signup_success():
     return jsonify({"status": "success"})
@@ -312,8 +307,8 @@ def signup_error():
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
+        email = request.get_json().get('email')
+        password = request.get_json().get('password')
 
         result = User.query.filter(User.email == email).first()
         if result is None:
@@ -326,7 +321,6 @@ def login():
         if not isSuccess:
             e = "The password is incorrect"
             return redirect(url_for('login_error', problem=str(e)))
-
             
         userForToken = {
             'email': email,
@@ -340,11 +334,11 @@ def login():
 
 @app.route('/login_error', methods=['GET'])
 def login_error():
-    return jsonify("")
+    return jsonify({"status": request.args.get('problem')})
 
 @app.route('/login_success', methods=['GET'])
 def login_success():
-    return jsonify("")
+    return jsonify({"status": "success"})
 
 @app.route('/get_uni/<param>', methods=['GET'])
 def get_uni(param):
