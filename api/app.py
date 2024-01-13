@@ -16,9 +16,11 @@ from user_builder import UserBuilder
 from helpers import course_equivalencies_join_to_dict
 from schemas import *
 from flask_cors import CORS
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-
 cors = CORS(app)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
