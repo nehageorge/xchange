@@ -4,26 +4,6 @@ import { Text } from "react-native";
 import XchangeTopBar from "./XchangeTopBar";
 import { useNavigate } from 'react-router-dom';
 
-function Submit(email, password, confirm_password) {
-  const request = {
-    method: 'POST',
-    headers: { 
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ 
-      email: email, 
-      password: password,
-      confirm_password: confirm_password
-    })
-  };
-  console.log("HERE");
-  fetch(process.env.REACT_APP_PROXY + "/signup", request)
-  .then(response => {
-    console.log("did this come back?")
-  }
-  )
-}
-
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,8 +11,39 @@ function Signup() {
 
   const navigate = useNavigate();
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const request = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        email: email, 
+        password: password,
+        confirm_password: confirmPassword
+      })
+    };
+
+    console.log("HERE");
+    fetch(process.env.REACT_APP_PROXY + "/signup", request)
+    .then(response => {
+        response.json().then(
+          (val) => {
+            const msg = val["status"]
+            if (msg == "success") {
+              navigate("/signup_success")
+            } else {
+              navigate("/signup_error" + "?problem=" + msg)
+            }
+          }
+        )
+      }
+    )
+  }
+
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <XchangeTopBar />
       <div className="Signup">
         <center>
@@ -102,10 +113,7 @@ function Signup() {
               <Button
                 sx={{ backgroundColor: "#E0D03B" }}
                 style={{ width: "100%" }}
-                onClick={(e) => { 
-                  Submit(email, password, confirmPassword);
-                  navigate('../signup_success', {replace: true})
-                }}
+                type="submit"
               >
                 <div className="button-text">
                   <Text style={{ width: "325px" }}>Sign Up</Text>
@@ -114,7 +122,7 @@ function Signup() {
           </div>
         </center>
       </div>
-    </>
+    </form>
   );
 }
 
