@@ -1,15 +1,14 @@
 .flex-container {
   display: flex;
   flex-flow: row;
-  align-items: stretch;
-  justify-content: space-around;
-  list-style: none;
+  justify-content: flex-start;
+  overflow-x: scroll;
 }
 
 .flex-item1 {
   background: white;
   height: 100vh;
-  width: 60vw;
+  width: 100vw;
   display: flex;
   flex-flow: column;
   border-right: 3px solid #000000;
@@ -29,9 +28,9 @@
 
 .landing-text-padding {
   margin-top: 25vh;
-  margin-left: 15vh;
-  width: 550px;
-
+  margin-left: 5vh;
+  margin-right: 15vh;
+  width: 70%;
   font-family: "Helvetica";
   color: black;
 }
@@ -42,7 +41,8 @@
 
 .left-buttons-padding {
   margin-top: 25px;
-  margin-left: 15vh;
+  margin-left: 5vh;
+  margin-right: 15vh;
   display: flex;
   flex-flow: row;
   gap: 12px;
@@ -51,7 +51,8 @@
 
 .links-padding {
   margin-top: 100px;
-  margin-left: 15vh;
+  margin-left: 5vh;
+  margin-right: 15vh;
   display: flex;
   flex-flow: column;
 }
@@ -61,22 +62,16 @@
   border-radius: 12pt;
   margin-top: 18vh;
   height: 500px;
-  width: 400px;
+  width: 75%;
   z-index: 2;
 }
 
 .login-body {
   margin-top: 15px;
-  margin-left: 35px;
-  margin-right: 40px;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .picture {
   position: fixed;
 }
-
-/*.vl {
-    border-left: 4px solid #000000;
-    height: 100%;
-    box-shadow: 1px 1px 4px #000000;
-}*/
