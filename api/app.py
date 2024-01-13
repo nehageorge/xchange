@@ -15,10 +15,14 @@ import time
 from user_builder import UserBuilder
 from helpers import course_equivalencies_join_to_dict
 from schemas import *
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+cors = CORS(app)
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:abcd1234@uw-xchange-db.c3pzdva7zeof.us-east-2.rds.amazonaws.com:3306/xchange'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:ASLDKFIu28793rouijqwer3iyFJASDrH@xchange.c3pzdva7zeof.us-east-2.rds.amazonaws.com:3306/xchange'
 app.config['SECRET_KEY'] = 'xchangeskey'
 
 
@@ -117,6 +121,7 @@ Routes
 """
 @app.route('/universities', methods=['GET'])
 def index():
+	print("HELLLOOO", flush=True)
 	unis = University.query.all()
 	res = jsonify(unis_schema.dump(unis))
 	res.headers.add('Access-Control-Allow-Origin', '*') # TODO: move the headers.add thing so that it's global and you don't have to write it so many times
@@ -216,28 +221,31 @@ def get_uni_course_equivalencies(param):
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
+    print("reached", flush=True)
     if request.method == 'POST':
-        print("signup body")
-        email = request.data['email']
-        password = request.data['password']
-        confirm_password = request.data['confirm_password']
+        print("signup body", flush=True)
+        email = request.get_json().get('email')
+        password = request.get_json().get('password')
+        confirm_password = request.get_json().get('confirm_password')
         if User.query.filter(User.email == email).first() is not None:
             e = "User with this email already exists. Please log in instead."
-            print("signup error")
+            print("signup error", flush=True)
             return redirect(url_for('signup_error', problem=e))
         try:
-            print("user building")
+            print("user building", flush=True)
             user = UserBuilder(email, password, confirm_password)
             db.session.add(User(email=user.email,password=user.password,is_admin=user.is_admin))
             db.session.commit()
-            print("finish user building")
+            print("finish user building", flush=True)
         except Exception as e:
+            print("user lowkey exists", flush=True)
+            print(str(e), flush=True)
             return redirect(url_for('signup_error', problem=str(e)))
 
-        print("signup success")
+        print("signup success", flush=True)
         response = redirect(url_for('signup_success'))
         response.headers.add('Access-Control-Allow-Origin', '*')
-        return redirect(url_for('signup_success'))
+        return response
     else:
         print("signup not a post method")
         return jsonify("")
@@ -293,13 +301,13 @@ def forgot_password_success(token):
 
 
 
-@app.route('/signup_error', methods=['GET'])
-def signup_error():
-    return jsonify("")
-
 @app.route('/signup_success', methods=['GET'])
 def signup_success():
-    return jsonify("")
+    return jsonify({"status": "success"})
+
+@app.route('/signup_error', methods=['GET'])
+def signup_error():
+    return jsonify({"status": request.args.get('problem')})
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
