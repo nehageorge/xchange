@@ -303,14 +303,11 @@ def forgot_password_success(token):
 
 @app.route('/signup_success', methods=['GET'])
 def signup_success():
-    return jsonify("success")
+    return jsonify({"status": "success"})
 
 @app.route('/signup_error', methods=['GET'])
 def signup_error():
-    print(request.url, flush=True)
-    print(request.args.get('problem'), flush=True)
-    print(str(request.args.get('problem')), flush=True)
-    return jsonify({"problem": request.args.get('problem')})
+    return jsonify({"status": request.args.get('problem')})
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
