@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 from itsdangerous import URLSafeTimedSerializer as Serializer
-from flask import Flask, request, redirect, jsonify, url_for, flash
+from flask import Flask, request, redirect, jsonify, url_for, flash, render_template
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
@@ -252,10 +252,10 @@ def signup():
 def send_mail(user):
     token=user.get_token()
     msg=Message('Password Reset Request',recipients=[user.email], sender='xchangeuw@outlook.com')
-    print(url_for('forgot_password_success', token=token,_external=True).replace("http://127.0.0.1:5000", "http://127.0.0.1:3000"))
+    print(url_for('forgot_password_success', token=token,_external=True).replace("backend.uw-xchange.com", "uw-xchange.com"))
     msg.body=f''' To reset your password, please follow the link below:
     
-    {url_for('forgot_password_success', token=token,_external=True).replace("http://127.0.0.1:5000", "http://127.0.0.1:3000")}
+    {url_for('forgot_password_success', token=token,_external=True).replace("backend.uw-xchange.com", "uw-xchange.com")}
     If you didn't send a password reset request, please ignore this message.
 
     '''
@@ -265,38 +265,38 @@ def send_mail(user):
 @app.route('/forgot_password', methods=['GET','POST'])
 def forgot_password():
     if request.method == 'POST':
-        email = request.form['email']
+        email = request.get_json().get('email')
 
         result = User.query.filter(User.email == email).first()
         if result is None:
-            e = "This email is not registered."
-            return redirect(url_for('login_error', problem=str(e)))
+            #e = "This email is not registered."
+            return jsonify({"status": "no-email"})
         send_mail(result)
-        flash('Reset request sent. Check your mail.', 'success')
-        return redirect(url_for('login'))
+        #flash('Reset request sent. Check your mail.', 'success')
+        return jsonify({"status": "success"})
     else:
-        return jsonify("")
+        return jsonify({"status": "unknown"})
 
 #Need to pass in token
 @app.route('/forgot_password_success/<string:token>', methods=['GET', 'POST'])
 def forgot_password_success(token):
     user=User.verify_token(token)
     if user is None:
-        flash('That is an invalid token or it has expired. Please try again.', 'warning')
-        return redirect(url_for('forgot_password'))
+        #flash('That is an invalid token or it has expired. Please try again.', 'warning')
+        return jsonify({"status": "invalid"})
     else:
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
+        password = request.get_json().get('password')
+        confirm_password = request.get_json().get('confirm_password')
 
         if not(password == confirm_password):
-            raise ValueError("Passwords do not match")
+            return jsonify({"status": "mismatch"})
 
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
         user.password = hashed
         db.session.commit()
-        flash('Password changed! Please login!', 'success')
-        return redirect(url_for('login'))
+        #flash('Password changed! Please login!', 'success')
+        return jsonify({"status": "success"})
 
 @app.route('/signup_success', methods=['GET'])
 def signup_success():
