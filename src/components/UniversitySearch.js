@@ -13,14 +13,15 @@ function UniversitySearch() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/universities").then((res) =>
+    fetch("/universities").then((res) => {
       res.json().then((data) => {
         setAllUnis(data);
         if (search.length == 0) {
           setUnis(data);
         }
-      })
-    );
+      });
+      hideLoader();
+    });
   }, []);
 
   function handleSearch(newSearch) {
@@ -38,6 +39,10 @@ function UniversitySearch() {
     );
   }
 
+  function hideLoader() {
+    document.getElementById("loader-div").style.visibility = "hidden";
+  }
+
   return (
     <div className="Home">
       <XchangeTabbedHeader />
@@ -50,7 +55,12 @@ function UniversitySearch() {
             objectFit: "cover",
           }}
         ></img>
+        {/* Picture sourced from https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg */}
       </View>
+      <div class="page-loader" id="loader-div">
+        <div class="spinner"></div>
+        <div class="txt">Loading...</div>
+      </div>
       <View style={{ flex: 1, padding: 45 }}>
         <TextField
           sx={{ backgroundColor: "rgba(52, 52, 52, 0.1)" }}
@@ -63,6 +73,7 @@ function UniversitySearch() {
           InputLabelProps={{ style: { fontSize: 20 } }}
         />
         <br></br>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <XchangeTable
           headers={["Program Name", "Languages", "Terms", "Competitiveness"]}
           colWidths={["35%", "15%", "25%", "25%"]}

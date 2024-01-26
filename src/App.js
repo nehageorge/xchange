@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ViewUni from "./components/ViewUni";
-import CourseHome from "./components/CourseHome";
 import CoursePage from "./components/CoursePage";
 import CourseSearch from "./components/CourseSearch";
 import Landing from "./components/Landing";
@@ -29,13 +28,16 @@ function App() {
           <Route exact path="/signup_error" element={<SignupError />} />
           <Route exact path="/signup_success" element={<SignupSuccess />} />
           <Route exact path="/forgot_password" element={<ForgotPassword />} />
-          <Route exact path="/forgot_password_success/:token" element={<ForgotPasswordSuccess />} />
+          <Route
+            exact
+            path="/forgot_password_success/:token"
+            element={<ForgotPasswordSuccess />}
+          />
           <Route exact path="/about" element={<AboutPage />} />
           <Route exact path="/contact" element={<ContactPage />} />
           <Route exact path="/privacy" element={<PrivacyPolicyPage />} />
           <Route exact path="/universities" element={<UniversitySearch />} />
           <Route exact path="/get_uni/:id/:page" element={<ViewUni />} />
-          <Route exact path="/course/home" element={<CourseHome />} />
           <Route exact path="/uwcourse/:id" element={<CoursePage />} />
           <Route exact path="/course/search" element={<CourseSearch />} />
         </Routes>

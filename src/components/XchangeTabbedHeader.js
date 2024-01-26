@@ -25,7 +25,7 @@ function XchangeTabbedHeader({ uniActive = true }) {
           </button>
           <button
             className="CoursesTab"
-            onClick={() => navigate("/course/home")}
+            onClick={() => navigate("/course/search")}
             style={{ background: uniActive ? "#ccc" : "#fff" }}
           >
             <h5>Courses</h5>
