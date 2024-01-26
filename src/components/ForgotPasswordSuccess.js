@@ -19,7 +19,7 @@ function ForgotPasswordSuccess() {
         },
         body: JSON.stringify({ 
           password: password, 
-          confirmPassword: confirmPassword
+          confirm_password: confirmPassword
         })
       };
   
