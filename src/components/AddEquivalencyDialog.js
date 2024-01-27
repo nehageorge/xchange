@@ -84,7 +84,7 @@ function AddEquivalencyDialog(props) {
       onClose={props.onClose}
       fullWidth={userPresent}
       maxWidth="md"
-      PaperProps={{ style: { padding: 20 } }}
+      PaperProps={{ style: { padding: 20 , width: '70%'} }}
     >
       {userPresent && (
         <form action="/course/search" method="POST">
@@ -94,7 +94,7 @@ function AddEquivalencyDialog(props) {
               style={{ height: 3, width: 400, backgroundColor: "#e0d03b" }}
             ></div>
             <Grid container spacing={2} direction="row" padding={3}>
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={4}>
                 <p>UW Course Name</p>
                 {DropdownMenu("", uwCourses, "uw_course_name", (_, value) => {
                   setUwCourseId(value.id);
@@ -105,15 +105,15 @@ function AddEquivalencyDialog(props) {
                   value={uwCourseId}
                 ></input>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={4}>
                 <p>Your Program</p>
                 {DropdownMenu("", uwPrograms, "program")}
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={4}>
                 <p>Year Taken</p>
                 {DropdownMenu("", pastTenYears, "year_taken")}
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={4}>
                 <p>Host University</p>
                 {DropdownMenu("", hostUnis, "host_uni", (_, value) =>
                   setHostUniId(value.id)
@@ -124,26 +124,27 @@ function AddEquivalencyDialog(props) {
                   value={hostUniId}
                 ></input>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={4}>
                 <p>Host Course Name</p>
                 <TextField
                   name="host_course_name"
                   sx={{ width: "100%" }}
                 ></TextField>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={4}>
                 <p>Host University Course Code</p>
                 <TextField
                   name="host_course_code"
                   sx={{ width: "100%" }}
                 ></TextField>
               </Grid>
-              <Grid item xs={12}></Grid>
-              <Grid item xs={6}></Grid>
-              <Grid item xs={3}>
+            </Grid>
+
+            <Grid container spacing={2} direction="row" padding={3} justifyContent="flex-end">
+              <Grid item xs={6} sm={3}>
                 <div onClick={props.onClose}>{XChangeButton("Cancel")}</div>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={6} sm={3}>
                 <div onClick={props.saveOnClick}>
                   <Button
                     sx={{ backgroundColor: "#E0D03B" }}
@@ -155,8 +156,10 @@ function AddEquivalencyDialog(props) {
                     </div>
                   </Button>
                 </div>
+
               </Grid>
             </Grid>
+
           </div>
         </form>
       )}
