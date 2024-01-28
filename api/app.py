@@ -4,6 +4,7 @@ from flask import Flask, request, redirect, jsonify, url_for, flash, render_temp
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
+from werkzeug.middleware.proxy_fix import ProxyFix
 import flask_appbuilder
 import importlib
 import sys
@@ -22,6 +23,12 @@ load_dotenv()
 
 app = Flask(__name__)
 cors = CORS(app)
+
+app.wsgi_app = ProxyFix(
+    app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+)
+
+app.config["CORS_ORIGINS"] = ["https://www.uw-xchange.com", "https://uw-xchange.com", "http://localhost"]
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:ASLDKFIu28793rouijqwer3iyFJASDrH@xchange.c3pzdva7zeof.us-east-2.rds.amazonaws.com:3306/xchange'
@@ -101,7 +108,6 @@ class User(db.Model):
             return
         return User.query.filter_by(id=id).first()
 
-
 class DiscussionPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     university_id = db.Column(db.Integer, db.ForeignKey('university.id'),nullable=False)
@@ -122,37 +128,39 @@ Routes
 """
 @app.route('/universities', methods=['GET'])
 def index():
+	print(request.environ, flush=True)
 	unis = University.query.all()
 	res = jsonify(unis_schema.dump(unis))
-	res.headers.add('Access-Control-Allow-Origin', '*') # TODO: move the headers.add thing so that it's global and you don't have to write it so many times
+#	res.headers.add('Access-Control-Allow-Origin', 'https://www.uw-xchange.com')
+#	res.headers.add('Access-Control-Allow-Origin', ['https://www.uw-xchange.com', 'https://uw-xchange.com']) # TODO: move the headers.add thing so that it's global and you don't have to write it so many times
 	return res
 
 @app.route('/uw_courses', methods=['GET'])
 def uw_course():
 	courses = UWCourse.query.all()
 	res = jsonify(uwcourses_schema.dump(courses))
-	res.headers.add('Access-Control-Allow-Origin', '*')
+#	res.headers.add('Access-Control-Allow-Origin', '*')
 	return res
 
 @app.route('/search_unis/<string:param>', methods=['GET'])
 def search_unis(param):
 	unis = University.query.filter(University.program.like('%'+param+'%') | University.location.like('%'+param+'%'))
 	res = jsonify(unis_schema.dump(unis))
-	res.headers.add('Access-Control-Allow-Origin', '*')
+#	res.headers.add('Access-Control-Allow-Origin', '*')
 	return res
 
 @app.route('/course_equivalencies', methods=['GET'])
 def get_all_course_equivalencies():
     result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).all()
     course_equivalencies = jsonify(course_equivalencies_join_to_dict(result))
-    course_equivalencies.headers.add('Access-Control-Allow-Origin', '*')
+#    course_equivalencies.headers.add('Access-Control-Allow-Origin', '*')
     return course_equivalencies
 
 @app.route('/search_courses/<string:query>', methods=['GET'])
 def search_courses(query):
     result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter((UWCourse.name.like('%'+query+'%') | UWCourse.code.like('%'+query+'%'))).all()
     course_equivalencies = jsonify(course_equivalencies_join_to_dict(result))
-    course_equivalencies.headers.add('Access-Control-Allow-Origin', '*')
+ #   course_equivalencies.headers.add('Access-Control-Allow-Origin', '*')
     return course_equivalencies
 
 @app.route('/course/search', methods=['POST', 'GET'])
@@ -178,7 +186,7 @@ def course_search():
 def get_course(param):
 	course = UWCourse.query.filter(UWCourse.id == param).first()
 	res = jsonify(uwcourse_schema.dump(course))
-	res.headers.add('Access-Control-Allow-Origin', '*')
+#	res.headers.add('Access-Control-Allow-Origin', '*')
 	return res
 
 @app.route('/course_equivalencies/search', methods=['POST'])
@@ -209,14 +217,14 @@ def course_equivalencies_search():
     result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(*filters).all()
 
     course_equivalencies = jsonify(course_equivalencies_join_to_dict(result))
-    course_equivalencies.headers.add('Access-Control-Allow-Origin', '*')
+#    course_equivalencies.headers.add('Access-Control-Allow-Origin', '*')
     return course_equivalencies
 
 @app.route('/course_equivalencies/<string:param>', methods=['GET'])
 def get_uni_course_equivalencies(param):
     result = db.session.query(CourseEquivalency, UWCourse, University).select_from(CourseEquivalency).join(UWCourse).join(University).filter(University.id == param).all()
     course_equivalencies = jsonify(course_equivalencies_join_to_dict(result))
-    course_equivalencies.headers.add('Access-Control-Allow-Origin', '*')
+#    course_equivalencies.headers.add('Access-Control-Allow-Origin', '*')
     return course_equivalencies
 
 @app.route('/signup', methods=['GET','POST'])
@@ -243,7 +251,7 @@ def signup():
 
         print("signup success", flush=True)
         response = redirect(url_for('signup_success'))
-        response.headers.add('Access-Control-Allow-Origin', '*')
+ #       response.headers.add('Access-Control-Allow-Origin', '*')
         return response
     else:
         print("signup not a post method")
@@ -346,7 +354,6 @@ def login_success():
 def get_uni(param):
     uni = University.query.filter(University.id == param).first()
     res = jsonify(uni_schema.dump(uni))
-    res.headers.add('Access-Control-Allow-Origin', '*')
     return res
 
 @app.route('/get_uni/discussion/<string:param>/<string:user>', methods=['POST'])
@@ -374,7 +381,6 @@ def university_discussion_posts(param, user):
     else:
         posts = db.session.query(DiscussionPost).join(University).filter(University.id.like('%'+param+'%')).all()
         res = jsonify(discussion_posts_schema.dump(posts))
-        res.headers.add('Access-Control-Allow-Origin', '*')
         return res
 
 if __name__ == '__main__':
