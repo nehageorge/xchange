@@ -25,7 +25,6 @@ function Signup() {
       })
     };
 
-    console.log("HERE");
     fetch(process.env.REACT_APP_PROXY + "/signup", request)
     .then(response => {
         response.json().then(

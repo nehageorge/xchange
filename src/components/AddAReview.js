@@ -6,8 +6,6 @@ import * as React from "react";
 import { Text } from "react-native";
 import { Button, TextField, Select, MenuItem, Grid } from "@mui/material";
 
-import { useNavigate } from 'react-router-dom';
-
 function Slct(name, st, options = []) {
   const [slct, setSlct] = React.useState("");
 
@@ -90,11 +88,9 @@ function AddAReview(props) {
   const affordable = CustomRating({text: "Affordable", name: "affordable", readOnly: false, val:9, ref: setAffordable})
   const easy = CustomRating({text: "Easy", name: "easy", readOnly: false, val: 9, ref: setEasy})
 
-  const navigate = useNavigate();
-
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(safetyR)
+
     const request = {
       method: 'POST',
       headers: { 
@@ -122,6 +118,7 @@ function AddAReview(props) {
             if (msg == "unknown") {
               setMessage("An error occurred. Please try again.")
             } else if (msg == "success") {
+              //setMessage("your review has been successfuly uploaded. reload the page to see changes")
               window.location.reload()
               //console.log("/get_uni/" + props.uniId + "/2")
               //navigate("/get_uni/" + props.uniId + "/2")

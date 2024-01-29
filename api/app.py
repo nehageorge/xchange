@@ -157,22 +157,22 @@ def search_courses(query):
 
 @app.route('/course/search', methods=['POST', 'GET'])
 def course_search():
-    program = request.form['program']
-    year = request.form['year_taken']
-    course_name = request.form['host_course_name']
-    course_code = request.form['host_course_code']
+    program = request.get_json().get('program')
+    year = request.get_json().get('year_taken')
+    course_name = request.get_json().get('host_course_name')
+    course_code = request.get_json().get('host_course_code')
 
-    uni_id = request.form['host_uni_id']
-    uw_course_id = request.form['uw_course_id']
+    uni_id = request.get_json().get('host_uni_id')
+    uw_course_id = request.get_json().get('uw_course_id')
 
     fields_present = program and year and course_name and course_code and uni_id and uw_course_id
 
     if not fields_present or int(uni_id) == 0 or int(uw_course_id) == 0:
-        return redirect(url_for('course_search', error="add-fail"))
+        return jsonify({"status": "add-fail"}) #redirect(url_for('course_search', error="add-fail"))
 
-    db.session.add(CourseEquivalency(uwcourse_id=uw_course_id,university_id=uni_id,code="{0}: {1}".format(course_code,course_name), year_taken=year,student_program=program))
+    db.session.add(CourseEquivalency(uwcourse_id=uw_course_id,university_id=uni_id,code="{0}: {1}".format(course_code,course_name), year_taken=year, student_program=program))
     db.session.commit()
-    return redirect(url_for('course_search'))
+    return jsonify({"status": "success"})
 
 @app.route('/course/<string:param>', methods=['GET'])
 def get_course(param):
