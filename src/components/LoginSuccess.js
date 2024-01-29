@@ -6,8 +6,8 @@ import { useSearchParams } from "react-router-dom";
 
 function LoginSuccess() {
   const [searchParams, _] = useSearchParams();
-  window.sessionStorage.setItem("token", searchParams.get("token"));
-  window.sessionStorage.setItem("user", searchParams.get("user"));
+  //window.sessionStorage.setItem("token", searchParams.get("token"));
+  //window.sessionStorage.setItem("user", searchParams.get("user"));
 
   return (
     <>

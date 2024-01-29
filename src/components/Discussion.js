@@ -150,7 +150,7 @@ function Discussion(props) {
       <div className="col">
         <div className="section-title">Reviews</div>
         <List style={{ maxHeight: "65vh", overflow: "auto" }}>
-          {posts.map((post) => Review(post))}
+          {posts.map((post) => Review(post)).reverse()}
         </List>
       </div>
     </div>
