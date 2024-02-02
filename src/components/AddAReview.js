@@ -133,7 +133,7 @@ function AddAReview(props) {
                 ></CustomRating>
               </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs>
               <div>
                 <CustomRating
                   text="Fun"
@@ -153,7 +153,7 @@ function AddAReview(props) {
                 ></CustomRating>
               </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs>
               <div>
                 <CustomRating
                   text="Easy"
