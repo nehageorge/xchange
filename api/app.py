@@ -90,7 +90,7 @@ class User(db.Model):
     password = db.Column(db.String(128))
     is_admin = db.Column(db.Integer)
 
-    def get_token(self,expires_sec=600):
+    def get_token(self,expires_sec=3600):
         if self is None:
             e = "There was a problem sending the email."
             return redirect(url_for('login_error', problem=str(e)))
@@ -165,22 +165,23 @@ def search_courses(query):
 
 @app.route('/course/search', methods=['POST', 'GET'])
 def course_search():
-    program = request.form['program']
-    year = request.form['year_taken']
-    course_name = request.form['host_course_name']
-    course_code = request.form['host_course_code']
+    program = request.get_json().get('program')
+    year = request.get_json().get('year_taken')
+    course_name = request.get_json().get('host_course_name')
+    course_code = request.get_json().get('host_course_code')
 
-    uni_id = request.form['host_uni_id']
-    uw_course_id = request.form['uw_course_id']
+    uni_id = request.get_json().get('host_uni_id')
+    uw_course_id = request.get_json().get('uw_course_id')
 
     fields_present = program and year and course_name and course_code and uni_id and uw_course_id
 
     if not fields_present or int(uni_id) == 0 or int(uw_course_id) == 0:
-        return redirect(url_for('course_search', error="add-fail"))
+        return jsonify({"status": "add-fail"}) #redirect(url_for('course_search', error="add-fail"))
 
     db.session.add(CourseEquivalency(uwcourse_id=uw_course_id,university_id=uni_id,code="{0}: {1}".format(course_code,course_name), year_taken=year,student_program=program))
     db.session.commit()
-    return redirect(url_for('course_search'))
+    return jsonify({"status": "success"})
+
 
 @app.route('/course/<string:param>', methods=['GET'])
 def get_course(param):
@@ -348,7 +349,7 @@ def login_error():
 
 @app.route('/login_success', methods=['GET'])
 def login_success():
-    return jsonify({"status": "success"})
+    return jsonify({"status": "success", "token": request.args.get('token'), "user": request.args.get('user')})
 
 @app.route('/get_uni/<param>', methods=['GET'])
 def get_uni(param):
@@ -360,16 +361,16 @@ def get_uni(param):
 @app.route('/get_uni/discussion/<string:param>', defaults={'user': None}, methods=['GET'])
 def university_discussion_posts(param, user):
     if request.method == 'POST':
-        name = request.form['name']
-        faculty = request.form['faculty']
-        term = request.form['term']
-        housing = request.form['housing']
-        favourite = request.form['favourite']
-        food = request.form['food']
-        safety = request.form['safety'].split(' ')[0]
-        fun = request.form['fun'].split(' ')[0]
-        affordable = request.form['affordable'].split(' ')[0]
-        easy = request.form['easy'].split(' ')[0]
+        name = request.get_json().get('name')
+        faculty = request.get_json().get('faculty')
+        term = request.get_json().get('term')
+        housing = request.get_json().get('housing')
+        favourite = request.get_json().get('favourite')
+        food = request.get_json().get('food')
+        safety = request.get_json().get('safety').split(' ')[0]
+        fun = request.get_json().get('fun').split(' ')[0]
+        affordable = request.get_json().get('affordable').split(' ')[0]
+        easy = request.get_json().get('easy').split(' ')[0]
         uid = User.query.filter(User.email.like('%'+user+'%')).first().id
         post = DiscussionPost(university_id=param, user_id=uid,student_name=name, student_faculty=faculty, student_term=term,
             housing=housing, favourite_aspect=favourite, food_situation=food, safe_rating=safety,
@@ -377,7 +378,7 @@ def university_discussion_posts(param, user):
         db.session.add(post)
         db.session.commit()
         redirectUrl = f"/get_uni/{param}/2"
-        return redirect(redirectUrl)
+        return jsonify({"status": "success"})
     else:
         posts = db.session.query(DiscussionPost).join(University).filter(University.id.like('%'+param+'%')).all()
         res = jsonify(discussion_posts_schema.dump(posts))
