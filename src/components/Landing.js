@@ -18,6 +18,7 @@ const TitleText = () => {
   return (
     <Text style={{ fontFamily: font }}>
       <Text style={{ fontSize: "3.7rem", fontWeight: "bold" }}>
+        <Text>UW&nbsp;</Text>
         <Text style={{ color: "#E0D03B" }}>X</Text>
         {titleText}
       </Text>
@@ -58,7 +59,7 @@ function Landing() {
         <div className="links-padding">
           {OtherLinks("About", "/about")}
           {OtherLinks("Contact", "/contact")}
-          {OtherLinks("Privacy Policy", "/privacy")}
+          {OtherLinks("Privacy Policy and Terms", "/privacy")}
         </div>
       </div>
       <div className="flex-item2">

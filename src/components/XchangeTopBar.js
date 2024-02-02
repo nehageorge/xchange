@@ -7,6 +7,7 @@ function XchangeTopBar() {
 
   return (
     <div className="TopHeader" style={{ padding: "15px" }}>
+      <h2>UW&nbsp;</h2>
       <h2 style={{ color: "#E0D03B" }}>X</h2>
       <h2>Change </h2>
       <div style={{ flex: 1 }}></div>

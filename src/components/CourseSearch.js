@@ -26,12 +26,13 @@ function CourseSearch() {
   const [uniFilters, setUniFilters] = useState([]);
 
   useEffect(() => {
-    fetch("/course_equivalencies").then((res) =>
+    fetch("/course_equivalencies").then((res) => {
       res.json().then((data) => {
         setCoursesEquivalency(data);
         setAllCoursesEquivalency(data);
-      })
-    );
+      });
+      hideLoader();
+    });
   }, []);
 
   useEffect(() => {
@@ -109,6 +110,10 @@ function CourseSearch() {
     );
   }
 
+  function hideLoader() {
+    document.getElementById("loader-div").style.visibility = "hidden";
+  }
+
   return (
     <div className="CourseSearch">
       <XchangeTabbedHeader uniActive={false} />
@@ -132,6 +137,10 @@ function CourseSearch() {
         </FlashMessage>
       )}
       <div style={{ padding: "1em", marginLeft: "1rem" }}>
+        <div class="page-loader" id="loader-div">
+          <div class="spinner"></div>
+          <div class="txt">Loading...</div>
+        </div>
         <h2>Search for a Course</h2>
 
         <Box sx={{ flexGrow: 1 }}>
