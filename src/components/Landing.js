@@ -74,6 +74,8 @@ function Landing() {
           (val) => {
             const msg = val["status"]
             if (msg == "success") {
+              window.sessionStorage.setItem("token", val["token"]);
+              window.sessionStorage.setItem("user", val["user"]);
               navigate("/login_success")
             } else {
               navigate("/login_error" + "?problem=" + msg)

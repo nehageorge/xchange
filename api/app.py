@@ -178,10 +178,9 @@ def course_search():
     if not fields_present or int(uni_id) == 0 or int(uw_course_id) == 0:
         return jsonify({"status": "add-fail"}) #redirect(url_for('course_search', error="add-fail"))
 
-    db.session.add(CourseEquivalency(uwcourse_id=uw_course_id,university_id=uni_id,code="{0}: {1}".format(course_code,course_name), year_taken=year,student_program=program))
+    db.session.add(CourseEquivalency(uwcourse_id=uw_course_id,university_id=uni_id,code="{0}: {1}".format(course_code,course_name), year_taken=year, student_program=program))
     db.session.commit()
     return jsonify({"status": "success"})
-
 
 @app.route('/course/<string:param>', methods=['GET'])
 def get_course(param):
@@ -377,7 +376,6 @@ def university_discussion_posts(param, user):
             fun_rating=fun, affordable_rating=affordable,easy_rating=easy)
         db.session.add(post)
         db.session.commit()
-        redirectUrl = f"/get_uni/{param}/2"
         return jsonify({"status": "success"})
     else:
         posts = db.session.query(DiscussionPost).join(University).filter(University.id.like('%'+param+'%')).all()
