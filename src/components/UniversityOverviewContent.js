@@ -86,10 +86,9 @@ function UniversityOverviewContent(props) {
         spacing={2}
         direction="row"
         item
-        spacing={2}
         alignItems="flex-end"
       >
-        <Grid item item xs={1.5}>
+        <Grid item xs={3}>
           Faculties:
         </Grid>
         {faculties.map((faculty) => (
@@ -121,7 +120,6 @@ function UniversityOverviewContent(props) {
           container
           spacing={3}
           item
-          spacing={3}
           direction="column"
           justifyContent="left"
           alignItems="left"
@@ -160,7 +158,6 @@ function UniversityOverviewContent(props) {
         container
         spacing={3}
         item
-        spacing={3}
         direction="row"
         justifyContent="left"
         alignItems="left"
@@ -196,8 +193,8 @@ function UniversityOverviewContent(props) {
   }
 
   return (
-    <div className="UniversityOverviewContent">
-      <View style={{ flex: 1, paddingHorizontal: 25, paddingVertical: 10 }}>
+    <div>
+      <View style={{ paddingVertical: 10 }}>
         <div className="UniversityInformationBox">
           <Grid
             container
