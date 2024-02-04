@@ -194,7 +194,7 @@ function AddAReview(props) {
                 {safety}
               </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs>
               <div>
                 {fun}
               </div>
@@ -204,7 +204,7 @@ function AddAReview(props) {
                 {affordable}
               </div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs>
               <div>
                 {easy}
               </div>

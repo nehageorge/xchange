@@ -10,6 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import CoursePageFilters from "./CoursePageFilters";
 import { useState, useEffect } from "react";
+import AddIcon from "./AddIcon";
 import AddEquivalencyButton from "./AddEquivalencyButton";
 import AddEquivalencyDialog from "./AddEquivalencyDialog";
 import FlashMessage from "react-flash-message";
@@ -29,8 +30,9 @@ function CourseSearch() {
       res.json().then((data) => {
         setCoursesEquivalency(data);
         setAllCoursesEquivalency(data);
-      })
-    );
+      });
+      hideLoader();
+    });
   }, []);
 
   useEffect(() => {
@@ -62,6 +64,17 @@ function CourseSearch() {
 
   function OpenAddEquivalencyDialog() {
     const [open, setOpen] = React.useState(false);
+    const [winWidth, setWinWidth] = React.useState(window.innerWidth);
+    const updateWindowWidth = () => {
+      setWinWidth(window.innerWidth);
+    };
+
+    React.useEffect(() => {
+      window.addEventListener("resize", updateWindowWidth);
+      return () => {
+        window.removeEventListener("resize", updateWindowWidth);
+      };
+    }, []);
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -73,10 +86,32 @@ function CourseSearch() {
 
     return (
       <div style={{ paddingBottom: 10 }}>
-        <AddEquivalencyButton onClick={handleClickOpen} />
+        {winWidth < 760 ? (
+          <div>
+            <button
+              style={{
+                background: "none",
+                padding: 0,
+                border: "none",
+                color: "black",
+              }}
+              onClick={handleClickOpen}
+            >
+              <AddIcon />
+            </button>
+          </div>
+        ) : (
+          <div>
+            <AddEquivalencyButton onClick={handleClickOpen} />
+          </div>
+        )}
         <AddEquivalencyDialog open={open} onClose={handleClose} />
       </div>
     );
+  }
+
+  function hideLoader() {
+    document.getElementById("loader-div").style.visibility = "hidden";
   }
 
   return (
@@ -102,6 +137,10 @@ function CourseSearch() {
         </FlashMessage>
       )}
       <div style={{ padding: "1em", marginLeft: "1rem" }}>
+        <div class="page-loader" id="loader-div">
+          <div class="spinner"></div>
+          <div class="txt">Loading...</div>
+        </div>
         <h2>Search for a Course</h2>
 
         <Box sx={{ flexGrow: 1 }}>
@@ -144,7 +183,6 @@ function CourseSearch() {
                       style={{ color: "blue", textDecoration: "underline" }}
                     >
                       <Link to={`/uwcourse/${ce.uwcourse.id}`}>
-
                         {ce.uwcourse.code}: {ce.uwcourse.name}
                       </Link>
                     </TableCell>

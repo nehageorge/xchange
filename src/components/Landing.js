@@ -14,16 +14,17 @@ const font = "Helvetica";
 const TitleText = () => {
   const titleText = "Change";
   const bodyText =
-    "\nEverything you need to plan your exchange term is here,\nwith hundreds of universities and student reviews, as\nwell as past approved course equivalents by school\nand program.";
+    "\nEverything you need to plan your exchange term is here, with hundreds of universities and student reviews, as well as past approved course equivalents by school and program.";
 
   return (
     <Text style={{ fontFamily: font }}>
-      <Text style={{ fontSize: 70, fontWeight: "bold" }}>
+      <Text style={{ fontSize: "3.7rem", fontWeight: "bold" }}>
+        <Text>UW&nbsp;</Text>
         <Text style={{ color: "#E0D03B" }}>X</Text>
         {titleText}
       </Text>
       <div className="body-padding"></div>
-      <Text style={{ fontSize: 20, fontStyle: "italic" }}>{bodyText}</Text>
+      <Text style={{ fontSize: "1.2rem", fontStyle: "italic", width: "50%" }}>{bodyText}</Text>
     </Text>
   );
 };
@@ -34,7 +35,7 @@ const OtherLinks = (linkText, path) => {
       href={path}
       style={{
         fontFamily: font,
-        fontSize: 15,
+        fontSize: "1rem",
         fontWeight: "100",
         fontStyle: "italic",
         textDecorationLine: "underline",
@@ -97,23 +98,23 @@ function Landing() {
         <div className="links-padding">
           {OtherLinks("About", "/about")}
           {OtherLinks("Contact", "/contact")}
-          {OtherLinks("Privacy Policy", "/privacy")}
+          {OtherLinks("Privacy Policy and Terms", "/privacy")}
         </div>
       </div>
       <div className="flex-item2">
         <div className="login-panel">
           <div
             style={{
-              marginTop: "-65px",
-              marginLeft: "35px",
+              marginTop: "-25%",
+              marginLeft: "15%",
             }}
           >
             <Suitcase style={{ scale: "2" }} />
           </div>
           <div
             style={{
-              marginTop: "-95px",
-              marginLeft: "120px",
+              marginTop: "-35%",
+              marginLeft: "45%",
             }}
           >
             <Baggage style={{ scale: "2.5" }} />
@@ -123,7 +124,7 @@ function Landing() {
               <Text
                 style={{
                   fontFamily: font,
-                  fontSize: 30,
+                  fontSize: '50%',
                   fontWeight: "bold",
                   color: "#1E1E1E",
                 }}

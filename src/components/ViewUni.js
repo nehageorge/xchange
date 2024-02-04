@@ -44,18 +44,18 @@ function ViewUni() {
   }
 
   return (
-    <div className="UniversityOverview">
+    <div>
       <XchangeTabbedHeader />
-      <View style={{ flex: 1, paddingHorizontal: 25, paddingVertical: 20 }}>
+      <View style={{ paddingHorizontal: 25, paddingVertical: 20 }}>
         <h3 style={{ paddingBottom: 10 }}>{currUni["name"]}</h3>
-        <Grid container spacing={2} paddingBottom={3}>
-          <Grid item xs={2}>
+        <Grid container spacing={5} paddingBottom={2}>
+          <Grid item >
             {UniversityButton("Overview", content !== 0, 0)}
           </Grid>
-          <Grid item xs={3}>
+          <Grid item >
             {UniversityButton("Previously Approved Courses", content !== 1, 1)}
           </Grid>
-          <Grid item xs={2}>
+          <Grid item >
             {UniversityButton("Discussion", content !== 2, 2)}
           </Grid>
         </Grid>

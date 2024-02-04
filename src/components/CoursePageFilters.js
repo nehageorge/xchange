@@ -179,7 +179,7 @@ function CoursePageFilters(props) {
       >
         <div className="ProgramFilter">
           <div className="FilterTitle">
-            <h5>Program</h5>
+            <h6>Program</h6>
           </div>
           <View style={{ flex: 1, flexDirection: "row" }}>
             <div
@@ -187,7 +187,7 @@ function CoursePageFilters(props) {
               style={{ paddingLeft: 5, paddingTop: 5, paddingRight: 5 }}
             >
               <TextField
-                sx={{ backgroundColor: "rgba(52, 52, 52, 0.1)", width: 145 }}
+                sx={{ backgroundColor: "rgba(52, 52, 52, 0.1)", width: "100%" }}
                 inputProps={{
                   style: {
                     padding: 10,
@@ -246,7 +246,7 @@ function CoursePageFilters(props) {
           style={{ borderTop: borderStyle, borderRadius: 5 }}
         >
           <div className="FilterTitle">
-            <h5>University</h5>
+            <h6>University</h6>
           </div>
           <View style={{ flex: 1, flexDirection: "row" }}>
             <div
@@ -254,7 +254,7 @@ function CoursePageFilters(props) {
               style={{ paddingLeft: 5, paddingTop: 5, paddingRight: 5 }}
             >
               <TextField
-                sx={{ backgroundColor: "rgba(52, 52, 52, 0.1)", width: 145 }}
+                sx={{ backgroundColor: "rgba(52, 52, 52, 0.1)", width: "100%" }}
                 inputProps={{
                   style: {
                     padding: 10,
