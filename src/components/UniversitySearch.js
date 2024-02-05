@@ -13,7 +13,7 @@ function UniversitySearch() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_PROXY + "/universities").then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/universities").then((res) => {
       res.json().then((data) => {
         setAllUnis(data);
         if (search.length == 0) {

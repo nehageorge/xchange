@@ -25,8 +25,9 @@ function CourseSearch() {
   const [programFilters, setProgramFilters] = useState([]);
   const [uniFilters, setUniFilters] = useState([]);
 
+
   useEffect(() => {
-    fetch(process.env.REACT_APP_PROXY + "/course_equivalencies").then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/course_equivalencies").then((res) => {
       res.json().then((data) => {
         setCoursesEquivalency(data);
         setAllCoursesEquivalency(data);
