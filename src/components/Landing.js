@@ -19,8 +19,10 @@ const TitleText = () => {
     <Text style={{ fontFamily: font }}>
       <Text style={{ fontSize: "3.7rem", fontWeight: "bold" }}>
         <Text>UW&nbsp;</Text>
+      </Text>
+      <Text style={{ fontSize: "3.7rem", fontWeight: "bold", whiteSpace: "nowrap" }}>
         <Text style={{ color: "#E0D03B" }}>X</Text>
-        {titleText}
+        Change
       </Text>
       <div className="body-padding"></div>
       <Text style={{ fontSize: "1.2rem", fontStyle: "italic", width: "50%" }}>
@@ -68,16 +70,16 @@ function Landing() {
         <div className="login-panel">
           <div
             style={{
-              marginTop: "-25%",
-              marginLeft: "15%",
+              marginTop: "-65px",
+              marginLeft: "35px",
             }}
           >
             <Suitcase style={{ scale: "2" }} />
           </div>
           <div
             style={{
-              marginTop: "-35%",
-              marginLeft: "45%",
+              marginTop: "-95px",
+              marginLeft: "120px",
             }}
           >
             <Baggage style={{ scale: "2.5" }} />
