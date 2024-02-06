@@ -41,14 +41,11 @@ function Review(post) {
     <div className="review-bg">
       <div className="user">
         <div className="duck-img"></div>
-        {post["student_name"]}
+        <div className="bold">
+          {`${post["student_faculty"]} / ${post["student_term"]}`}
+        </div>
       </div>
       <div className="review">
-        <div className="review-title">
-          <div className="bold">
-            {`${post["student_faculty"]} / ${post["student_term"]}`}
-          </div>
-        </div>
         <div className="text">
           <div className="bold"> Housing:</div>
           &nbsp;{post["housing"]}

@@ -127,6 +127,7 @@ function AddAReview(props) {
                   multiline
                   rows={4}
                   fullWidth
+                  name="freeform"
                 />
               </div>
             </Grid>
