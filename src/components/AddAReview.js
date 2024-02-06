@@ -71,7 +71,7 @@ function AddAReview(props) {
   const [houseS, setHouse] = React.useState("")
   const [favS, setFav] = React.useState("")
   const [foodS, setFood] = React.useState("")
-
+  const [freeformS, setFreeform] = React.useState("")
   const [safetyR, setSafety] = React.useState(defaultRating)
   const [funR, setFun] = React.useState(defaultRating)
   const [affordableR, setAffordable] = React.useState(defaultRating)
@@ -97,12 +97,12 @@ function AddAReview(props) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ 
-        name: fullName,
         faculty: facultyS,
         term: termS,
         housing: houseS,
         favourite: favS,
         food: foodS,
+	freeform: freeformS,
         safety: '' + safetyR,
         fun: '' + funR, 
         affordable: '' + affordableR,
@@ -183,6 +183,7 @@ function AddAReview(props) {
                   rows={4}
                   fullWidth
                   name="freeform"
+	          onChange={(event) => {setFreeform(event.target.value);}}
                 />
               </div>
             </Grid>
