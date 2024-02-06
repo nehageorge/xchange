@@ -118,13 +118,6 @@ function CourseSearch() {
   return (
     <div className="CourseSearch">
       <XchangeTabbedHeader uniActive={false} />
-      <View>
-        <img
-          src={"/matt-ragland-02z1I7gv4ao-unsplash-cropped.jpg"}
-          alt="Macbook, bagpack and notes"
-          style={{ maxHeight: 400, paddingBottom: "1rem" }}
-        ></img>
-      </View>
       {searchParams.get("error") && (
         <FlashMessage duration={3000}>
           <center style={{ background: "#ed897e" }}>

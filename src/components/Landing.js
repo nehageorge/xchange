@@ -93,7 +93,7 @@ function Landing() {
         <div className="landing-text-padding">{TitleText()}</div>
         <div className="left-buttons-padding">
           {XChangeButton("Search for schools", "/universities")}
-          {XChangeButton("Search for courses", "/course/home")}
+          {XChangeButton("Search for courses", "/course/search")}
         </div>
         <div className="links-padding">
           {OtherLinks("About", "/about")}

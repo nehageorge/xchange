@@ -47,17 +47,6 @@ function UniversitySearch() {
   return (
     <div className="Home">
       <XchangeTabbedHeader />
-      <View>
-        <img
-          src="/singapore_skyline.png"
-          alt="Panoramic view of Singapore city"
-          style={{
-            maxHeight: 340,
-            objectFit: "cover",
-          }}
-        ></img>
-        {/* Picture sourced from https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg */}
-      </View>
       <div class="page-loader" id="loader-div">
         <div class="spinner"></div>
         <div class="txt">Loading...</div>
