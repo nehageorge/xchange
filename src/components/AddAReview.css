@@ -19,7 +19,7 @@
   display: flex;
   flex-flow: column;
   align-items: start;
-
+  height: fit-content;
   width: fit-content;
 }
 
