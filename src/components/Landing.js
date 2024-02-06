@@ -19,8 +19,10 @@ const TitleText = () => {
     <Text style={{ fontFamily: font }}>
       <Text style={{ fontSize: "3.7rem", fontWeight: "bold" }}>
         <Text>UW&nbsp;</Text>
+      </Text>
+      <Text style={{ fontSize: "3.7rem", fontWeight: "bold", whiteSpace: "nowrap" }}>
         <Text style={{ color: "#E0D03B" }}>X</Text>
-        {titleText}
+        Change
       </Text>
       <div className="body-padding"></div>
       <Text style={{ fontSize: "1.2rem", fontStyle: "italic", width: "50%" }}>{bodyText}</Text>
