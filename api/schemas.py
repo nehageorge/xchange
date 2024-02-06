@@ -35,8 +35,8 @@ courses_equivalency_schema = CourseEquivalencySchema(many=True)
 class DiscussionPostSchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("student_name", "student_faculty", "student_term", "housing",
-        "favourite_aspect", "food_situation", "safe_rating", "fun_rating", "affordable_rating", "easy_rating")
+        fields = ("student_faculty", "student_term", "housing",
+        "favourite_aspect", "food_situation", "freeform", "safe_rating", "fun_rating", "affordable_rating", "easy_rating")
     
 discussion_post_schema = DiscussionPostSchema()
 discussion_posts_schema = DiscussionPostSchema(many=True)
