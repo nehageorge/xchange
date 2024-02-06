@@ -61,6 +61,7 @@ function Review(post) {
           <div className="bold"> Food Situation:</div>
           &nbsp;{post["food_situation"]}
         </div>
+        <div className="text">&nbsp;{post["freeform"]}</div>
       </div>
       <div className="vertical-line"></div>
       <div className="user-rating-categories">

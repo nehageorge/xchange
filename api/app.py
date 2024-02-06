@@ -101,12 +101,12 @@ class DiscussionPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     university_id = db.Column(db.Integer, db.ForeignKey('university.id'),nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    student_name = db.Column(db.String(128))
     student_faculty = db.Column(db.String(128))
     student_term = db.Column(db.String(128))
     housing = db.Column(db.String(128))
     favourite_aspect = db.Column(db.String(128))
     food_situation = db.Column(db.String(128))
+    student_name = db.Column(db.String(5000))
     safe_rating = db.Column(db.Integer)
     fun_rating = db.Column(db.Integer)
     affordable_rating = db.Column(db.Integer)
@@ -332,12 +332,12 @@ def get_uni(param):
 @app.route('/get_uni/discussion/<param>', defaults={'user': None}, methods=['GET'])
 def university_discussion_posts(param, user):
     if request.method == 'POST':
-        name = request.form['name']
         faculty = request.form['faculty']
         term = request.form['term']
         housing = request.form['housing']
         favourite = request.form['favourite']
         food = request.form['food']
+        food = request.form['freeform']
         safety = request.form['safety'].split(' ')[0]
         fun = request.form['fun'].split(' ')[0]
         affordable = request.form['affordable'].split(' ')[0]
