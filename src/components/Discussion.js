@@ -38,7 +38,7 @@ function AddAReviewDialog(uniId) {
 
 function Review(post) {
   return (
-    <div className="review-bg">
+    <div className="review-bg" style={{height: "fit-content"}}>
       <div className="user">
         <div className="duck-img"></div>
         <div className="bold">
