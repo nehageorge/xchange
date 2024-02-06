@@ -86,8 +86,6 @@ function AddAReview(props) {
             <Grid item xs={12}>
               <div>
                 <p className="add-a-review">Add A Review</p>
-                <p>Full name</p>
-                {textBox("Full Name", "name")}
               </div>
             </Grid>
             <Grid item xs={3}>
@@ -118,6 +116,19 @@ function AddAReview(props) {
               <div>
                 <p>Food Situation</p>
                 {Slct("food", meals)}
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <div>
+                <p>Additional thoughts</p>
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Tell us about your time abroad..."
+                  multiline
+                  rows={4}
+                  fullWidth
+                  name="freeform"
+                />
               </div>
             </Grid>
             <Grid item xs={12}>

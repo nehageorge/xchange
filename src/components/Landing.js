@@ -23,7 +23,9 @@ const TitleText = () => {
         {titleText}
       </Text>
       <div className="body-padding"></div>
-      <Text style={{ fontSize: "1.2rem", fontStyle: "italic", width: "50%" }}>{bodyText}</Text>
+      <Text style={{ fontSize: "1.2rem", fontStyle: "italic", width: "50%" }}>
+        {bodyText}
+      </Text>
     </Text>
   );
 };
@@ -54,7 +56,7 @@ function Landing() {
         <div className="landing-text-padding">{TitleText()}</div>
         <div className="left-buttons-padding">
           {XChangeButton("Search for schools", "/universities")}
-          {XChangeButton("Search for courses", "/course/home")}
+          {XChangeButton("Search for courses", "/course/search")}
         </div>
         <div className="links-padding">
           {OtherLinks("About", "/about")}
@@ -85,7 +87,7 @@ function Landing() {
               <Text
                 style={{
                   fontFamily: font,
-                  fontSize: '50%',
+                  fontSize: "50%",
                   fontWeight: "bold",
                   color: "#1E1E1E",
                 }}

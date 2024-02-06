@@ -101,12 +101,12 @@ class DiscussionPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     university_id = db.Column(db.Integer, db.ForeignKey('university.id'),nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    student_name = db.Column(db.String(128))
     student_faculty = db.Column(db.String(128))
     student_term = db.Column(db.String(128))
     housing = db.Column(db.String(128))
     favourite_aspect = db.Column(db.String(128))
     food_situation = db.Column(db.String(128))
+    freeform = db.Column(db.String(5000))
     safe_rating = db.Column(db.Integer)
     fun_rating = db.Column(db.Integer)
     affordable_rating = db.Column(db.Integer)
@@ -332,19 +332,19 @@ def get_uni(param):
 @app.route('/get_uni/discussion/<param>', defaults={'user': None}, methods=['GET'])
 def university_discussion_posts(param, user):
     if request.method == 'POST':
-        name = request.form['name']
         faculty = request.form['faculty']
         term = request.form['term']
         housing = request.form['housing']
         favourite = request.form['favourite']
         food = request.form['food']
+        freeform = request.form['freeform']
         safety = request.form['safety'].split(' ')[0]
         fun = request.form['fun'].split(' ')[0]
         affordable = request.form['affordable'].split(' ')[0]
         easy = request.form['easy'].split(' ')[0]
         uid = User.query.filter(User.email.like('%'+user+'%')).first().id
-        post = DiscussionPost(university_id=param, user_id=uid,student_name=name, student_faculty=faculty, student_term=term,
-            housing=housing, favourite_aspect=favourite, food_situation=food, safe_rating=safety,
+        post = DiscussionPost(university_id=param, user_id=uid, student_faculty=faculty, student_term=term,
+            housing=housing, favourite_aspect=favourite, food_situation=food, freeform=freeform, safe_rating=safety,
             fun_rating=fun, affordable_rating=affordable,easy_rating=easy)
         db.session.add(post)
         db.session.commit()
