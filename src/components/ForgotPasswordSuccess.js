@@ -6,15 +6,41 @@ import XchangeTopBar from "./XchangeTopBar";
 
 function ForgotPasswordSuccess() {
     const params = useParams();
-    const [token, setToken] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [message, setMessage] = useState("")
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      const request = {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          password: password, 
+          confirm_password: confirmPassword
+        })
+      };
   
-    useEffect(() => {
-        fetch("/forgot_password_success/" + params.token).then((res) =>
-            res.json().then((data) => {
-            setToken(data);
-            })
-        );
-        }, []);
+      fetch(process.env.REACT_APP_PROXY + "/forgot_password_success/" + params.token, request)
+      .then(response => {
+          response.json().then(
+            (val) => {
+              const msg = val["status"]
+              if (msg == "invalid") {
+                setMessage("Your signup link is invalid or expired. Please request to make a new password again.")
+              } else if (msg == "success") {
+                setMessage("Success! You may now log in with your new password.")
+              } else if (msg == "mismatch") {
+                setMessage("Your passwords didn't match. Please try again.")
+              }
+            }
+          )
+        }
+      )
+    }
+
   return (
     <>
       <XchangeTopBar />
@@ -28,8 +54,7 @@ function ForgotPasswordSuccess() {
               padding: "50px",
             }}
           >
-            <form action={"/forgot_password_success/" + params.token}  method="POST">
-                
+            <form onSubmit={handleSubmit}>
               <Text
                 style={{
                   fontSize: 30,
@@ -52,6 +77,7 @@ function ForgotPasswordSuccess() {
                   borderRadius: "4pt",
                   width: "100%",
                 }}
+                onChange={(e) => setPassword(e.target.value)}
               ></TextField>
               <br></br>
               <br></br>
@@ -66,6 +92,7 @@ function ForgotPasswordSuccess() {
                   borderRadius: "4pt",
                   width: "100%",
                 }}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               ></TextField>
               <br></br>
               <br></br>
@@ -78,6 +105,7 @@ function ForgotPasswordSuccess() {
                   <Text style={{ width: "325px" }}>Confirm new password</Text>
                 </div>
               </Button>
+              <Text>{message}</Text>
             </form>
           </div>
         </center>

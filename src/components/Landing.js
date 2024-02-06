@@ -1,12 +1,13 @@
 import "./Landing.css";
 import XChangeButton from "./XChangeButton.js";
 import { Text } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import Link from "@mui/joy/Link";
 import { ReactComponent as Plane } from "./assets/Vector-5.svg";
 import { ReactComponent as Suitcase } from "./assets/Vector-6.svg";
 import { ReactComponent as Baggage } from "./assets/Vector-7.svg";
+import { useNavigate } from 'react-router-dom';
 
 const font = "Helvetica";
 
@@ -52,6 +53,44 @@ const OtherLinks = (linkText, path) => {
 };
 
 function Landing() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log("IDHAR HAI")
+    const request = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        email: email, 
+        password: password,
+      })
+    };
+
+    fetch(process.env.REACT_APP_PROXY + "/", request)
+    .then(response => {
+        response.json().then(
+          (val) => {
+            const msg = val["status"]
+            if (msg == "success") {
+              window.sessionStorage.setItem("token", val["token"]);
+              window.sessionStorage.setItem("user", val["user"]);
+              navigate("/login_success")
+            } else {
+              navigate("/login_error" + "?problem=" + msg)
+            }
+          }
+        )
+      }
+    )
+  }
+
   return (
     <div className="flex-container">
       <div className="flex-item1">
@@ -85,7 +124,7 @@ function Landing() {
             <Baggage style={{ scale: "2.5" }} />
           </div>
           <div className="login-body">
-            <form action="/" method="POST">
+            <form onSubmit={handleSubmit}>
               <Text
                 style={{
                   fontFamily: font,
@@ -102,6 +141,7 @@ function Landing() {
                 label="Email"
                 name="email"
                 variant="outlined"
+                onChange={(e) => setEmail(e.target.value)}
                 style={{
                   backgroundColor: "#FFFFFF",
                   borderRadius: "4pt",
@@ -115,6 +155,7 @@ function Landing() {
                 name="password"
                 type="password"
                 variant="outlined"
+                onChange={(e) => setPassword(e.target.value)}
                 style={{
                   backgroundColor: "#FFFFFF",
                   borderRadius: "4pt",

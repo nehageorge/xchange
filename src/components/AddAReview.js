@@ -3,29 +3,15 @@ import XChangeButton from "./XChangeButton.js";
 import CustomRating from "./CustomRating.js";
 
 import * as React from "react";
+import { Text } from "react-native";
 import { Button, TextField, Select, MenuItem, Grid } from "@mui/material";
 
-function textBox(txt, name = "") {
-  return (
-    <TextField
-      id="outlined-basic"
-      label={txt}
-      name={name}
-      variant="outlined"
-      style={{
-        backgroundColor: "#FFFFFF",
-        borderRadius: "4pt",
-        width: "90%",
-      }}
-    ></TextField>
-  );
-}
-
-function Slct(name, options = []) {
+function Slct(name, st, options = []) {
   const [slct, setSlct] = React.useState("");
 
   const handleChange = (event) => {
     setSlct(event.target.value);
+    st(event.target.value);
   };
 
   return (
@@ -43,10 +29,11 @@ function Slct(name, options = []) {
   );
 }
 
-function AddAReview(props) {
+function AddAReview(props) { 
+
   const user = window.sessionStorage.getItem("user");
   const userPresent = user ? true : false;
-  const url = userPresent ? `/get_uni/discussion/${props.uniId}/${user}` : "";
+  const url = userPresent ? `/get_uni/discussion/${props.uniId}/${user}` : `/get_uni/discussion/${props.uniId}`;
   // Option Data
   const faculties = [
     "Arts",
@@ -74,6 +61,74 @@ function AddAReview(props) {
     "Mix of cooking and eating out places",
   ];
 
+  const defaultRating = 9
+
+  const [message, setMessage] = React.useState("")
+  const [fullName, setName] = React.useState("")
+
+  const [facultyS, setFaculty] = React.useState("")
+  const [termS, setTerm] = React.useState("")
+  const [houseS, setHouse] = React.useState("")
+  const [favS, setFav] = React.useState("")
+  const [foodS, setFood] = React.useState("")
+
+  const [safetyR, setSafety] = React.useState(defaultRating)
+  const [funR, setFun] = React.useState(defaultRating)
+  const [affordableR, setAffordable] = React.useState(defaultRating)
+  const [easyR, setEasy] = React.useState(defaultRating)
+
+  const fac = Slct("faculty", setFaculty, faculties)
+  const ter = Slct("term", setTerm, terms)
+  const house = Slct("housing", setHouse, housings)
+  const fav = Slct("favourite", setFav, favAspects)
+  const food = Slct("food", setFood, meals)
+
+  const safety = CustomRating({text: "Safe", name: "safety", readOnly: false, val: 9, ref: setSafety})
+  const fun = CustomRating({text: "Fun", name: "fun", readOnly: false, val: 9, ref: setFun})
+  const affordable = CustomRating({text: "Affordable", name: "affordable", readOnly: false, val:9, ref: setAffordable})
+  const easy = CustomRating({text: "Easy", name: "easy", readOnly: false, val: 9, ref: setEasy})
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    const request = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        name: fullName,
+        faculty: facultyS,
+        term: termS,
+        housing: houseS,
+        favourite: favS,
+        food: foodS,
+        safety: '' + safetyR,
+        fun: '' + funR, 
+        affordable: '' + affordableR,
+        easy: '' + easyR,
+      })
+    };
+
+    fetch(process.env.REACT_APP_PROXY + url, request)
+    .then(response => {
+        response.json().then(
+          (val) => {
+            const msg = val["status"]
+            if (msg == "unknown") {
+              setMessage("An error occurred. Please try again.")
+            } else if (msg == "success") {
+              //setMessage("your review has been successfuly uploaded. reload the page to see changes")
+              window.location.reload()
+              //console.log("/get_uni/" + props.uniId + "/2")
+              //navigate("/get_uni/" + props.uniId + "/2")
+            } 
+          }
+        )
+      }
+    )
+  }
+
   function close() {
     props.setOpen(false);
   }
@@ -81,7 +136,7 @@ function AddAReview(props) {
   return userPresent ? (
     <div className="ratings-box">
       <div className="padding">
-        <form action={url} method="POST">
+        <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <div>
@@ -91,31 +146,31 @@ function AddAReview(props) {
             <Grid item xs={3}>
               <div>
                 <p>Faculty</p>
-                {Slct("faculty", faculties)}
+                {fac}
               </div>
             </Grid>
             <Grid item xs={3}>
               <div>
                 <p>Exchange Term</p>
-                {Slct("term", terms)}
+                {ter}
               </div>
             </Grid>
             <Grid item xs={6}>
               <div>
                 <p>Housing</p>
-                {Slct("housing", housings)}
+                {house}
               </div>
             </Grid>
             <Grid item xs={6}>
               <div>
                 <p>Favourite Aspect of Exchange</p>
-                {Slct("favourite", favAspects)}
+                {fav}
               </div>
             </Grid>
             <Grid item xs={6}>
               <div>
                 <p>Food Situation</p>
-                {Slct("food", meals)}
+                {food}
               </div>
             </Grid>
             <Grid item xs={12}>
@@ -136,42 +191,22 @@ function AddAReview(props) {
             </Grid>
             <Grid item xs={6}>
               <div>
-                <CustomRating
-                  text="Safe"
-                  name="safety"
-                  readOnly={false}
-                  val={9}
-                ></CustomRating>
+                {safety}
               </div>
             </Grid>
             <Grid item xs>
               <div>
-                <CustomRating
-                  text="Fun"
-                  name="fun"
-                  readOnly={false}
-                  val={9}
-                ></CustomRating>
+                {fun}
               </div>
             </Grid>
             <Grid item xs={6}>
               <div>
-                <CustomRating
-                  text="Affordable"
-                  name="affordable"
-                  readOnly={false}
-                  val={9}
-                ></CustomRating>
+                {affordable}
               </div>
             </Grid>
             <Grid item xs>
               <div>
-                <CustomRating
-                  text="Easy"
-                  name="easy"
-                  readOnly={false}
-                  val={9}
-                ></CustomRating>
+                {easy}
               </div>
             </Grid>
             <Grid item xs={6}>
@@ -196,6 +231,7 @@ function AddAReview(props) {
               </div>
             </Grid>
           </Grid>
+          <Text>{message}</Text>
         </form>
       </div>
     </div>

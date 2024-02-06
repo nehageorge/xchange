@@ -86,7 +86,7 @@ function Discussion(props) {
   const [easy, setEasy] = useState(0);
 
   useEffect(() => {
-    fetch("/get_uni/discussion/" + params.id).then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/get_uni/discussion/" + params.id).then((res) =>
       res.json().then((data) => {
         setPosts(data);
       })
@@ -148,7 +148,7 @@ function Discussion(props) {
       <div className="col">
         <div className="section-title">Reviews</div>
         <List style={{ maxHeight: "65vh", overflow: "auto" }}>
-          {posts.map((post) => Review(post))}
+          {posts.map((post) => Review(post)).reverse()}
         </List>
       </div>
     </div>

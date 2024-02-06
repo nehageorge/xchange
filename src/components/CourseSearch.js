@@ -25,8 +25,9 @@ function CourseSearch() {
   const [programFilters, setProgramFilters] = useState([]);
   const [uniFilters, setUniFilters] = useState([]);
 
+
   useEffect(() => {
-    fetch("/course_equivalencies").then((res) => {
+    fetch(process.env.REACT_APP_PROXY + "/course_equivalencies").then((res) => {
       res.json().then((data) => {
         setCoursesEquivalency(data);
         setAllCoursesEquivalency(data);
@@ -36,12 +37,12 @@ function CourseSearch() {
   }, []);
 
   useEffect(() => {
-    if (query.length == 0 && uniFilters === [] && programFilters === []) {
+    if (query.length === 0 && uniFilters.length === 0 && programFilters.length === 0) {
       setCoursesEquivalency(allCourseEquivalencies);
       return;
     }
 
-    fetch("/course_equivalencies/search", {
+    fetch(process.env.REACT_APP_PROXY + "/course_equivalencies/search", {
       method: "POST",
       body: JSON.stringify({
         query: query,
@@ -117,13 +118,6 @@ function CourseSearch() {
   return (
     <div className="CourseSearch">
       <XchangeTabbedHeader uniActive={false} />
-      <View>
-        <img
-          src={"/matt-ragland-02z1I7gv4ao-unsplash-cropped.jpg"}
-          alt="Macbook, bagpack and notes"
-          style={{ maxHeight: 400, paddingBottom: "1rem" }}
-        ></img>
-      </View>
       {searchParams.get("error") && (
         <FlashMessage duration={3000}>
           <center style={{ background: "#ed897e" }}>
