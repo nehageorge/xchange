@@ -29,16 +29,6 @@ function CoursePage() {
   return (
     <div>
       <XchangeTabbedHeader />
-      <View>
-        <img
-          src="/singapore_skyline.png"
-          alt="Panoramic view of Singapore city"
-          style={{
-            maxHeight: 340,
-            objectFit: "cover",
-          }}
-        ></img>
-      </View>
       <View
         style={{
           flex: 1,
