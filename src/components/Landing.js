@@ -66,16 +66,16 @@ function Landing() {
         <div className="login-panel">
           <div
             style={{
-              marginTop: "-25%",
-              marginLeft: "15%",
+              marginTop: "-65px",
+              marginLeft: "35px",
             }}
           >
             <Suitcase style={{ scale: "2" }} />
           </div>
           <div
             style={{
-              marginTop: "-35%",
-              marginLeft: "45%",
+              marginTop: "-95px",
+              marginLeft: "120px",
             }}
           >
             <Baggage style={{ scale: "2.5" }} />
