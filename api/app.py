@@ -244,7 +244,13 @@ def signup():
             user = UserBuilder(email, password, confirm_password)
             db.session.add(User(email=user.email,password=user.password,is_admin=user.is_admin))
             db.session.commit()
-	    send_signup_mail(user)
+
+            result = User.query.filter(User.email == email).first()
+            if result is None:
+                #e = "This email is not registered."
+                return jsonify({"status": "no-email"})
+
+            send_signup_mail(result)
             print("finish user building", flush=True)
         except Exception as e:
             print("user lowkey exists", flush=True)
@@ -266,7 +272,7 @@ def send_mail(user):
     msg.body=f''' To reset your password, please follow the link below:
     
     {url_for('forgot_password_success', token=token,_external=True).replace("backend.uw-xchange.com", "uw-xchange.com")}
-    If you didn't send a password reset request, please ignore this message.
+    If you didn't make a new account, please ignore this message.
 
     '''
 
