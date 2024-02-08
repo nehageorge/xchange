@@ -48,7 +48,7 @@ function LoginSuccess() {
             <Button
               sx={{ backgroundColor: "#E0D03B" }}
               style={{ width: "100%" }}
-              href="/course/home"
+              href="/course/search"
             >
               <div className="button-text">
                 <Text style={{ width: "325px" }}>Search for courses</Text>
