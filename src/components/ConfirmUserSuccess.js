@@ -7,32 +7,20 @@ import XChangeButton from "./XChangeButton.js";
 
 function ConfirmUserSuccess() {
     const params = useParams();
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("")
     const [message, setMessage] = useState("")
 
     const handleSubmit = (e) => {
       e.preventDefault()
-      const request = {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          password: password, 
-          confirm_password: confirmPassword
-        })
-      };
 
-      fetch(process.env.REACT_APP_PROXY + "/confirm_user_success/" + params.token, request)
+      fetch(process.env.REACT_APP_PROXY + "/confirm_user_success/" + params.token)
       .then(response => {
           response.json().then(
             (val) => {
               const msg = val["status"]
               if (msg == "invalid") {
-                setMessage("Your signup link is invalid or expired. Please request to make a new password again.")
+                setMessage("Your confirmation link is invalid or expired. Please sign up again.")
               } else if (msg == "success") {
-                setMessage("Success! You may now log in with your new password.")
+                setMessage("Success! You may now log in.")
               } 
             }
           )
@@ -45,17 +33,27 @@ function ConfirmUserSuccess() {
       <XchangeTopBar />
       <div className="Signup">
         <center>
-          <div
-            style={{
-              width: "50%",
-              background: "#D8D8D8",
-              borderRadius: "12pt",
-              padding: "50px",
-            }}
-          >
-            {XChangeButton("Confirm user", "/confirm_user_success")}
-          </div>
-          <Text>{message}</Text>
+          <form onSubmit={handleSubmit}>
+            <div
+              style={{
+                width: "50%",
+                background: "#D8D8D8",
+                borderRadius: "12pt",
+                padding: "50px",
+              }}
+            >
+              <Button
+                sx={{ backgroundColor: "#E0D03B" }}
+                style={{ width: "100%" }}
+                type="submit"
+              >
+                <div class="button-text">
+                  <Text style={{ width: "325px" }}>Confirm User</Text>
+                </div>
+              </Button>
+            </div>
+            <Text>{message}</Text>
+          </form>
         </center>
       </div>
     </>
