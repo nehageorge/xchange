@@ -285,7 +285,7 @@ def send_signup_mail(user):
     msg.body=f''' To confirm your account, please follow the link below:
     
     {url_for('confirm_user_success', token=token,_external=True).replace("backend.uw-xchange.com", "uw-xchange.com")}
-    If you didn't send a password reset request, please ignore this message.
+    If you didn't make a new account, please ignore this message.
     '''
 
     mail.send(msg)
