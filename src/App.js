@@ -34,7 +34,7 @@ function App() {
             path="/forgot_password_success/:token"
             element={<ForgotPasswordSuccess />}
           />
-	  <Route exact path="/confirm_user_success" element={<ConfirmUserSuccess/>} />
+	  <Route exact path="/confirm_user_success/:token" element={<ConfirmUserSuccess/>} />
           <Route exact path="/about" element={<AboutPage />} />
           <Route exact path="/contact" element={<ContactPage />} />
           <Route exact path="/privacy" element={<PrivacyPolicyPage />} />
