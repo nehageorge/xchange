@@ -89,6 +89,7 @@ class User(db.Model):
     email = db.Column(db.String(128))
     password = db.Column(db.String(128))
     is_admin = db.Column(db.Integer)
+    email_confirmed = db.Column(db.Boolean, default=False)
 
     def get_token(self,expires_sec=3600):
         if self is None:
@@ -243,6 +244,7 @@ def signup():
             user = UserBuilder(email, password, confirm_password)
             db.session.add(User(email=user.email,password=user.password,is_admin=user.is_admin))
             db.session.commit()
+	    send_signup_mail(user)
             print("finish user building", flush=True)
         except Exception as e:
             print("user lowkey exists", flush=True)
@@ -270,6 +272,18 @@ def send_mail(user):
 
     mail.send(msg)
 
+def send_signup_mail(user):
+    token=user.get_token()
+    msg=Message('Confirm XChange user',recipients=[user.email], sender='xchangeuw@outlook.com')
+
+    msg.body=f''' To confirm your account, please follow the link below:
+    
+    {url_for('confirm_user_success', token=token,_external=True).replace("backend.uw-xchange.com", "uw-xchange.com")}
+    If you didn't send a password reset request, please ignore this message.
+    '''
+
+    mail.send(msg)
+
 @app.route('/forgot_password', methods=['GET','POST'])
 def forgot_password():
     if request.method == 'POST':
@@ -284,6 +298,17 @@ def forgot_password():
         return jsonify({"status": "success"})
     else:
         return jsonify({"status": "unknown"})
+
+@app.route('/confirm_user_success/<string:token>', methods=['GET', 'POST'])
+def confirm_user_success(token):
+    user=User.verify_token(token)
+    if user is None:
+        #flash('That is an invalid token or it has expired. Please try again.', 'warning')
+        return jsonify({"status": "invalid"})
+    else:
+        user.email_confirmed = True
+        db.session.commit()
+        return jsonify({"status": "success"})
 
 #Need to pass in token
 @app.route('/forgot_password_success/<string:token>', methods=['GET', 'POST'])
@@ -331,7 +356,9 @@ def login():
         if not isSuccess:
             e = "The password is incorrect"
             return redirect(url_for('login_error', problem=str(e)))
-            
+        elif result.email_confirmed == False:
+            e = "The user is not verified. Check your email!"
+            return redirect(url_for('login_error', problem=str(e)))    
         userForToken = {
             'email': email,
             'id': str(result.id),
