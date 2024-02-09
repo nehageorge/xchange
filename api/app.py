@@ -351,7 +351,7 @@ def university_discussion_posts(param, user):
         redirectUrl = f"/get_uni/{param}/2"
         return redirect(redirectUrl)
     else:
-        posts = db.session.query(DiscussionPost).join(University).filter(University.id.like('%'+param+'%')).all()
+        posts = db.session.query(DiscussionPost).join(University).filter(University.id.like(param)).all()
         res = discussion_posts_schema.dump(posts)
         return res
 
