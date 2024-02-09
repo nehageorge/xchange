@@ -1,11 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import { Text } from "react-native";
 import XchangeTopBar from "./XchangeTopBar";
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const request = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        email: email, 
+        password: password,
+        confirm_password: confirmPassword
+      })
+    };
+
+    fetch(process.env.REACT_APP_PROXY + "/signup", request)
+    .then(response => {
+        response.json().then(
+          (val) => {
+            const msg = val["status"]
+            if (msg == "success") {
+              navigate("/signup_success")
+            } else {
+              navigate("/signup_error" + "?problem=" + msg)
+            }
+          }
+        )
+      }
+    )
+  }
+
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <XchangeTopBar />
       <div className="Signup">
         <center>
@@ -17,7 +54,6 @@ function Signup() {
               padding: "50px",
             }}
           >
-            <form action="/signup" method="POST">
               <Text
                 style={{
                   fontSize: 30,
@@ -39,6 +75,7 @@ function Signup() {
                   borderRadius: "4pt",
                   width: "100%",
                 }}
+                onChange={(e) => setEmail(e.target.value)}
               ></TextField>
               <br></br>
               <br></br>
@@ -53,6 +90,7 @@ function Signup() {
                   borderRadius: "4pt",
                   width: "100%",
                 }}
+                onChange={(e) => setPassword(e.target.value)}
               ></TextField>
               <br></br>
               <br></br>
@@ -67,6 +105,7 @@ function Signup() {
                   borderRadius: "4pt",
                   width: "100%",
                 }}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               ></TextField>
               <br></br>
               <br></br>
@@ -79,11 +118,10 @@ function Signup() {
                   <Text style={{ width: "325px" }}>Sign Up</Text>
                 </div>
               </Button>
-            </form>
           </div>
         </center>
       </div>
-    </>
+    </form>
   );
 }
 
