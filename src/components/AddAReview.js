@@ -188,6 +188,19 @@ function AddAReview(props) {
               </div>
             </Grid>
             <Grid item xs={12}>
+              <div>
+                <p>Additional thoughts</p>
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Tell us about your time abroad..."
+                  multiline
+                  rows={4}
+                  fullWidth
+                  name="freeform"
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12}>
               <p className="my-experience-was">My experience was ...</p>
             </Grid>
             <Grid item xs={6}>
