@@ -411,7 +411,7 @@ def university_discussion_posts(param, user):
         db.session.commit()
         return jsonify({"status": "success"})
     else:
-        posts = db.session.query(DiscussionPost).join(University).filter(DiscussionPost.university_id == University.id & DiscussionPost.university_id == param).all()
+        posts = db.session.query(DiscussionPost).join(University, University.id == DiscussionPost.university_id).filter(DiscussionPost.university_id == param).all()
         res = jsonify(discussion_posts_schema.dump(posts))
         return res
 
