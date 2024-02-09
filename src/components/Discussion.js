@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Dialog from "@mui/material/Dialog";
 
 import List from "@mui/material/List";
+import { Grid } from "@mui/material";
 
 function AddAReviewDialog(uniId) {
   const [open, setOpen] = React.useState(false);
@@ -38,40 +39,42 @@ function AddAReviewDialog(uniId) {
 
 function Review(post) {
   return (
-    <div className="review-bg">
-      <div className="user">
-        <div className="duck-img"></div>
-        <div className="bold">
-          {`${post["student_faculty"]} / ${post["student_term"]}`}
+    <div className="list-item">
+      <div className="review-bg">
+        <div className="user">
+          <div className="duck-img"></div>
+          <div className="bold">
+            {`${post["student_faculty"]} / ${post["student_term"]}`}
+          </div>
         </div>
-      </div>
-      <div className="review">
-        <div className="text">
-          <div className="bold"> Housing:</div>
-          &nbsp;{post["housing"]}
+        <div className="review">
+          <div className="text">
+            <div className="bold"> Housing:</div>
+            &nbsp;{post["housing"]}
+          </div>
+          <div className="text">
+            <div className="bold"> Favourite Aspect:</div>
+            &nbsp;{post["favourite_aspect"]}
+          </div>
+          <div className="text">
+            <div className="bold"> Food Situation:</div>
+            &nbsp;{post["food_situation"]}
+          </div>
+          <div className="text">&nbsp;{post["freeform"]}</div>
         </div>
-        <div className="text">
-          <div className="bold"> Favourite Aspect:</div>
-          &nbsp;{post["favourite_aspect"]}
+        <div className="vertical-line"></div>
+        <div className="user-rating-categories">
+          <div className="bold"> Safe:</div>
+          <div className="bold"> Fun:</div>
+          <div className="bold"> Affordable: </div>
+          <div className="bold"> Easy:</div>
         </div>
-        <div className="text">
-          <div className="bold"> Food Situation:</div>
-          &nbsp;{post["food_situation"]}
+        <div className="user-ratings">
+          <Typography>{`${post["safe_rating"]}/10`}</Typography>
+          <Typography>{`${post["fun_rating"]}/10`}</Typography>
+          <Typography>{`${post["affordable_rating"]}/10`}</Typography>
+          <Typography>{`${post["easy_rating"]}/10`}</Typography>
         </div>
-        <div className="text">&nbsp;{post["freeform"]}</div>
-      </div>
-      <div className="vertical-line"></div>
-      <div className="user-rating-categories">
-        <div className="bold"> Safe:</div>
-        <div className="bold"> Fun:</div>
-        <div className="bold"> Affordable: </div>
-        <div className="bold"> Easy:</div>
-      </div>
-      <div className="user-ratings">
-        <Typography>{`${post["safe_rating"]}/10`}</Typography>
-        <Typography>{`${post["fun_rating"]}/10`}</Typography>
-        <Typography>{`${post["affordable_rating"]}/10`}</Typography>
-        <Typography>{`${post["easy_rating"]}/10`}</Typography>
       </div>
     </div>
   );
@@ -147,9 +150,7 @@ function Discussion(props) {
       </div>
       <div className="col">
         <div className="section-title">Reviews</div>
-        <List style={{ maxHeight: "65vh", overflow: "auto" }}>
-          {posts.map((post) => Review(post))}
-        </List>
+        {posts.map((post) => Review(post))}
       </div>
     </div>
   );
