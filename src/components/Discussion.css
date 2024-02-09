@@ -41,12 +41,12 @@
 }
 
 .review-bg {
-    background-image: url(./assets/Review.svg);
-    background-size: 900px;
-    background-repeat: no-repeat;
     width: 900px;
-    height: 210px;
-
+    height: fit-content;
+    padding: 30px 0px 30px 0px;
+    border-radius: 30px;
+    border-width: 5px;
+    background-color: rgba(245, 235, 149, 0.683);
     display: flex;
     flex-flow: row;
     align-items: center;
@@ -111,4 +111,8 @@
 
 .bold {
     font-weight: bold;
+}
+
+.list-item {
+    margin-top: 20px;
 }
