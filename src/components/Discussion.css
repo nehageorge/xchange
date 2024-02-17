@@ -5,6 +5,15 @@
     align-items: start;
 }
 
+/* Media query for screens smaller than 600px */
+@media screen and (max-width: 600px) {
+    .row {
+      /* Styles for screens smaller than 600px */
+      /* For example: */
+      flex-flow: column;
+    }
+  }
+
 .col {
     display: flex; 
     flex-flow: column;
