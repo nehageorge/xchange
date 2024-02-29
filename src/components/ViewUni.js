@@ -6,6 +6,7 @@ import XchangeTabbedHeader from "./XchangeTabbedHeader";
 import UniversityOverviewContent from "./UniversityOverviewContent";
 import PreviouslyApprovedCourses from "./PreviouslyApprovedCourses";
 import Discussion from "./Discussion";
+import "./ViewUni.css";
 
 function ViewUni() {
   const params = useParams();
@@ -44,7 +45,7 @@ function ViewUni() {
   }
 
   return (
-    <div>
+    <div className={(content === 2 ? "width900" : '')}>
       <XchangeTabbedHeader />
       <View style={{ paddingHorizontal: 25, paddingVertical: 20 }}>
         <h3 style={{ paddingBottom: 10 }}>{currUni["name"]}</h3>
