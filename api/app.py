@@ -117,9 +117,22 @@ Routes
 """
 @app.route('/universities', methods=['GET'])
 def index():
-	unis = University.query.all()
-	res = unis_schema.dump(unis)
-	return jsonify(res)
+    added_unis = set()
+    unis = []
+    all_unis = University.query.all()
+
+    byProgram = int(request.args.get("program", 1))
+    if byProgram:
+        unis = all_unis         
+    else:
+        for uni in all_unis:
+            if uni.name in added_unis:
+                continue
+            else:
+                added_unis.add(uni.name)
+                unis.append(uni)
+    res = unis_schema.dump(unis)
+    return jsonify(res)
 
 @app.route('/uw_courses', methods=['GET'])
 def uw_course():
