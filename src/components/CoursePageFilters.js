@@ -41,10 +41,12 @@ function CoursePageFilters(props) {
   const [uniSearchResults, setUniSearchResults] = useState(new Map());
 
   useEffect(() => {
-    fetch("/universities").then((res) =>
-      res.json().then((data) => {
-        setUnis(getInitialUniNames(data));
-      })
+    fetch("/universities?" + new URLSearchParams({ program: 0 })).then(
+      (res) => {
+        res.json().then((data) => {
+          setUnis(getInitialUniNames(data));
+        });
+      }
     );
   }, []);
 
