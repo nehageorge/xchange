@@ -1,5 +1,6 @@
 import "./Landing.css";
 import XChangeButton from "./XChangeButton.js";
+import Box from '@mui/material/Box';
 import { Text } from "react-native";
 import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
@@ -92,7 +93,9 @@ function Landing() {
   }
 
   return (
-    <div className="flex-container">
+    <div>
+      <Box p={3} component="div" display={{sm:"none", xs:"flex"}} textAlign={"center"} sx={{ borderBottom: '2px solid ', borderColor: "#e0d03b" }}>For the optimal user experience, please view our site on desktop.</Box>
+      <div className="flex-container">
       <div className="flex-item1">
         <div className="landing-text-padding">{TitleText()}</div>
         <div className="left-buttons-padding">
@@ -219,6 +222,8 @@ function Landing() {
         </div>
       </div>
     </div>
+    </div>
+    
   );
 }
 
