@@ -29,8 +29,8 @@ function SignupSuccess() {
             <br></br>
             <br></br>
             <Text style={{ fontSize: 15 }}>
-              New user has been created. You can now save universities and
-              courses, as well as leave reviews!
+              New user has been created. You have now been sent a confirmation email. After you confirm your account,
+	      you can now save universities and courses, as well as leave reviews!
             </Text>
             <br></br>
             <br></br>

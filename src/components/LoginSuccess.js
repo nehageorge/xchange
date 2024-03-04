@@ -6,8 +6,8 @@ import { useSearchParams } from "react-router-dom";
 
 function LoginSuccess() {
   const [searchParams, _] = useSearchParams();
-  window.sessionStorage.setItem("token", searchParams.get("token"));
-  window.sessionStorage.setItem("user", searchParams.get("user"));
+  //window.sessionStorage.setItem("token", searchParams.get("token"));
+  //window.sessionStorage.setItem("user", searchParams.get("user"));
 
   return (
     <>
@@ -48,7 +48,7 @@ function LoginSuccess() {
             <Button
               sx={{ backgroundColor: "#E0D03B" }}
               style={{ width: "100%" }}
-              href="/course/home"
+              href="/course/search"
             >
               <div className="button-text">
                 <Text style={{ width: "325px" }}>Search for courses</Text>

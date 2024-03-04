@@ -41,7 +41,7 @@ function CoursePageFilters(props) {
   const [uniSearchResults, setUniSearchResults] = useState(new Map());
 
   useEffect(() => {
-    fetch("/universities?" + new URLSearchParams({ program: 0 })).then(
+    fetch(process.env.REACT_APP_PROXY + "/universities?" + new URLSearchParams({ program: 0 })).then(
       (res) => {
         res.json().then((data) => {
           setUnis(getInitialUniNames(data));
