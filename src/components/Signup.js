@@ -5,6 +5,7 @@ import XchangeTopBar from "./XchangeTopBar";
 import { useNavigate } from 'react-router-dom';
 
 function Signup() {
+  const size = window.innerWidth < 1024 ? "80%" : "50%";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -48,7 +49,7 @@ function Signup() {
         <center>
           <div
             style={{
-              width: "50%",
+              width: size,
               background: "#D8D8D8",
               borderRadius: "12pt",
               padding: "50px",
