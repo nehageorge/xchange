@@ -4,6 +4,7 @@ import { Text } from "react-native";
 import XchangeTopBar from "./XchangeTopBar";
 
 function Signup() {
+  const size = window.innerWidth < 1024 ? "80%" : "50%";
   return (
     <>
       <XchangeTopBar />
@@ -11,7 +12,7 @@ function Signup() {
         <center>
           <div
             style={{
-              width: "50%",
+              width: size,
               background: "#D8D8D8",
               borderRadius: "12pt",
               padding: "50px",
