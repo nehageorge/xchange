@@ -334,6 +334,8 @@ def forgot_password_success(token):
             raise ValueError("Password is not 8 characters")
         if not(password == confirm_password):
             return jsonify({"status": "mismatch"})
+        if len(password) < 8:
+            return jsonify({"status": "length"})
 
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password.encode('utf-8'), salt)

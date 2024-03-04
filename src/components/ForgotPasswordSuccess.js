@@ -34,6 +34,8 @@ function ForgotPasswordSuccess() {
                 setMessage("Success! You may now log in with your new password.")
               } else if (msg == "mismatch") {
                 setMessage("Your passwords didn't match. Please try again.")
+              } else if (msg == "length") {
+                setMessage("Your password is not long enough (must be at least 8 characters). Please try again.")
               }
             }
           )
