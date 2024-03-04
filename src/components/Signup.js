@@ -46,7 +46,7 @@ function Signup() {
               <TextField
                 type="password"
                 name="password"
-                label="Password"
+                label="Password (must be at least 8 characters)"
                 variant="outlined"
                 style={{
                   backgroundColor: "#FFFFFF",

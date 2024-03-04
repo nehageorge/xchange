@@ -215,6 +215,9 @@ def signup():
         if User.query.filter(User.email == email).first() is not None:
             e = "User with this email already exists. Please log in instead."
             return redirect(url_for('signup_error', problem=e))
+        if len(password) < 8:
+            e = "Password must be 8 characters long. Please try again."
+            return redirect(url_for('signup_error', problem=e))
         try:
             user = UserBuilder(email, password, confirm_password)
             db.session.add(User(email=user.email,password=user.password,is_admin=user.is_admin))
@@ -265,6 +268,8 @@ def forgot_password_success(token):
         password = request.form['password']
         confirm_password = request.form['confirm_password']
 
+        if len(password) < 8:
+            raise ValueError("Password is not 8 characters")
         if not(password == confirm_password):
             raise ValueError("Passwords do not match")
 
