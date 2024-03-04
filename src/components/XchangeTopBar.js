@@ -20,9 +20,6 @@ function XchangeTopBar() {
         <h2 style={{ color: "#E0D03B", display: "inline" }}>X</h2>
         <h2 style={{ display: "inline" }}>Change </h2>
       </span>
-      <h2>UW&nbsp;</h2>
-      <h2 style={{ color: "#E0D03B" }}>X</h2>
-      <h2>Change </h2>
       <div style={{ flex: 1 }}></div>
       {userPresent && (
         <>
