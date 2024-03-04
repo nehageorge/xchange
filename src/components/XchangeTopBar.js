@@ -1,15 +1,22 @@
 import { useNavigate } from "react-router-dom";
 
+
 function XchangeTopBar() {
   const navigate = useNavigate();
   const user = window.sessionStorage.getItem("user");
   const userPresent = user ? true : false;
 
+  const toHome = () => {
+    navigate("/");
+  };
+
   return (
     <div className="TopHeader" style={{ padding: "15px" }}>
-      <h2>UW&nbsp;</h2>
-      <h2 style={{ color: "#E0D03B" }}>X</h2>
-      <h2>Change </h2>
+      <span onClick={toHome} style = {{cursor: "pointer", display: "inline"}}>
+        <h2 style={{ display: "inline" }}>UW&nbsp;</h2>
+        <h2 style={{ color: "#E0D03B", display: "inline" }}>X</h2>
+        <h2 style={{ display: "inline" }}>Change </h2>
+      </span>
       <div style={{ flex: 1 }}></div>
       {userPresent && (
         <>
