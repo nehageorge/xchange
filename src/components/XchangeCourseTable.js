@@ -15,7 +15,7 @@ function XchangeCourseTable(props) {
   const [allCourseEquivalencies, setAllCoursesEquivalency] = useState([]);
   const [query, setQuery] = useState("");
   useEffect(() => {
-    fetch("/course_equivalencies/search", {
+    fetch(process.env.REACT_APP_PROXY + "/course_equivalencies/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ course_id: props.course_id }),
@@ -34,7 +34,7 @@ function XchangeCourseTable(props) {
       return;
     }
 
-    fetch("/course_equivalencies/search", {
+    fetch(process.env.REACT_APP_PROXY + "/course_equivalencies/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ uni_query: newQuery, course_id: props.course_id }),

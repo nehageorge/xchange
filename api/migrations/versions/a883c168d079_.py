@@ -1,8 +1,8 @@
-"""Change UWcourse Description
+"""empty message
 
-Revision ID: ef52e75a2aec
-Revises: c3a8a01b1af0
-Create Date: 2023-08-13 14:10:54.326987
+Revision ID: a883c168d079
+Revises: 60d71a0f4055
+Create Date: 2023-11-01 18:37:35.703623
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision = 'ef52e75a2aec'
-down_revision = '673323a4f63d'
+revision = 'a883c168d079'
+down_revision = '60d71a0f4055'
 branch_labels = None
 depends_on = None
 

@@ -2,12 +2,13 @@ import "./Landing.css";
 import XChangeButton from "./XChangeButton.js";
 import Box from '@mui/material/Box';
 import { Text } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import Link from "@mui/joy/Link";
 import { ReactComponent as Plane } from "./assets/Vector-5.svg";
 import { ReactComponent as Suitcase } from "./assets/Vector-6.svg";
 import { ReactComponent as Baggage } from "./assets/Vector-7.svg";
+import { useNavigate } from 'react-router-dom';
 
 const font = "Helvetica";
 
@@ -20,8 +21,10 @@ const TitleText = () => {
     <Text style={{ fontFamily: font }}>
       <Text style={{ fontSize: "3.7rem", fontWeight: "bold" }}>
         <Text>UW&nbsp;</Text>
+      </Text>
+      <Text style={{ fontSize: "3.7rem", fontWeight: "bold", whiteSpace: "nowrap" }}>
         <Text style={{ color: "#E0D03B" }}>X</Text>
-        {titleText}
+        Change
       </Text>
       <div className="body-padding"></div>
       <Text style={{ fontSize: "1.2rem", fontStyle: "italic", width: "50%" }}>
@@ -51,6 +54,44 @@ const OtherLinks = (linkText, path) => {
 };
 
 function Landing() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log("IDHAR HAI")
+    const request = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        email: email, 
+        password: password,
+      })
+    };
+
+    fetch(process.env.REACT_APP_PROXY + "/", request)
+    .then(response => {
+        response.json().then(
+          (val) => {
+            const msg = val["status"]
+            if (msg == "success") {
+              window.sessionStorage.setItem("token", val["token"]);
+              window.sessionStorage.setItem("user", val["user"]);
+              navigate("/login_success")
+            } else {
+              navigate("/login_error" + "?problem=" + msg)
+            }
+          }
+        )
+      }
+    )
+  }
+
   return (
     <div>
       <Box p={3} component="div" display={{sm:"none", xs:"flex"}} textAlign={"center"} sx={{ borderBottom: '2px solid ', borderColor: "#e0d03b" }}>For the optimal user experience, please view our site on desktop.</Box>
@@ -71,22 +112,22 @@ function Landing() {
         <div className="login-panel">
           <div
             style={{
-              marginTop: "-25%",
-              marginLeft: "15%",
+              marginTop: "-65px",
+              marginLeft: "35px",
             }}
           >
             <Suitcase style={{ scale: "2" }} />
           </div>
           <div
             style={{
-              marginTop: "-35%",
-              marginLeft: "45%",
+              marginTop: "-95px",
+              marginLeft: "120px",
             }}
           >
             <Baggage style={{ scale: "2.5" }} />
           </div>
           <div className="login-body">
-            <form action="/" method="POST">
+            <form onSubmit={handleSubmit}>
               <Text
                 style={{
                   fontFamily: font,
@@ -103,6 +144,7 @@ function Landing() {
                 label="Email"
                 name="email"
                 variant="outlined"
+                onChange={(e) => setEmail(e.target.value)}
                 style={{
                   backgroundColor: "#FFFFFF",
                   borderRadius: "4pt",
@@ -116,6 +158,7 @@ function Landing() {
                 name="password"
                 type="password"
                 variant="outlined"
+                onChange={(e) => setPassword(e.target.value)}
                 style={{
                   backgroundColor: "#FFFFFF",
                   borderRadius: "4pt",
