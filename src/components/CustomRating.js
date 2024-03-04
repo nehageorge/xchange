@@ -47,6 +47,7 @@ function CustomRating(props) {
           emptyIcon={<Circle fontSize="inherit" />}
           onChange={(event, newValue) => {
             setValue(newValue == null ? 0 : newValue);
+            props.ref(newValue == null ? 0 : newValue);
           }}
           onChangeActive={(event, newHover) => {
             setHover(newHover == null ? 0 : newHover);

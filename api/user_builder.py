@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 
 class UserBuilder():
-	def __init__(self, email, password, confirm_password):
+	def __init__(self, email, password, confirm_password, email_confirmed=False):
 		if not(email and password):
 			raise ValueError("Input validation failed. Email and password required.")
 		if not(email.endswith("@uwaterloo.ca")):
@@ -16,3 +16,4 @@ class UserBuilder():
 		hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
 		self.password = hashed
 		self.is_admin = 0
+		self.email_confirmed = email_confirmed

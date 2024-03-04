@@ -1,0 +1,5 @@
+@media screen and (max-width: 600px) {
+.width900 {
+    width: 900px; /* Set width to 900px when content is 2 */
+  }
+}
