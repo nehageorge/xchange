@@ -129,12 +129,22 @@ Routes
 """
 @app.route('/universities', methods=['GET'])
 def index():
-	print(request.environ, flush=True)
-	unis = University.query.all()
-	res = jsonify(unis_schema.dump(unis))
-#	res.headers.add('Access-Control-Allow-Origin', 'https://www.uw-xchange.com')
-#	res.headers.add('Access-Control-Allow-Origin', ['https://www.uw-xchange.com', 'https://uw-xchange.com']) # TODO: move the headers.add thing so that it's global and you don't have to write it so many times
-	return res
+    added_unis = set()
+    unis = []
+    all_unis = University.query.all()
+
+    byProgram = int(request.args.get("program", 1))
+    if byProgram:
+        unis = all_unis         
+    else:
+        for uni in all_unis:
+            if uni.name in added_unis:
+                continue
+            else:
+                added_unis.add(uni.name)
+                unis.append(uni)
+    res = unis_schema.dump(unis)
+    return jsonify(res)
 
 @app.route('/uw_courses', methods=['GET'])
 def uw_course():
