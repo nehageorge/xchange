@@ -239,6 +239,9 @@ def signup():
             e = "User with this email already exists. Please log in instead."
             print("signup error", flush=True)
             return redirect(url_for('signup_error', problem=e))
+        if len(password) < 8:
+            e = "Password must be 8 characters long. Please try again."
+            return redirect(url_for('signup_error', problem=e))
         try:
             print("user building", flush=True)
             user = UserBuilder(email, password, confirm_password)
@@ -327,6 +330,8 @@ def forgot_password_success(token):
         password = request.get_json().get('password')
         confirm_password = request.get_json().get('confirm_password')
 
+        if len(password) < 8:
+            raise ValueError("Password is not 8 characters")
         if not(password == confirm_password):
             return jsonify({"status": "mismatch"})
 
