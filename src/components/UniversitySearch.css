@@ -52,6 +52,18 @@
   line-height: 1.5;
 }
 
+.custom-grid-item {
+}
+
+@media (max-width: 600px) {
+  .custom-grid-item {
+
+    transform: translateX(40px);
+
+  }
+}
+
+
 /* Spinner animation */
 .spinner {
   position: relative;
