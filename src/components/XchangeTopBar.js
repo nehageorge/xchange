@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
 
 
 function XchangeTopBar() {
   const navigate = useNavigate();
   const user = window.sessionStorage.getItem("user");
   const userPresent = user ? true : false;
-  const [displayBanner, setDisplayBanner] = useState("flex");
+  const [displayBanner, setDisplayBanner] = useState(true);
 
   const toHome = () => {
     navigate("/");
@@ -15,9 +16,11 @@ function XchangeTopBar() {
 
   return (
     <div>
-      <Alert severity="info" onClose={() => { setDisplayBanner("none") }} display={{sm:"none", xs: displayBanner }}>
-        For the optimal user experience, please view our site on desktop.
-      </Alert>
+      <Collapse in={displayBanner}>
+        <Alert severity="info" onClose={() => { setDisplayBanner(false) }} display={{sm:"none", xs: "flex" }}>
+          For the optimal user experience, please view our site on desktop.
+        </Alert>
+      </Collapse>
       <div className="TopHeader" style={{ padding: "15px" }}>
       <span onClick={toHome} style = {{cursor: "pointer", display: "inline"}}>
         <h2 style={{ display: "inline" }}>UW&nbsp;</h2>
