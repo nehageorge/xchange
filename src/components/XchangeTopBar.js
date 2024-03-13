@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
 
 
 function XchangeTopBar() {
@@ -13,7 +13,9 @@ function XchangeTopBar() {
 
   return (
     <div>
-      <Box p={3} component="div" display={{sm:"none", xs:"flex"}} textAlign={"center"} sx={{ borderBottom: '2px solid ', borderColor: "#e0d03b" }}>For the optimal user experience, please view our site on desktop.</Box>
+      <Alert severity="info" onClose={() => {}} display={{sm:"none", xs:"flex"}}>
+        For the optimal user experience, please view our site on desktop.
+      </Alert>
       <div className="TopHeader" style={{ padding: "15px" }}>
       <span onClick={toHome} style = {{cursor: "pointer", display: "inline"}}>
         <h2 style={{ display: "inline" }}>UW&nbsp;</h2>
