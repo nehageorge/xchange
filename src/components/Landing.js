@@ -96,7 +96,7 @@ function Landing() {
 
   return (
     <div>
-      <Collapse in={displayBanner}>
+      <Collapse in={displayBanner} display={{sm:"none", xs: "flex"}}>
         <Alert severity="info" onClose={() => { setDisplayBanner(false) }} display={{sm:"none", xs: "flex"}}>
           For the optimal user experience, please view our site on desktop.
         </Alert>
