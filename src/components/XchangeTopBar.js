@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import Alert from '@mui/material/Alert';
 
 
@@ -6,6 +7,7 @@ function XchangeTopBar() {
   const navigate = useNavigate();
   const user = window.sessionStorage.getItem("user");
   const userPresent = user ? true : false;
+  const [displayBanner, setDisplayBanner] = useState("flex");
 
   const toHome = () => {
     navigate("/");
@@ -13,7 +15,7 @@ function XchangeTopBar() {
 
   return (
     <div>
-      <Alert severity="info" onClose={() => {}} display={{sm:"none", xs:"flex"}}>
+      <Alert severity="info" onClose={() => { setDisplayBanner("none") }} display={{sm:"none", xs: displayBanner }}>
         For the optimal user experience, please view our site on desktop.
       </Alert>
       <div className="TopHeader" style={{ padding: "15px" }}>
