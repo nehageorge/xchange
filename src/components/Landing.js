@@ -57,6 +57,7 @@ function Landing() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [displayBanner, setDisplayBanner] = useState("flex");
 
   const navigate = useNavigate();
 
@@ -94,7 +95,7 @@ function Landing() {
 
   return (
     <div>
-      <Alert severity="info" onClose={() => {}} display={{sm:"none", xs:"flex"}}>
+      <Alert severity="info" onClose={() => { setDisplayBanner("none") }} display={{sm:"none", xs: displayBanner}}>
         For the optimal user experience, please view our site on desktop.
       </Alert>
       <div className="flex-container">
