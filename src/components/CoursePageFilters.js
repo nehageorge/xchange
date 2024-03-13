@@ -41,10 +41,12 @@ function CoursePageFilters(props) {
   const [uniSearchResults, setUniSearchResults] = useState(new Map());
 
   useEffect(() => {
-    fetch("/universities").then((res) =>
-      res.json().then((data) => {
-        setUnis(getInitialUniNames(data));
-      })
+    fetch(process.env.REACT_APP_PROXY + "/universities?" + new URLSearchParams({ program: 0 })).then(
+      (res) => {
+        res.json().then((data) => {
+          setUnis(getInitialUniNames(data));
+        });
+      }
     );
   }, []);
 
@@ -246,7 +248,8 @@ function CoursePageFilters(props) {
           style={{ borderTop: borderStyle, borderRadius: 5 }}
         >
           <div className="FilterTitle">
-            <h6>University</h6>
+            <Box component="div" display={{sm:"flex", xs:"none"}}><h6>University</h6></Box>
+            <Box component="div" display={{sm:"none", xs:"flex"}}><h6>Unis</h6></Box>
           </div>
           <View style={{ flex: 1, flexDirection: "row" }}>
             <div

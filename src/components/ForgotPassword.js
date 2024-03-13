@@ -3,8 +3,42 @@ import { Text } from "react-native";
 import { TextField, Button } from "@mui/material";
 import XchangeTopBar from "./XchangeTopBar";
 
-
 function ForgotPassword() {
+
+  const [email, setEmail] = React.useState("");
+  const [message, setMessage] = React.useState("")
+  
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const request = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        email: email, 
+      })
+    }; 
+
+    fetch(process.env.REACT_APP_PROXY + "/forgot_password", request)
+    .then(response => {
+        response.json().then(
+          (val) => {
+            const msg = val["status"]
+            console.log(msg)
+            if (msg == "unknown") {
+              setMessage("An unknown error occurred. Please try again.")
+            } else if (msg == "success") {
+              setMessage("Reset request sent. Check your mail.")
+            } else if (msg == "no-email") {
+              setMessage("This email is not registered. Please try again.")
+            }
+          }
+        )
+      }
+    )
+  }
+
     return(
         <>
         <XchangeTopBar />
@@ -17,7 +51,7 @@ function ForgotPassword() {
               padding: "50px",
             }}
           >
-        <form action="/forgot_password" method="POST">
+        <form onSubmit={handleSubmit}>
               <Text
                 style={{
                   fontSize: 30,
@@ -39,6 +73,7 @@ function ForgotPassword() {
                   borderRadius: "4pt",
                   width: "100%",
                 }}
+                onChange={(e) => setEmail(e.target.value)}
               ></TextField>
               <br></br>
               <br></br>
@@ -47,10 +82,13 @@ function ForgotPassword() {
                 style={{ width: "100%" }}
                 type="submit"
               >
-                <div class="button-text">
+                <div className="button-text">
                   <Text style={{ width: "325px" }}>Reset Password</Text>
                 </div>
               </Button>
+              {
+                <Text>{message}</Text>
+              }
             </form>
             </div>
             </center>
