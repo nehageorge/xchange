@@ -1,6 +1,7 @@
 import "./Landing.css";
 import XChangeButton from "./XChangeButton.js";
 import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
 import { Text } from "react-native";
 import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
@@ -57,7 +58,7 @@ function Landing() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [displayBanner, setDisplayBanner] = useState("flex");
+  const [displayBanner, setDisplayBanner] = useState(true);
 
   const navigate = useNavigate();
 
@@ -95,9 +96,11 @@ function Landing() {
 
   return (
     <div>
-      <Alert severity="info" onClose={() => { setDisplayBanner("none") }} display={{sm:"none", xs: displayBanner}}>
-        For the optimal user experience, please view our site on desktop.
-      </Alert>
+      <Collapse in={displayBanner}>
+        <Alert severity="info" onClose={() => { setDisplayBanner(false) }} display={{sm:"none", xs: "flex"}}>
+          For the optimal user experience, please view our site on desktop.
+        </Alert>
+      </Collapse>
       <div className="flex-container">
       <div className="flex-item1">
         <div className="landing-text-padding">{TitleText()}</div>
