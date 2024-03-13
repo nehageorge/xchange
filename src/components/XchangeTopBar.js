@@ -9,6 +9,7 @@ function XchangeTopBar() {
   const user = window.sessionStorage.getItem("user");
   const userPresent = user ? true : false;
   const [displayBanner, setDisplayBanner] = useState(true);
+  const bannerDisplaySetting = window.innerWidth < 1024 ? "flex" : "none";
 
   const toHome = () => {
     navigate("/");
@@ -16,11 +17,13 @@ function XchangeTopBar() {
 
   return (
     <div>
-      <Collapse in={displayBanner} display={{sm:"none", xs: "flex"}}>
-        <Alert severity="info" onClose={() => { setDisplayBanner(false) }} display={{sm:"none", xs: "flex" }}>
-          For the optimal user experience, please view our site on desktop.
-        </Alert>
-      </Collapse>
+      <div style={{ display: bannerDisplaySetting }}>
+        <Collapse in={displayBanner} display={{sm:"none"}}>
+          <Alert severity="info" onClose={() => { setDisplayBanner(false) }} display={{sm:"none", xs: "flex" }}>
+            For the optimal user experience, please view our site on desktop.
+          </Alert>
+        </Collapse>
+      </div>
       <div className="TopHeader" style={{ padding: "15px" }}>
       <span onClick={toHome} style = {{cursor: "pointer", display: "inline"}}>
         <h2 style={{ display: "inline" }}>UW&nbsp;</h2>
