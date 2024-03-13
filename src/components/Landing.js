@@ -59,6 +59,7 @@ function Landing() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayBanner, setDisplayBanner] = useState(true);
+  const bannerDisplaySetting = window.innerWidth < 1024 ? "flex" : "none";
 
   const navigate = useNavigate();
 
@@ -96,11 +97,13 @@ function Landing() {
 
   return (
     <div>
-      <Collapse in={displayBanner} display={{sm:"none", xs: "flex"}}>
-        <Alert severity="info" onClose={() => { setDisplayBanner(false) }} display={{sm:"none", xs: "flex"}}>
-          For the optimal user experience, please view our site on desktop.
-        </Alert>
-      </Collapse>
+      <div style={{ display: bannerDisplaySetting }}>
+        <Collapse in={displayBanner}>
+          <Alert severity="info" onClose={() => { setDisplayBanner(false) }} display={{sm:"none", xs: "flex"}}>
+            For the optimal user experience, please view our site on desktop.
+          </Alert>
+        </Collapse>
+      </div>
       <div className="flex-container">
       <div className="flex-item1">
         <div className="landing-text-padding">{TitleText()}</div>
