@@ -14,7 +14,7 @@ function AddEquivalencyDialog(props) {
   const userPresent = user ? true : false;
   // placeholder data
   useEffect(() => {
-    fetch("/universities").then((res) =>
+    fetch("/universities?" + new URLSearchParams({ program: 0 })).then((res) =>
       res.json().then((data) => {
         setHostUnis(data.map(getHostUniData));
       })
