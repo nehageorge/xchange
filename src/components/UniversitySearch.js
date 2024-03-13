@@ -13,7 +13,7 @@ function UniversitySearch() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("/universities").then((res) => {
+    fetch(process.env.REACT_APP_PROXY + "/universities").then((res) => {
       res.json().then((data) => {
         setAllUnis(data);
         if (search.length == 0) {
@@ -25,12 +25,13 @@ function UniversitySearch() {
   }, []);
 
   function handleSearch(newSearch) {
+    console.log(process.env.REACT_APP_PROXY)
     setSearch(newSearch);
     if (newSearch.length == 0) {
       setUnis(allUnis);
       return;
     }
-    fetch("/search_unis/" + newSearch).then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/search_unis/" + newSearch).then((res) =>
       res.json().then((data) => {
         if (newSearch.length != 0) {
           setUnis(data);
@@ -46,17 +47,6 @@ function UniversitySearch() {
   return (
     <div className="Home">
       <XchangeTabbedHeader />
-      <View>
-        <img
-          src="/singapore_skyline.png"
-          alt="Panoramic view of Singapore city"
-          style={{
-            maxHeight: 340,
-            objectFit: "cover",
-          }}
-        ></img>
-        {/* Picture sourced from https://live.staticflickr.com/916/43142094942_2742225a90_b.jpg */}
-      </View>
       <div class="page-loader" id="loader-div">
         <div class="spinner"></div>
         <div class="txt">Loading...</div>
