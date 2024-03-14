@@ -23,6 +23,11 @@ function CoursePageFilters(props) {
     [12, ["Nanotechnology  Engineering", "NE"]],
     [13, ["Software Engineering", "SE"]],
     [14, ["Systems Design Engineering", "SYDE"]],
+    [15, ["Mathematics", "MATH"]],
+    [16, ["Environment", "ENV"]],
+    [17, ["Science", "SCI"]],
+    [18, ["Health", "HEALTH"]],
+    [19, ["Arts", "ARTS"]],
   ];
   const programMap = new Map(programList);
 
