@@ -1,12 +1,15 @@
 import "./Landing.css";
 import XChangeButton from "./XChangeButton.js";
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
 import { Text } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import Link from "@mui/joy/Link";
 import { ReactComponent as Plane } from "./assets/Vector-5.svg";
 import { ReactComponent as Suitcase } from "./assets/Vector-6.svg";
 import { ReactComponent as Baggage } from "./assets/Vector-7.svg";
+import { useNavigate } from 'react-router-dom';
 
 const font = "Helvetica";
 
@@ -19,11 +22,15 @@ const TitleText = () => {
     <Text style={{ fontFamily: font }}>
       <Text style={{ fontSize: "3.7rem", fontWeight: "bold" }}>
         <Text>UW&nbsp;</Text>
+      </Text>
+      <Text style={{ fontSize: "3.7rem", fontWeight: "bold", whiteSpace: "nowrap" }}>
         <Text style={{ color: "#E0D03B" }}>X</Text>
-        {titleText}
+        Change
       </Text>
       <div className="body-padding"></div>
-      <Text style={{ fontSize: "1.2rem", fontStyle: "italic", width: "50%" }}>{bodyText}</Text>
+      <Text style={{ fontSize: "1.2rem", fontStyle: "italic", width: "50%" }}>
+        {bodyText}
+      </Text>
     </Text>
   );
 };
@@ -48,13 +55,61 @@ const OtherLinks = (linkText, path) => {
 };
 
 function Landing() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [displayBanner, setDisplayBanner] = useState(true);
+  const bannerDisplaySetting = window.innerWidth < 1024 ? "flex" : "none";
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log("IDHAR HAI")
+    const request = {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        email: email, 
+        password: password,
+      })
+    };
+
+    fetch(process.env.REACT_APP_PROXY + "/", request)
+    .then(response => {
+        response.json().then(
+          (val) => {
+            const msg = val["status"]
+            if (msg == "success") {
+              window.sessionStorage.setItem("token", val["token"]);
+              window.sessionStorage.setItem("user", val["user"]);
+              navigate("/login_success")
+            } else {
+              navigate("/login_error" + "?problem=" + msg)
+            }
+          }
+        )
+      }
+    )
+  }
+
   return (
-    <div className="flex-container">
+    <div>
+      <div style={{ display: bannerDisplaySetting }}>
+        <Collapse in={displayBanner}>
+          <Alert severity="info" onClose={() => { setDisplayBanner(false) }} display={{sm:"none", xs: "flex"}}>
+            For the optimal user experience, please view our site on desktop.
+          </Alert>
+        </Collapse>
+      </div>
+      <div className="flex-container">
       <div className="flex-item1">
         <div className="landing-text-padding">{TitleText()}</div>
         <div className="left-buttons-padding">
           {XChangeButton("Search for schools", "/universities")}
-          {XChangeButton("Search for courses", "/course/home")}
+          {XChangeButton("Search for courses", "/course/search")}
         </div>
         <div className="links-padding">
           {OtherLinks("About", "/about")}
@@ -66,26 +121,26 @@ function Landing() {
         <div className="login-panel">
           <div
             style={{
-              marginTop: "-25%",
-              marginLeft: "15%",
+              marginTop: "-65px",
+              marginLeft: "35px",
             }}
           >
             <Suitcase style={{ scale: "2" }} />
           </div>
           <div
             style={{
-              marginTop: "-35%",
-              marginLeft: "45%",
+              marginTop: "-95px",
+              marginLeft: "120px",
             }}
           >
             <Baggage style={{ scale: "2.5" }} />
           </div>
           <div className="login-body">
-            <form action="/" method="POST">
+            <form onSubmit={handleSubmit}>
               <Text
                 style={{
                   fontFamily: font,
-                  fontSize: '50%',
+                  fontSize: "50%",
                   fontWeight: "bold",
                   color: "#1E1E1E",
                 }}
@@ -98,6 +153,7 @@ function Landing() {
                 label="Email"
                 name="email"
                 variant="outlined"
+                onChange={(e) => setEmail(e.target.value)}
                 style={{
                   backgroundColor: "#FFFFFF",
                   borderRadius: "4pt",
@@ -111,6 +167,7 @@ function Landing() {
                 name="password"
                 type="password"
                 variant="outlined"
+                onChange={(e) => setPassword(e.target.value)}
                 style={{
                   backgroundColor: "#FFFFFF",
                   borderRadius: "4pt",
@@ -174,6 +231,8 @@ function Landing() {
         </div>
       </div>
     </div>
+    </div>
+    
   );
 }
 

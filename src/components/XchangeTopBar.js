@@ -1,15 +1,35 @@
 import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
+
 
 function XchangeTopBar() {
   const navigate = useNavigate();
   const user = window.sessionStorage.getItem("user");
   const userPresent = user ? true : false;
+  const [displayBanner, setDisplayBanner] = useState(true);
+  const bannerDisplaySetting = window.innerWidth < 1024 ? "flex" : "none";
+
+  const toHome = () => {
+    navigate("/");
+  };
 
   return (
-    <div className="TopHeader" style={{ padding: "15px" }}>
-      <h2>UW&nbsp;</h2>
-      <h2 style={{ color: "#E0D03B" }}>X</h2>
-      <h2>Change </h2>
+    <div>
+      <div style={{ display: bannerDisplaySetting }}>
+        <Collapse in={displayBanner} display={{sm:"none"}}>
+          <Alert severity="info" onClose={() => { setDisplayBanner(false) }} display={{sm:"none", xs: "flex" }}>
+            For the optimal user experience, please view our site on desktop.
+          </Alert>
+        </Collapse>
+      </div>
+      <div className="TopHeader" style={{ padding: "15px" }}>
+      <span onClick={toHome} style = {{cursor: "pointer", display: "inline"}}>
+        <h2 style={{ display: "inline" }}>UW&nbsp;</h2>
+        <h2 style={{ color: "#E0D03B", display: "inline" }}>X</h2>
+        <h2 style={{ display: "inline" }}>Change </h2>
+      </span>
       <div style={{ flex: 1 }}></div>
       {userPresent && (
         <>
@@ -43,6 +63,8 @@ function XchangeTopBar() {
         </button>
       )}
     </div>
+    </div>
+    
   );
 }
 

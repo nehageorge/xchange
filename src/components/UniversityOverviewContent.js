@@ -88,12 +88,12 @@ function UniversityOverviewContent(props) {
         item
         alignItems="flex-end"
       >
-        <Grid item xs={3}>
+        <Grid item xs={1.5}>
           Faculties:
         </Grid>
         {faculties.map((faculty) => (
           <Grid item>
-            <div>{FacultyBubble(faculty)}</div>
+            <div className="custom-grid-item">{FacultyBubble(faculty)}</div>
           </Grid>
         ))}
       </Grid>
