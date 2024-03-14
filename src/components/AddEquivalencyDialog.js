@@ -51,21 +51,11 @@ function AddEquivalencyDialog(props) {
   }
 
   const uwPrograms = [
-    { label: "Architectural Engineering" },
-    { label: "Architecture" },
-    { label: "Biomedical Engineering" },
-    { label: "Chemical Engineering" },
-    { label: "Civil Engineering" },
-    { label: "Computer Engineering" },
-    { label: "Electrical Engineering" },
-    { label: "Environmental Engineering" },
-    { label: "Geological Engineering" },
-    { label: "Management Engineering" },
-    { label: "Mechanical Engineering" },
-    { label: "Mechatronics Engineering" },
-    { label: "Nanotechnology Engineering" },
-    { label: "Software Engineering" },
-    { label: "Systems Design Engineering" },
+    { label: "Mathematics"},
+    { label: "Environment"},
+    { label: "Science" },
+    { label: "Health" },
+    { label: "Arts" },
   ];
   const pastTenYears = [
     { label: "2024" },
@@ -142,7 +132,7 @@ function AddEquivalencyDialog(props) {
       {userPresent && (
         <form onSubmit={handleSubmit}>
           <div className="DialogContent">
-            <h3>Add Your Course Equivalency</h3>
+            <h3>Add Your Course Equivalency (Non-Engineering)</h3>
             <div
               style={{ height: 3, width: 400, backgroundColor: "#e0d03b" }}
             ></div>
