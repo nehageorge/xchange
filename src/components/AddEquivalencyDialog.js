@@ -134,7 +134,7 @@ function AddEquivalencyDialog(props) {
           <div className="DialogContent">
             <h3>Add Your Course Equivalency (Non-Engineering)</h3>
             <div
-              style={{ height: 3, width: 400, backgroundColor: "#e0d03b" }}
+              style={{ height: 3, width: 630, backgroundColor: "#e0d03b" }}
             ></div>
             <Grid container spacing={2} direction="row" padding={3}>
               <Grid item xs={12} sm={4}>
