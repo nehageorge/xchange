@@ -27,7 +27,7 @@ function AddEquivalencyDialog(props) {
 
   // placeholder data
   useEffect(() => {
-    fetch(process.env.REACT_APP_PROXY + "/universities"  + new URLSearchParams({ program: 0 })).then((res) =>
+    fetch(process.env.REACT_APP_PROXY + "/universities?"  + new URLSearchParams({ program: 0 })).then((res) =>
       res.json().then((data) => {
         setHostUnis(data.map(getHostUniData));
       })
